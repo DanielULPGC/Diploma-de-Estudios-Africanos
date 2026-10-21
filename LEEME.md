@@ -10,6 +10,7 @@ Recurso docente (FCEDU, ULPGC) basado en Giemsch, L. y Haidle, M. N. (Eds.). (20
 - `js/retos.js` · motores de retos (clasificar, ordenar, test, numérico, caja, predicciones, mapa).
 - `js/app.js` · interfaz, progreso, recorrido, guía docente.
 - `js/tierra.js` · costas Natural Earth 1:110m (dominio público).
+- `datos/imagenes.js` + `img/yacimientos/` · 32 fotografías de yacimientos (Wikimedia Commons, redimensionadas a 720 px). Cada una conserva su propia licencia (dominio público, CC0, CC BY, CC BY-SA o Licence Ouverte), indicada con su autoría en el pie; no están cubiertas por la licencia CC BY-NC del recurso.
 - `datos/salas.js`, `datos/especies.js`, `datos/expansion.js` · todo el contenido. Corregir o ampliar contenido no exige tocar `js/`.
 
 ## Publicar en GitHub Pages

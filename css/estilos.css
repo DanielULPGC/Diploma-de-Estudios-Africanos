@@ -172,8 +172,25 @@ p { margin: 0; }
 .visor-cab .boton:last-child { margin-left: auto; }
 .visor-etapas { display: flex; gap: 4px; flex-wrap: wrap; }
 .visor-etapas .boton[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-.visor-cuerpo { position: relative; flex: 1; min-height: 0; }
-.visor-cuerpo canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.visor-cuerpo { position: relative; flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 300px); }
+.visor-mapa { position: relative; min-width: 0; min-height: 0; }
+.visor-mapa canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.visor-lado { border-left: 1px solid var(--line); padding: var(--s-3); overflow-y: auto; display: flex; flex-direction: column; gap: var(--s-2); min-width: 0; }
+.visor-lado h4 { font-size: var(--t-md); }
+.visor-lado .mono { font-size: var(--t-xs); color: var(--muted); }
+.lista-sitios { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.lista-sitios .boton { width: 100%; justify-content: space-between; text-align: left; font-weight: 500; }
+.chip-foto { font-family: var(--f-mono); font-size: 0.6875rem; font-weight: 400; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 0 6px; }
+.marca-sitio.con-foto::after { content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--surface); }
+.marca-sitio.vieja.con-foto::after { inset: 2px; }
+.marca-sitio.activa { outline: 3px solid var(--ink); outline-offset: 2px; z-index: 2; }
+.figura { margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.figura img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--r); background: var(--surface-2); max-width: 100%; }
+.figura figcaption { font-size: var(--t-xs); line-height: 1.45; color: var(--ink); }
+.figura .credito { display: block; color: var(--muted); margin-top: 2px; }
+.figura .credito a { color: inherit; }
+.galeria { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--s-3); }
+.figura.compacta figcaption { font-size: 0.6875rem; }
 .visor-marcas { position: absolute; inset: 0; }
 .marca-sitio {
   position: absolute; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; border: 2px solid var(--surface);
@@ -291,6 +308,8 @@ body.modo-presentacion .idea { font-size: 1.4rem; }
   .leyenda { max-width: calc(100% - 32px); top: auto; bottom: var(--s-4); }
   .leyenda .nota { display: none; }
   .visor { inset: 8px; }
+  .visor-cuerpo { grid-template-columns: 1fr; grid-template-rows: minmax(160px, 1fr) auto; }
+  .visor-lado { border-left: 0; border-top: 1px solid var(--line); max-height: 45%; }
   body.modo-presentacion .app { display: flex; }
 }
 @media (min-width: 1440px) { body { font-size: 1rem; } .ficha .texto { font-size: 1.125rem; } }

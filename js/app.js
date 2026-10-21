@@ -123,6 +123,18 @@ function bloqueAviso(a) {
     a.fuentes?.length ? el("ul", {}, a.fuentes.map(f => el("li", {}, f.cita, " ", f.doi ? el("a", { href: "https://doi.org/" + f.doi, target: "_blank", rel: "noopener" }, "doi:" + f.doi) : null))) : null);
 }
 
+/* ---------- Fotografías de yacimientos ---------- */
+const IMG = S.imagenes || {};
+function figuraYacimiento(clave, { titulo = null, compacta = false } = {}) {
+  const f = IMG[clave]; if (!f) return null;
+  const lic = f.licUrl ? el("a", { href: f.licUrl, target: "_blank", rel: "noopener license" }, f.licencia) : f.licencia;
+  return el("figure", { class: "figura" + (compacta ? " compacta" : "") },
+    el("img", { src: f.src, alt: f.pie, loading: "lazy", decoding: "async", width: 720, height: 480 }),
+    el("figcaption", {}, titulo ? el("strong", {}, titulo + ". ") : null, f.pie,
+      el("span", { class: "credito" }, "Foto: ", f.autor || "autoría en Commons", " · ", lic, " · ", el("a", { href: f.pagina, target: "_blank", rel: "noopener" }, "Wikimedia Commons"), " (redimensionada)")));
+}
+const IMG_ESPECIE = { sahelanthropus: "Toros-Menalla", afarensis: "Laetoli", africanus: "Sterkfontein", boisei: "KoobiFora", rudolfensis: "KoobiFora", habilis: "Hadar", ergaster: "KoobiFora", erectus: "Dmanisi", heidelbergensis: "Mauer", neanderthalensis: "Neander", sapiens: "JebelIrhoud" };
+
 /* ---------- Vistas ---------- */
 function vistaInicio() {
   estado.vista = "inicio"; estado.sel = null; if (museo) museo.marcar(null); pintarIndice();
@@ -207,6 +219,7 @@ function abrirEspecie(id, { volar = false } = {}) {
       el("dt", {}, "Yacimientos"), el("dd", {}, e.yacimientos),
       e.hallazgos !== "—" ? [el("dt", {}, "Restos"), el("dd", {}, e.hallazgos)] : null),
     el("div", { class: "texto" }, el("p", {}, e.rasgos)),
+    IMG_ESPECIE[e.id] ? el("section", { class: "seccion" }, el("h3", {}, "Un yacimiento de la especie"), figuraYacimiento(IMG_ESPECIE[e.id])) : null,
     e.nota ? bloqueAviso(e.nota) : null,
     el("section", { class: "seccion" }, el("h3", {}, "Comparar"), comparador(e)),
     navegacion({ tipo: "especie", id }));
@@ -263,11 +276,31 @@ function vistaGuia() {
       lista("Las síntesis son de redacción propia y no sustituyen la lectura del catálogo, que no se reproduce.",
         "El catálogo es de 2022: las notas verdes recogen hallazgos posteriores con su DOI; las amarillas, erratas y debates.",
         "Las piezas 3D son evocaciones, no réplicas; las coordenadas del mapa son aproximadas; la escala temporal es de raíz cuadrada.",
+        "Las fotografías proceden de Wikimedia Commons, con licencias libres (dominio público, CC0, CC BY, CC BY-SA, Licence Ouverte); cada pie indica autoría, licencia y si la imagen muestra el yacimiento o solo su entorno. Al reutilizarlas, mantenga esos créditos.",
         "El progreso se guarda solo en este navegador; no se recogen datos personales.",
         "Recurso elaborado con asistencia de IA generativa y verificación de fuentes; requiere revisión docente antes de su uso.")),
     el("section", { class: "seccion" }, el("h3", {}, "Modo docente"),
       el("p", { class: "texto" }, "Añada #docente al final del enlace (o ?docente si el recurso se aloja en un servidor propio) para abrir todas las vitrinas y mostrar el botón «Ver solución» en cada reto.")),
     el("div", { class: "nav-ficha" }, el("button", { class: "boton", type: "button", onclick: vistaInicio }, "Volver al inicio")));
+  enfocarFicha();
+}
+
+function vistaGaleria() {
+  estado.vista = "galeria"; terminarRecorrido(); cerrarVisor(); estado.sel = null; if (museo) museo.marcar(null); pintarIndice();
+  const etapas = S.expansion;
+  const sin = [];
+  const bloques = etapas.map(e => {
+    const con = e.sitios.filter(s => s.img && IMG[s.img]);
+    e.sitios.filter(s => !s.img).forEach(s => sin.push(s.n));
+    return con.length ? el("section", { class: "seccion" }, el("h3", {}, `${e.rango} · ${e.titulo}`),
+      el("div", { class: "galeria" }, con.map(s => figuraYacimiento(s.img, { titulo: `${s.n} (${s.a})`, compacta: true })))) : null;
+  });
+  poner(ficha,
+    cabecera("Galería", "Yacimientos en imágenes", el("p", { class: "sub" }, `${Object.keys(IMG).length} fotografías con licencia libre (Wikimedia Commons), ordenadas por las etapas del mapa de la sala 11`)),
+    el("p", { class: "consigna" }, "Algunas imágenes muestran el yacimiento; otras, el paisaje de la región, un museo o un fósil hallado allí. El pie lo indica en cada caso."),
+    bloques,
+    el("section", { class: "seccion aviso" }, el("h3", {}, "Sin fotografía libre localizada"), el("p", {}, sin.join(" · ") + ".")),
+    el("div", { class: "nav-ficha" }, el("button", { class: "boton", type: "button", onclick: () => abrirSala("s11", { volar: true }) }, "Ir a la sala 11"), el("button", { class: "boton", type: "button", onclick: vistaInicio }, "Volver al inicio")));
   enfocarFicha();
 }
 
@@ -309,7 +342,22 @@ function abrirVisor(alVisitar) {
   const canvas = el("canvas", { "aria-hidden": "true" });
   const capa = el("div", { class: "visor-marcas" });
   const info = el("div", { class: "globo-info", hidden: true });
-  const cuerpo = el("div", { class: "visor-cuerpo" }, canvas, capa, info);
+  const mapa = el("div", { class: "visor-mapa" }, canvas, capa, info);
+  const lado = el("div", { class: "visor-lado", "aria-live": "polite" });
+  const cuerpo = el("div", { class: "visor-cuerpo" }, mapa, lado);
+  let elegido = null;
+  function verSitio(s) {
+    elegido = s;
+    capa.querySelectorAll(".marca-sitio").forEach(m => m.classList.toggle("activa", m.dataset.n === s.n));
+    lado.replaceChildren(el("h4", {}, s.n), el("p", { class: "mono" }, s.a + (s.nuevo ? " · hallazgo posterior al catálogo" : "")),
+      s.img && IMG[s.img] ? figuraYacimiento(s.img) : el("p", { class: "explicacion" }, "No se ha localizado una fotografía de este yacimiento con licencia libre."),
+      el("p", { class: "explicacion" }, "Ubicación aproximada en el mapa."));
+  }
+  function listaSitios() {
+    const e = etapas[actual];
+    lado.replaceChildren(el("h4", {}, "Yacimientos de esta etapa"), el("p", { class: "explicacion" }, "Pulse un punto del mapa o un nombre para ver su fotografía."),
+      el("ul", { class: "lista-sitios" }, e.sitios.map(s => el("li", {}, el("button", { class: "boton", type: "button", onclick: () => verSitio(s) }, s.n, s.img && IMG[s.img] ? el("span", { class: "chip-foto", "aria-label": "con fotografía" }, "foto") : null)))));
+  }
   const pieV = el("div", { class: "visor-pie", "aria-live": "polite" });
   const botones = etapas.map((e, i) => el("button", { class: "boton", type: "button", "aria-pressed": "false", onclick: () => ir(i) }, e.rango));
   const cerrar = el("button", { class: "boton", type: "button", onclick: () => { cerrarVisor(); document.querySelector("#ficha-titulo")?.focus(); } }, "Cerrar mapa");
@@ -318,7 +366,7 @@ function abrirVisor(alVisitar) {
   const LON0 = -100, LON1 = 160, LAT0 = -45, LAT1 = 70;
   const proyectar = (lon, lat, w, h) => ({ x: (lon - LON0) / (LON1 - LON0) * w, y: (LAT1 - lat) / (LAT1 - LAT0) * h });
   function dibujar() {
-    const w = cuerpo.clientWidth, h = cuerpo.clientHeight; if (!w || !h) return;
+    const w = mapa.clientWidth, h = mapa.clientHeight; if (!w || !h) return;
     const dpr = Math.min(window.devicePixelRatio || 1, 2); canvas.width = w * dpr; canvas.height = h * dpr;
     const g = canvas.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0);
     const css = getComputedStyle(document.documentElement);
@@ -332,7 +380,8 @@ function abrirVisor(alVisitar) {
     const capaRect = { w, h };
     capa.replaceChildren(...etapas.slice(0, actual + 1).flatMap((e, k) => e.sitios.map(s => {
       const p = proyectar(s.lon, s.lat, capaRect.w, capaRect.h);
-      const b = el("button", { class: "marca-sitio" + (k < actual ? " vieja" : "") + (s.nuevo ? " nuevo" : ""), type: "button", style: `left:${p.x}px; top:${p.y}px`, "aria-label": `${s.n}: ${s.a}${s.nuevo ? " (hallazgo posterior al catálogo)" : ""}` });
+      const conFoto = s.img && IMG[s.img];
+      const b = el("button", { class: "marca-sitio" + (k < actual ? " vieja" : "") + (s.nuevo ? " nuevo" : "") + (conFoto ? " con-foto" : "") + (elegido && elegido.n === s.n ? " activa" : ""), "data-n": s.n, type: "button", style: `left:${p.x}px; top:${p.y}px`, "aria-label": `${s.n}: ${s.a}${s.nuevo ? " (hallazgo posterior al catálogo)" : ""}${conFoto ? ". Con fotografía" : ""}`, onclick: () => verSitio(s) });
       const mostrar = () => { info.hidden = false; info.style.left = p.x + "px"; info.style.top = p.y + "px"; info.textContent = `${s.n} · ${s.a}${s.nuevo ? " · posterior a 2022" : ""}`; };
       b.addEventListener("pointerenter", mostrar); b.addEventListener("focus", mostrar);
       b.addEventListener("pointerleave", () => info.hidden = true); b.addEventListener("blur", () => info.hidden = true);
@@ -343,10 +392,10 @@ function abrirVisor(alVisitar) {
     actual = i; visitadas.add(i);
     botones.forEach((b, k) => b.setAttribute("aria-pressed", String(k === i)));
     const e = etapas[i];
-    pieV.replaceChildren(el("strong", {}, `${e.rango} · ${e.titulo}`), el("p", {}, e.texto), el("p", { class: "mono" }, "Punto actual: etapa en curso · gris: etapas anteriores · anillo verde: hallazgo posterior al catálogo. Ubicaciones aproximadas."));
-    dibujar(); alVisitar(visitadas.size);
+    pieV.replaceChildren(el("strong", {}, `${e.rango} · ${e.titulo}`), el("p", {}, e.texto), el("p", { class: "mono" }, "Punto de color: etapa en curso · gris: etapas anteriores · anillo verde: hallazgo posterior al catálogo · punto blanco central: con fotografía. Ubicaciones aproximadas."));
+    elegido = null; listaSitios(); dibujar(); alVisitar(visitadas.size);
   }
-  new ResizeObserver(dibujar).observe(cuerpo);
+  new ResizeObserver(dibujar).observe(mapa);
   ir(0); botones[0].focus();
 }
 document.addEventListener("keydown", ev => { if (ev.key === "Escape" && !visor.hidden) { cerrarVisor(); } });
@@ -363,6 +412,7 @@ $("#btn-inicio").addEventListener("click", () => { terminarRecorrido(); if (muse
 $("#btn-recorrido").addEventListener("click", iniciarRecorrido);
 $("#btn-guia").addEventListener("click", vistaGuia);
 $("#btn-examen").addEventListener("click", vistaExamen);
+$("#btn-galeria").addEventListener("click", vistaGaleria);
 $("#btn-general").addEventListener("click", () => museo && museo.vistaGeneral());
 document.addEventListener("keydown", ev => {
   if (/input|textarea|select/i.test(document.activeElement.tagName)) return;
