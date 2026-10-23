@@ -1,6 +1,6 @@
 # Ser humanos · museo 3D de los comienzos de la cultura
 
-Recurso docente basado en Giemsch, L. y Haidle, M. N. (Eds.). (2022). *Being Human. The Beginnings of Our Culture*. Archäologisches Museum Frankfurt / Nünnerich-Asmus. ISBN 978-3-96176-193-7.
+Recurso docente sobre los comienzos de la cultura humana, con contenido de redacción propia y bibliografía en cada sala y ficha. Inspirado en la exposición «Being Human. The Beginnings of Our Culture» (Archäologisches Museum Frankfurt, 2021-2022) y en su volumen de acompañamiento: Giemsch, L. y Haidle, M. N. (Eds.). (2022). Nünnerich-Asmus. ISBN 978-3-96176-193-7.
 
 ## Estructura
 - `index.html` · página.
@@ -11,7 +11,7 @@ Recurso docente basado en Giemsch, L. y Haidle, M. N. (Eds.). (2022). *Being Hum
 - `js/app.js` · interfaz, progreso, recorrido, guía docente.
 - `js/tierra.js` · costas Natural Earth 1:110m (dominio público).
 - `datos/novedades.js` · investigación 2025-2026 por sala y especie, a partir de las reseñas del blog Nutcracker Man (Roberto Sáez, https://nutcrackerman.com/); referencias cotejadas en Crossref (22-10-2026).
-- `datos/imagenes.js` + `img/yacimientos/` · 32 fotografías de yacimientos (Wikimedia Commons, redimensionadas a 720 px). Cada una conserva su propia licencia (dominio público, CC0, CC BY, CC BY-SA o Licence Ouverte), indicada con su autoría en el pie; no están cubiertas por la licencia CC BY-NC del recurso.
+- `datos/referencias.js` · bibliografía (cita APA y DOI). La investigación 2023-2026 se localizó en buena parte gracias a las reseñas del blog Nutcracker Man (Roberto Sáez, https://nutcrackerman.com/); referencias cotejadas en Crossref (octubre de 2026).
 - `datos/salas.js`, `datos/especies.js`, `datos/expansion.js` · todo el contenido. Corregir o ampliar contenido no exige tocar `js/`.
 
 ## Publicar en GitHub Pages
@@ -23,4 +23,4 @@ Suba la carpeta completa a un repositorio y active Pages en la rama principal. N
 ## Privacidad
 No recoge datos. El progreso se guarda solo en el navegador (localStorage).
 
-Licencia del recurso: CC BY-NC 4.0. Las síntesis son de redacción propia y no reproducen el catálogo.
+Licencia del recurso: CC BY-NC 4.0. Las síntesis son de redacción propia y no reproducen textos de terceros.
