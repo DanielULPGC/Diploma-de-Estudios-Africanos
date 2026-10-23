@@ -1,6 +1,6 @@
 # Ser humanos · museo 3D de los comienzos de la cultura
 
-Recurso docente (FCEDU, ULPGC) basado en Giemsch, L. y Haidle, M. N. (Eds.). (2022). *Being Human. The Beginnings of Our Culture*. Archäologisches Museum Frankfurt / Nünnerich-Asmus. ISBN 978-3-96176-193-7.
+Recurso docente basado en Giemsch, L. y Haidle, M. N. (Eds.). (2022). *Being Human. The Beginnings of Our Culture*. Archäologisches Museum Frankfurt / Nünnerich-Asmus. ISBN 978-3-96176-193-7.
 
 ## Estructura
 - `index.html` · página.
@@ -10,6 +10,7 @@ Recurso docente (FCEDU, ULPGC) basado en Giemsch, L. y Haidle, M. N. (Eds.). (20
 - `js/retos.js` · motores de retos (clasificar, ordenar, test, numérico, caja, predicciones, mapa).
 - `js/app.js` · interfaz, progreso, recorrido, guía docente.
 - `js/tierra.js` · costas Natural Earth 1:110m (dominio público).
+- `datos/novedades.js` · investigación 2025-2026 por sala y especie, a partir de las reseñas del blog Nutcracker Man (Roberto Sáez, https://nutcrackerman.com/); referencias cotejadas en Crossref (22-10-2026).
 - `datos/imagenes.js` + `img/yacimientos/` · 32 fotografías de yacimientos (Wikimedia Commons, redimensionadas a 720 px). Cada una conserva su propia licencia (dominio público, CC0, CC BY, CC BY-SA o Licence Ouverte), indicada con su autoría en el pie; no están cubiertas por la licencia CC BY-NC del recurso.
 - `datos/salas.js`, `datos/especies.js`, `datos/expansion.js` · todo el contenido. Corregir o ampliar contenido no exige tocar `js/`.
 

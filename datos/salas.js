@@ -2,6 +2,7 @@
  * SER HUMANOS · las trece salas
  * Una sala por ensayo del catálogo. Síntesis de redacción propia; p = página impresa.
  * edad: anclaje en la línea del tiempo (Ma); lado: -1 izquierda, 1 derecha; null = laboratorio del presente.
+ * novedades: ver datos/novedades.js (investigación 2025-2026).
  * Tipos de reto: clasificar, ordenar, test, numerico, caja, prediccion-dieta, prediccion-tai, mapa.
  */
 window.SH = window.SH || {};
@@ -32,7 +33,6 @@ window.SH.salas = [
     { t: "Performance y habitus", d: "Las dos caras de la conducta cultural: las acciones concretas y las disposiciones incorporadas.", p: 14 }
   ],
   pensar: "Si la cultura es «el hacer mismo», ¿qué ganamos y qué perdemos al llamar cultura a la talla de piedra y no solo al arte? ¿Dónde pondría usted el límite entre hábito, tradición y cultura?",
-  aula: "En Primaria, el arranque de la Prehistoria puede plantearse desde objetos cotidianos («¿quién te enseñó a usar esto?») antes que desde las pinturas rupestres: la cultura como algo que se aprende de otros.",
   avisos: [],
   retos: [{
     tipo: "clasificar", titulo: "¿Dónde empieza la cultura?",
@@ -67,7 +67,6 @@ window.SH.salas = [
     { t: "Segundo almacén de información", d: "La cultura: unidades transmitidas por el ejemplo y la crianza, no por los genes.", p: 23 }
   ],
   pensar: "El ejemplo de los shakers es llamativo, pero ¿basta la supervivencia biológica para evaluar una cultura? ¿Qué otras culturas han persistido por medios no reproductivos (adopción, conversión, escuela)?",
-  aula: "La discusión «¿qué nos hace humanos?» funciona bien como debate inicial en el Grado; conviene separar lo que afirma la biología de lo que sostienen la filosofía o la teología, sin enfrentarlas de forma caricaturesca.",
   avisos: [
     { tipo: "aviso", texto: "Junker sitúa los primeros humanos hacia 2,5 Ma (p. 19); otros capítulos del mismo catálogo mencionan la mandíbula de Ledi-Geraru, de 2,8 Ma (p. 50). La separación chimpancé-humano se da como 5-7 Ma (p. 19) y como 7-8 Ma (p. 123): las estimaciones moleculares varían según el método.", fuentes: [] }
   ],
@@ -103,7 +102,6 @@ window.SH.salas = [
     { t: "Prensión de precisión", d: "Oposición del pulgar que permite que las yemas se toquen y manipulen objetos con control.", p: 36 }
   ],
   pensar: "El cierre de Schrenk traslada una conclusión paleoantropológica a la política actual. ¿Es legítimo ese salto? ¿Qué condiciones debería cumplir una analogía histórica para ser rigurosa en el aula?",
-  aula: "La tríada «moverse, cambiar el cuerpo o inventar» es un buen organizador para explicar en Primaria cómo responden los seres vivos a un cambio del clima.",
   avisos: [
     { tipo: "aviso", texto: "La hipótesis del vadeo como origen del bipedismo (p. 27) es una entre varias y no goza de consenso. Del mismo modo, el «uso controlado del fuego» en Koobi Fora hace 1,5 Ma (p. 36) es una interpretación discutida; el capítulo de Giemsch (sala 6) es más prudente.", fuentes: [] }
   ],
@@ -156,7 +154,6 @@ window.SH.salas = [
     { t: "Planificación anticipada", d: "Producir útiles para una necesidad futura, en lugar y momento desconocidos.", p: 51 }
   ],
   pensar: "Si las primeras herramientas son anteriores al género Homo, ¿qué consecuencias tiene para la idea de que «el ser humano es el animal que fabrica herramientas»?",
-  aula: "La talla experimental es inviable en el aula de Primaria, pero los remontajes se trabajan muy bien como rompecabezas: reconstruir un objeto a partir de sus fragmentos y deducir el orden de los golpes.",
   avisos: [
     { tipo: "actualizacion", texto: "Desde 2023, Nyayanga (Kenia) aporta herramientas olduvayenses de 2,6-3,0 Ma y restos de Paranthropus, lo que adelanta el Olduvayense y complica su atribución. La datación y asociación de Lomekwi 3 también han sido cuestionadas (Domínguez-Rodrigo y Alcalá, 2019, Journal of African Archaeology, 17(2), 173-176).", fuentes: [
       { cita: "Plummer, T. W. et al. (2023). Expanded geographic distribution and dietary strategies of the earliest Oldowan hominins and Paranthropus. Science, 379, 561-566.", doi: "10.1126/science.abo7452" },
@@ -209,7 +206,6 @@ window.SH.salas = [
     { t: "Inercia tecnológica", d: "Estabilidad de una tradición durante miles de generaciones.", p: 63 }
   ],
   pensar: "¿Puede una herramienta casi idéntica durante un millón de años ser prueba de capacidades cognitivas complejas? ¿Qué nos dice la estabilidad sobre la forma en que se enseñaba?",
-  aula: "La simetría axial del bifaz es un puente natural con Matemáticas en Primaria: medir, doblar y comparar mitades de una silueta recortada.",
   avisos: [
     { tipo: "actualizacion", texto: "La estructura de troncos ensamblados de Kalambo Falls (Zambia), de al menos 476 000 años, muestra trabajo de la madera en un contexto achelense; el catálogo solo menciona allí restos vegetales.", fuentes: [
       { cita: "Barham, L. et al. (2023). Evidence for the earliest structural use of wood at least 476,000 years ago. Nature, 622, 107-111.", doi: "10.1038/s41586-023-06557-9" },
@@ -260,7 +256,6 @@ window.SH.salas = [
     { t: "Hipótesis de la cocción", d: "La comida cocinada habría reducido el intestino y liberado energía para un cerebro mayor (Wrangham).", p: 70 }
   ],
   pensar: "La autora presenta el fuego como frontera «exclusiva» entre humanos y animales, pero cita a chimpancés de sabana que se mueven con calma entre incendios (Pruetz y Herzog, 2017). ¿Dónde estaría exactamente la frontera?",
-  aula: "Ordenar los cuatro pasos del fuego es una actividad sencilla para Primaria que introduce una idea clave de la historia de la técnica: los descubrimientos son procesos, no instantes.",
   avisos: [
     { tipo: "actualizacion", texto: "En Barnham (Suffolk, Reino Unido) se han documentado sedimentos quemados, bifaces fracturados por el calor y dos fragmentos de pirita llevados al lugar, interpretados como la prueba más antigua de producción de fuego, hacia 400 000 años. Si se confirma, adelanta en unos 350 000 años la fecha que da el catálogo.", fuentes: [
       { cita: "Davis, R. et al. (2025). Earliest evidence of making fire. Nature.", doi: "10.1038/s41586-025-09855-6" },
@@ -310,7 +305,6 @@ window.SH.salas = [
     { t: "Alimento de reserva", d: "Recurso disponible todo el año que compensa la escasez estacional.", p: 77 }
   ],
   pensar: "El estudio usa la vegetación actual como modelo de hace dos millones de años. ¿Qué supuestos asume esa analogía y cómo podrían sesgar el resultado?",
-  aula: "El gráfico de barras de la p. 76 se presta a la lectura de gráficos en Primaria: comparar, calcular diferencias y formular hipótesis sobre por qué crecen unas categorías y otras no.",
   avisos: [
     { tipo: "aviso", texto: "Los valores del reto se han leído del gráfico de barras (fig. 2, p. 76) y son aproximados (±2); los totales de 80 y 203 sí figuran en el texto.", fuentes: [] }
   ],
@@ -346,7 +340,6 @@ window.SH.salas = [
     { t: "Cognición corporizada y distribuida", d: "El pensamiento se apoya en el cuerpo, los objetos y el grupo.", p: 85 }
   ],
   pensar: "Las crías de chimpancé tardan unos tres años en dominar el cascado de nueces. ¿Qué implicaciones tiene ese dato para imaginar cuánto tiempo y qué apoyos necesitaba un niño hominino para aprender a tallar?",
-  aula: "Descomponer una tarea en módulos (preparar una merienda, montar una maqueta) y repartirlos en el equipo ilustra en Primaria por qué la cooperación depende de la planificación.",
   avisos: [],
   retos: [
     {
@@ -390,8 +383,7 @@ window.SH.salas = [
     { t: "Sobreimitación", d: "Copiar también acciones innecesarias o causalmente irrelevantes.", p: 98 },
     { t: "Conformismo", d: "Abandonar la estrategia propia para adoptar la de los pares.", p: 99 }
   ],
-  pensar: "La sobreimitación hace «menos eficiente» al niño que al chimpancé. ¿En qué sentido es, sin embargo, una ventaja evolutiva? ¿Qué rituales escolares se transmiten precisamente así?",
-  aula: "En la formación de maestros, el estudio invita a revisar la demostración docente: el alumnado copia también los gestos innecesarios del modelo, para bien y para mal.",
+  pensar: "La sobreimitación hace «menos eficiente» al niño que al chimpancé. ¿En qué sentido es, sin embargo, una ventaja evolutiva? ¿Qué rituales cotidianos o académicos se transmiten precisamente así?",
   avisos: [
     { tipo: "aviso", texto: "La afirmación de que los chimpancés no pueden aprender por imitación es una posición de algunos investigadores (p. 99), no un consenso.", fuentes: [
       { cita: "Horner, V. y Whiten, A. (2005). Causal knowledge and imitation/emulation switching in chimpanzees (Pan troglodytes) and children (Homo sapiens). Animal Cognition, 8(3), 164-181.", doi: "10.1007/s10071-004-0239-6" },
@@ -422,8 +414,7 @@ window.SH.salas = [
     { t: "Ósmosis cultural", d: "Absorción lenta del ambiente social, sin intención de aprender ni de enseñar.", p: 107 },
     { t: "Enseñanza", d: "Transmisión intencional que incluye corrección y explicación.", p: 107 }
   ],
-  pensar: "Si el habitus se percibe como talento individual, ¿qué consecuencias tiene para la evaluación en una entrevista, en un examen oral o en el Prácticum?",
-  aula: "El concepto de capital cultural es imprescindible en la formación del profesorado para leer la desigualdad en el aula sin naturalizarla como «falta de capacidad».",
+  pensar: "Si el habitus se percibe como talento individual, ¿qué consecuencias tiene para la evaluación en una entrevista de trabajo, un examen oral o la concesión de una beca?",
   avisos: [
     { tipo: "aviso", texto: "La aplicación del habitus a los homininos es una propuesta teórica del autor (desarrollada en Haidle y Schlaudt, 2020), no un resultado empírico.", fuentes: [
       { cita: "Haidle, M. N. y Schlaudt, O. (2020). Where does cumulative culture begin? A plea for a sociologically informed perspective. Biological Theory, 15, 161-174.", doi: "10.1007/s13752-020-00351-w" },
@@ -476,7 +467,6 @@ window.SH.salas = [
     { t: "«Especialización en no especializarse»", d: "Dieta y conducta flexibles que reducen los requisitos de hábitat de Homo.", p: 115 }
   ],
   pensar: "La autora advierte que dependemos de hallazgos y dataciones aislados para escribir esta historia. ¿Cómo deberían presentarse en un libro de texto las fechas «más antiguas», sabiendo que cambian cada pocos años?",
-  aula: "El cálculo de 1 km por generación conecta Historia y Matemáticas (proporcionalidad, escalas temporales) y desmonta la idea de «viaje»: nadie sabía que estaba saliendo de África.",
   avisos: [
     { tipo: "actualizacion", texto: "En 2025, el análisis de proteínas y de ADN mitocondrial del sarro dental atribuyó el cráneo de Harbin (China, más de 146 000 años) a los denisovanos, que hasta entonces se conocían casi solo por fragmentos.", fuentes: [
       { cita: "Fu, Q. et al. (2025). The proteome of the Late Middle Pleistocene Harbin individual. Science.", doi: "10.1126/science.adu9677" },
@@ -527,7 +517,6 @@ window.SH.salas = [
     { t: "Conformismo", d: "Adoptar la práctica dominante del nuevo grupo aunque la propia fuera igual de eficaz.", p: 129 }
   ],
   pensar: "El método de exclusión define la cultura por lo que no es (ni genes ni ecología). ¿Qué problemas plantea esta definición negativa? ¿Puede aplicarse también a grupos humanos?",
-  aula: "Los vídeos del Taï Chimpanzee Project (citados en la p. 133) permiten observar y registrar conductas con una ficha de campo, un ejercicio de método científico adaptable a Primaria.",
   avisos: [
     { tipo: "aviso", texto: "El catálogo da dos horquillas para la separación de humanos y chimpancés: 5-7 Ma (Junker, p. 19) y 7-8 Ma (Wittig, p. 123).", fuentes: [
       { cita: "Whiten, A. et al. (1999). Cultures in chimpanzees. Nature, 399, 682-685.", doi: "10.1038/21415" },
@@ -570,7 +559,6 @@ window.SH.salas = [
     { t: "Isótopos estables", d: "Proporciones químicas en el hueso que reflejan la dieta.", p: 140 }
   ],
   pensar: "La autora deduce «monogamia o poliginia» de la proporción entre los dedos. ¿Qué cautelas exige inferir conductas sociales de un rasgo anatómico?",
-  aula: "Cada método puede convertirse en una «pregunta detectivesca» para Primaria: ¿cómo sabemos qué comían?, ¿cómo sabemos cuántos años tiene?",
   avisos: [
     { tipo: "aviso", texto: "El catálogo atribuye la estimación de la lactancia a la razón calcio/estroncio (p. 139); los estudios de referencia sobre neandertales se basan sobre todo en el bario. El dato de alimentos sólidos a los 5-6 meses no lleva referencia en el catálogo y no se ha podido verificar. Las lanzas de Schöningen se fechan hoy hacia 200 000 años y se asocian a neandertales.", fuentes: [
       { cita: "Austin, C. et al. (2013). Barium distributions in teeth reveal early-life dietary transitions in primates. Nature, 498, 216-219.", doi: "10.1038/nature12169" },

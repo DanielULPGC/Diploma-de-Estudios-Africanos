@@ -317,3 +317,13 @@ body.modo-presentacion .idea { font-size: 1.4rem; }
   .ficha > * { animation: aparecer 220ms ease-out both; }
   @keyframes aparecer { from { opacity: 0.4; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 }
+
+/* Investigación reciente */
+.novedades { border-top: 1px solid var(--line); padding-top: var(--s-4); }
+.lista-novedades { margin: 0; padding-left: 1.1em; display: flex; flex-direction: column; gap: var(--s-3); font-size: var(--t-sm); }
+.lista-novedades .fuentes { margin: 4px 0 0; padding-left: 1em; color: var(--muted); font-size: var(--t-xs); display: flex; flex-direction: column; gap: 2px; }
+.lista-novedades .fuentes a, .lista-novedades .resena a { color: inherit; font-family: var(--f-mono); word-break: break-all; }
+.lista-novedades .resena { color: var(--muted); font-size: var(--t-xs); margin-top: 2px; }
+.enlace { border: 0; background: none; padding: 0; font: inherit; color: var(--accent); text-transform: inherit; letter-spacing: inherit; cursor: pointer; text-align: left; }
+.enlace:hover { text-decoration: underline; }
+.consigna a { color: var(--accent); }

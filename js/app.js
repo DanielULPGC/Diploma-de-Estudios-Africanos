@@ -135,12 +135,26 @@ function figuraYacimiento(clave, { titulo = null, compacta = false } = {}) {
 }
 const IMG_ESPECIE = { sahelanthropus: "Toros-Menalla", afarensis: "Laetoli", africanus: "Sterkfontein", boisei: "KoobiFora", rudolfensis: "KoobiFora", habilis: "Hadar", ergaster: "KoobiFora", erectus: "Dmanisi", heidelbergensis: "Mauer", neanderthalensis: "Neander", sapiens: "JebelIrhoud" };
 
+/* ---------- Investigación reciente (datos/novedades.js) ---------- */
+const NOV = S.novedades || { salas: {}, especies: {} };
+function itemNovedad(n) {
+  return el("li", {}, n.t ? el("strong", {}, n.t + ". ") : null, n.texto,
+    n.fuentes?.length ? el("ul", { class: "fuentes" }, n.fuentes.map(f => el("li", {}, f.cita, " ", f.doi ? el("a", { href: "https://doi.org/" + f.doi, target: "_blank", rel: "noopener" }, "doi:" + f.doi) : null))) : null,
+    n.resena ? el("p", { class: "resena" }, "Reseña: ", el("a", { href: n.resena, target: "_blank", rel: "noopener" }, NOV.fuente?.nombre || "fuente")) : null);
+}
+function bloqueNovedades(lista) {
+  if (!lista || !lista.length) return null;
+  return el("section", { class: "seccion novedades", "aria-label": "Investigación reciente" },
+    el("h3", {}, "Investigación reciente (2025-2026)"), el("ul", { class: "lista-novedades" }, lista.map(itemNovedad)),
+    el("p", { class: "explicacion" }, `Selección a partir de las reseñas de ${NOV.fuente?.nombre} (${NOV.fuente?.autor}); referencias cotejadas en Crossref. No forma parte del catálogo.`));
+}
+
 /* ---------- Vistas ---------- */
 function vistaInicio() {
   estado.vista = "inicio"; estado.sel = null; if (museo) museo.marcar(null); pintarIndice();
   const n = contarMontadas();
   poner(ficha,
-    cabecera("Comisariado en prácticas", "La exposición llega a la Facultad", el("p", { class: "sub" }, "A partir del catálogo Being Human. The Beginnings of Our Culture (Archäologisches Museum Frankfurt, 2022)")),
+    cabecera("Comisariado en prácticas", "Las vitrinas están vacías", el("p", { class: "sub" }, "A partir del catálogo Being Human. The Beginnings of Our Culture (Archäologisches Museum Frankfurt, 2022)")),
     DOCENTE ? el("p", { class: "docente" }, "Modo docente: vitrinas abiertas y soluciones visibles") : null,
     el("div", { class: "texto" },
       el("p", {}, "Las cajas de la exposición han llegado, pero las vitrinas están vacías. Su tarea, como comisario o comisaria en prácticas, es montar las trece salas: leer cada sala, comprender su idea central y superar sus retos. Cada vitrina se ilumina cuando la sala queda montada."),
@@ -156,7 +170,7 @@ function vistaInicio() {
         el("li", {}, "«Recorrido guiado» sigue el orden del catálogo: cada ensayo y, a continuación, su ficha de especie."))),
     el("div", { class: "nav-ficha" },
       el("button", { class: "boton primario", type: "button", onclick: () => iniciarRecorrido() }, "Empezar el recorrido"),
-      el("button", { class: "boton", type: "button", onclick: vistaGuia }, "Guía docente"),
+      el("button", { class: "boton", type: "button", onclick: vistaGuia }, "Guía de uso"),
       n > 0 && !DOCENTE ? el("button", { class: "boton", type: "button", onclick: reiniciar }, "Reiniciar progreso") : null));
   enfocarFicha();
 }
@@ -178,8 +192,8 @@ function abrirSala(id, { volar = false } = {}) {
     el("section", { class: "seccion" }, el("h3", {}, "Conceptos clave"),
       el("dl", { class: "glosario" }, s.conceptos.map(c => el("div", {}, el("dt", {}, c.t, el("span", { class: "mono" }, "p. " + c.p)), el("dd", {}, c.d))))),
     el("section", { class: "seccion" }, el("h3", {}, "Para pensar"), el("p", { class: "pensar" }, s.pensar)),
-    el("section", { class: "seccion" }, el("h3", {}, "En el aula"), el("p", { class: "aula" }, s.aula)),
     s.avisos.map(bloqueAviso),
+    bloqueNovedades(NOV.salas?.[s.id]),
     navegacion({ tipo: "sala", id }));
   actualizarRecorrido(); enfocarFicha();
 }
@@ -221,6 +235,7 @@ function abrirEspecie(id, { volar = false } = {}) {
     el("div", { class: "texto" }, el("p", {}, e.rasgos)),
     IMG_ESPECIE[e.id] ? el("section", { class: "seccion" }, el("h3", {}, "Un yacimiento de la especie"), figuraYacimiento(IMG_ESPECIE[e.id])) : null,
     e.nota ? bloqueAviso(e.nota) : null,
+    bloqueNovedades(NOV.especies?.[e.id]),
     el("section", { class: "seccion" }, el("h3", {}, "Comparar"), comparador(e)),
     navegacion({ tipo: "especie", id }));
   actualizarRecorrido(); enfocarFicha();
@@ -255,32 +270,46 @@ function vistaGuia() {
   estado.vista = "guia"; terminarRecorrido();
   const lista = (...xs) => el("ul", { style: "margin:0; padding-left:1.1em; display:flex; flex-direction:column; gap:4px" }, xs.map(x => el("li", {}, x)));
   poner(ficha,
-    cabecera("Para el profesorado", "Guía docente", el("p", { class: "sub" }, "Propuesta de uso en el aula universitaria (FCEDU) con puente a Primaria")),
+    cabecera("Para el profesorado", "Guía de uso", el("p", { class: "sub" }, "Propuesta para la docencia universitaria y la divulgación")),
     el("section", { class: "seccion" }, el("h3", {}, "Destinatarios y finalidad"),
-      el("p", { class: "texto" }, "Alumnado de los Grados en Educación Primaria e Infantil (Didáctica de las Ciencias Sociales y de la Historia) y de Antropología. El recurso convierte el catálogo en un itinerario de lectura activa: cada sala sintetiza un ensayo, plantea conceptos y preguntas, señala erratas y actualizaciones y exige superar retos para «montar» su vitrina.")),
+      el("p", { class: "texto" }, "Estudiantes universitarios de Antropología, Historia, Arqueología y Biología, y cualquier persona interesada en la evolución humana. El recurso convierte el catálogo en un itinerario de lectura activa: cada sala sintetiza un ensayo, plantea conceptos y preguntas, señala erratas, actualizaciones e investigación reciente, y exige superar retos para «montar» su vitrina.")),
     el("section", { class: "seccion" }, el("h3", {}, "Objetivos"),
       lista("Comprender la cultura como práctica aprendida y transmitida, y su papel en la evolución humana.",
         "Situar especies, tecnologías y procesos en una escala temporal profunda.",
         "Distinguir hecho, interpretación y debate en la investigación paleoantropológica, y reconocer el carácter provisional de las fechas «más antiguas».",
-        "Diseñar transposiciones didácticas rigurosas para Primaria.")),
+        "Contrastar una obra de 2022 con la investigación publicada después y valorar críticamente las fuentes.")),
     el("section", { class: "seccion" }, el("h3", {}, "Secuencia propuesta (3 sesiones)"),
       lista(
         "Sesión 1 · Recorrido guiado en modo presentación por las salas 1-3 y debate «¿dónde empieza la cultura?».",
-        "Sesión 2 · Comisariado por equipos: reparto de las trece salas. Cada equipo supera sus retos, redacta una cartela propia (60-80 palabras, con página del catálogo) y una transposición a Primaria.",
-        "Sesión 3 · Visita cruzada: cada equipo presenta su vitrina; examen de comisariado y debate sobre las notas de actualización (cómo cambia el conocimiento entre 2022 y hoy).")),
+        "Sesión 2 · Comisariado por equipos: reparto de las trece salas. Cada equipo supera sus retos y redacta una cartela propia (60-80 palabras, con página del catálogo) que incorpore al menos un estudio de «Investigación reciente».",
+        "Sesión 3 · Visita cruzada: cada equipo presenta su vitrina; examen de comisariado y debate sobre cómo ha cambiado el conocimiento entre 2022 y hoy.")),
     el("section", { class: "seccion" }, el("h3", {}, "Evaluación orientativa"),
-      lista("Rigor conceptual de la cartela y uso correcto de la página o el DOI.", "Calidad de la transposición: adecuación a la edad, actividad concreta y evitación de anacronismos.", "Lectura crítica: identificación de al menos una errata, un debate o una actualización.", "Comunicación oral en la visita cruzada.")),
-    el("section", { class: "seccion" }, el("h3", {}, "Marco normativo"),
-      el("p", { class: "texto" }, "La propuesta se alinea con la LOMLOE y el Real Decreto 157/2022 (enseñanzas mínimas de Primaria). En Canarias, el Decreto 211/2022 sitúa la Prehistoria entre los saberes de Conocimiento del Medio; conviene cotejar en el BOC el ciclo y los criterios concretos antes de programar.")),
+      lista("Rigor conceptual de la cartela y uso correcto de la página o el DOI.", "Lectura crítica: identificación de al menos una errata, un debate o una actualización.", "Contraste de fuentes: distinguir el artículo original de su reseña divulgativa.", "Comunicación oral en la visita cruzada.")),
     el("section", { class: "seccion aviso" }, el("h3", {}, "Límites del recurso"),
       lista("Las síntesis son de redacción propia y no sustituyen la lectura del catálogo, que no se reproduce.",
-        "El catálogo es de 2022: las notas verdes recogen hallazgos posteriores con su DOI; las amarillas, erratas y debates.",
+        "El catálogo es de 2022: las notas verdes recogen hallazgos posteriores con su DOI; las amarillas, erratas y debates; «Investigación reciente» resume estudios de 2025-2026 a partir de las reseñas de Nutcracker Man (Roberto Sáez), con las referencias cotejadas en Crossref.",
         "Las piezas 3D son evocaciones, no réplicas; las coordenadas del mapa son aproximadas; la escala temporal es de raíz cuadrada.",
         "Las fotografías proceden de Wikimedia Commons, con licencias libres (dominio público, CC0, CC BY, CC BY-SA, Licence Ouverte); cada pie indica autoría, licencia y si la imagen muestra el yacimiento o solo su entorno. Al reutilizarlas, mantenga esos créditos.",
         "El progreso se guarda solo en este navegador; no se recogen datos personales.",
         "Recurso elaborado con asistencia de IA generativa y verificación de fuentes; requiere revisión docente antes de su uso.")),
     el("section", { class: "seccion" }, el("h3", {}, "Modo docente"),
       el("p", { class: "texto" }, "Añada #docente al final del enlace (o ?docente si el recurso se aloja en un servidor propio) para abrir todas las vitrinas y mostrar el botón «Ver solución» en cada reto.")),
+    el("div", { class: "nav-ficha" }, el("button", { class: "boton", type: "button", onclick: vistaInicio }, "Volver al inicio")));
+  enfocarFicha();
+}
+
+function vistaNovedades() {
+  estado.vista = "novedades"; terminarRecorrido(); cerrarVisor(); estado.sel = null; if (museo) museo.marcar(null); pintarIndice();
+  const total = Object.values(NOV.salas).flat().length + Object.values(NOV.especies).flat().length;
+  poner(ficha,
+    cabecera("Más allá del catálogo", "Investigación reciente", el("p", { class: "sub" }, `${total} estudios de 2025-2026 relacionados con las salas y las especies`)),
+    el("p", { class: "consigna" }, "El catálogo es de 2022. Estas notas recogen estudios posteriores reseñados en ", el("a", { href: NOV.fuente.url, target: "_blank", rel: "noopener" }, `${NOV.fuente.nombre}`), `, el blog de divulgación paleoantropológica de ${NOV.fuente.autor} (consultado el ${NOV.fuente.consulta}). Autoría, revista y DOI se han cotejado en Crossref; cuando falta el DOI, el texto lo indica. Son resultados recientes: algunos están en debate y pueden revisarse.`),
+    salas.filter(s => NOV.salas[s.id]?.length).map(s => el("section", { class: "seccion" },
+      el("h3", {}, el("button", { class: "enlace", type: "button", onclick: () => abrirSala(s.id, { volar: true }) }, `Sala ${s.n} · ${s.titulo}`)),
+      el("ul", { class: "lista-novedades" }, NOV.salas[s.id].map(itemNovedad)))),
+    especies.filter(e => NOV.especies[e.id]?.length).map(e => el("section", { class: "seccion" },
+      el("h3", {}, el("button", { class: "enlace", type: "button", onclick: () => abrirEspecie(e.id, { volar: true }) }, e.nombre)),
+      el("ul", { class: "lista-novedades" }, NOV.especies[e.id].map(itemNovedad)))),
     el("div", { class: "nav-ficha" }, el("button", { class: "boton", type: "button", onclick: vistaInicio }, "Volver al inicio")));
   enfocarFicha();
 }
@@ -413,6 +442,7 @@ $("#btn-recorrido").addEventListener("click", iniciarRecorrido);
 $("#btn-guia").addEventListener("click", vistaGuia);
 $("#btn-examen").addEventListener("click", vistaExamen);
 $("#btn-galeria").addEventListener("click", vistaGaleria);
+$("#btn-novedades").addEventListener("click", vistaNovedades);
 $("#btn-general").addEventListener("click", () => museo && museo.vistaGeneral());
 document.addEventListener("keydown", ev => {
   if (/input|textarea|select/i.test(document.activeElement.tagName)) return;

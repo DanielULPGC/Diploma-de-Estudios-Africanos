@@ -14,7 +14,8 @@ window.SH.expansion = [
       { n: "Toros-Menalla (Sahelanthropus)", img: "Toros-Menalla", lat: 16.2, lon: 17.5, a: "hacia 7 Ma" },
       { n: "Colinas Tugen (Orrorin)", img: "Tugen", lat: 0.7, lon: 35.8, a: "hacia 6 Ma" },
       { n: "Aramis, Awash (Ardipithecus)", lat: 10.5, lon: 40.4, a: "5,8-3,9 Ma" },
-      { n: "Grecia (Graecopithecus, discutido)", lat: 38.0, lon: 23.7, a: "hacia 7 Ma" }
+      { n: "Grecia (Graecopithecus, discutido)", lat: 38.0, lon: 23.7, a: "hacia 7 Ma" },
+      { n: "Azmaka, Bulgaria (fémur atribuido a Graecopithecus)", lat: 42.3, lon: 25.4, a: "7,2 Ma; bipedismo discutido", nuevo: true }
     ]
   },
   {
@@ -34,6 +35,8 @@ window.SH.expansion = [
     texto: "Aparecen dos géneros nuevos: Paranthropus, especialista en vegetales duros, y Homo, «especializado en no especializarse». Algunos grupos llegan al norte de África y, según hallazgos recientes, fuera del continente (pp. 115-116).",
     sitios: [
       { n: "Ledi-Geraru (mandíbula de Homo)", img: "LediGeraru", lat: 11.5, lon: 40.8, a: "2,8 Ma" },
+      { n: "Mille-Logya (mandíbula de Paranthropus)", lat: 11.4, lon: 40.6, a: "2,9-2,5 Ma", nuevo: true },
+      { n: "Namorotukunan (Olduvayense estable)", lat: 4.1, lon: 36.2, a: "2,75-2,44 Ma", nuevo: true },
       { n: "Nyayanga (Olduvayense y Paranthropus)", img: "Nyayanga", lat: -0.5, lon: 34.4, a: "2,6-3,0 Ma", nuevo: true },
       { n: "Gona (Olduvayense)", lat: 11.1, lon: 40.3, a: "2,6 Ma" },
       { n: "Lokalalei 2C", lat: 4.1, lon: 35.8, a: "2,34 Ma" },
@@ -50,12 +53,16 @@ window.SH.expansion = [
       { n: "Dmanisi (Georgia)", img: "Dmanisi", lat: 41.3, lon: 44.3, a: "1,8 Ma" },
       { n: "Kokiselei 4 (primeros bifaces)", lat: 3.9, lon: 35.9, a: "1,76 Ma" },
       { n: "Koobi Fora (fuego)", img: "KoobiFora", lat: 3.9, lon: 36.3, a: "1,5 Ma" },
-      { n: "‘Ubeidiya (Israel)", img: "Ubeidiya", lat: 32.7, lon: 35.6, a: "1,4 Ma" },
+      { n: "Drimolen (H. erectus en Sudáfrica)", lat: -25.97, lon: 27.75, a: "2,04-1,95 Ma", nuevo: true },
+      { n: "Olduvai, EAK (elefante descuartizado)", lat: -2.99, lon: 35.35, a: "1,78 Ma", nuevo: true },
+      { n: "GaJi10, Turkana oriental (huellas de P. boisei)", lat: 4.3, lon: 36.25, a: "1,43 Ma", nuevo: true },
+      { n: "Majuangou (China)", lat: 40.2, lon: 114.6, a: "1,76-1,32 Ma", nuevo: true },
+      { n: "‘Ubeidiya (Israel)", img: "Ubeidiya", lat: 32.7, lon: 35.6, a: "1,4 Ma (catálogo); 2,14-1,93 Ma propuesto en 2026" },
       { n: "Sangiran (Java)", lat: -7.45, lon: 110.8, a: "hacia 1,6 Ma" },
       { n: "Pirro Nord (Italia)", img: "PirroNord", lat: 41.8, lon: 15.4, a: "1,6-1,3 Ma" },
       { n: "Orce, Barranco León (España)", img: "Orce", lat: 37.7, lon: -2.4, a: "hacia 1,4 Ma" },
       { n: "Sima del Elefante, Atapuerca", img: "SimaElefante", lat: 42.35, lon: -3.5, a: "1,4-1,0 Ma" },
-      { n: "Wonderwerk (fuego en cueva)", lat: -27.85, lon: 23.55, a: "hacia 1 Ma" }
+      { n: "Wonderwerk (fuego en cueva)", lat: -27.85, lon: 23.55, a: "hacia 1 Ma (catálogo); uso recurrente 1,79-1,07 Ma (2026)", nuevo: true }
     ]
   },
   {
@@ -82,7 +89,12 @@ window.SH.expansion = [
       { n: "Grecia (sapiens temprano)", lat: 36.6, lon: 22.4, a: "hacia 200 000 años" },
       { n: "Misliya (Israel, sapiens temprano)", img: "Misliya", lat: 32.7, lon: 35.0, a: "hacia 200 000 años" },
       { n: "Península arábiga", img: "Arabia", lat: 23.5, lon: 45.0, a: "hacia 120 000 años" },
-      { n: "Sur de China", lat: 25.3, lon: 107.4, a: "quizá 80 000 años" },
+      { n: "Fuyan, Daoxian (sur de China)", lat: 25.3, lon: 111.6, a: "quizá 80 000 años (catálogo); 230 000-130 000 años (2026)", nuevo: true },
+      { n: "Bianfu (suroeste de China, denisovanos)", lat: 25.5, lon: 104.5, a: "167 000-134 000 años", nuevo: true },
+      { n: "Üçağızlı II (neandertales y sapiens)", lat: 36.0, lon: 35.95, a: "77 000-47 000 años", nuevo: true },
+      { n: "Buhais (Emiratos Árabes Unidos)", lat: 24.9, lon: 55.7, a: "60 000-16 000 años", nuevo: true },
+      { n: "Lehringen (lanza y elefante)", lat: 52.9, lon: 9.3, a: "125 000 años", nuevo: true },
+      { n: "Liang Metanduno, Muna (Sulawesi)", lat: -4.85, lon: 122.6, a: "plantilla de mano de al menos 67 800 años (datación discutida)", nuevo: true },
       { n: "Sudeste asiático", lat: -0.2, lon: 100.6, a: "hacia 70 000 años" },
       { n: "Australia", lat: -12.5, lon: 132.9, a: "más de 50 000 años" },
       { n: "Valle de Neander", img: "Neander", lat: 51.2, lon: 6.95, a: "neandertales" },
