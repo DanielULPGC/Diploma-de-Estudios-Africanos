@@ -151,7 +151,7 @@ function caja(r, cont, fin, { docente }) {
     const box = el("div", { class: "prediccion" }, el("p", {}, p.s), el("div", { class: "opts", role: "group", "aria-label": p.s }, bs)); return { box, bs };
   });
   const resultado = el("p", { class: "resultado", "aria-live": "polite" });
-  const exp = el("p", { class: "explicacion", hidden: true }, "Los niños sobreimitaron con las dos cajas; los chimpancés solo cuando no veían que la placa bloqueaba la abertura superior. Cuando el mecanismo era visible, emularon (pp. 97-98; Horner y Whiten, 2005).");
+  const exp = el("p", { class: "explicacion", hidden: true }, "Los niños sobreimitaron con las dos cajas; los chimpancés solo cuando no veían que la placa bloqueaba la abertura superior. Cuando el mecanismo era visible, emularon (Horner y Whiten, 2005).");
   const comprobar = () => {
     let ok = 0; preguntas.forEach((p, i) => { const b = resp[i] === p.c; bloques[i].box.classList.toggle("correcta", b); bloques[i].box.classList.toggle("incorrecta", !b); if (b) ok++; });
     exp.hidden = false; const todo = ok === preguntas.length;
@@ -195,7 +195,7 @@ function prediccionDieta(r, cont, fin) {
     if (est.some(v => !Number.isFinite(v))) { resultado.textContent = "Escriba una estimación para cada escenario antes de comparar."; return; }
     zona.replaceChildren(dibujar(est), el("div", { class: "ley-graf" }, r.categorias.map((c, k) => el("span", {}, el("i", { style: `--c: var(${cols[k]})` }), c)), el("span", {}, "- - su estimación")));
     const errores = est.map((v, i) => Math.round(Math.abs(v - tot[i + 1]) / tot[i + 1] * 100));
-    resultado.textContent = `Diferencias con el estudio: ${errores.map((e, i) => `${r.escenarios[i + 1].nombre.toLowerCase()}, ${e} %`).join("; ")}. Fíjese en qué categorías crecen con el fuego: órganos subterráneos y hojas se triplican; las semillas se duplican (p. 77).`;
+    resultado.textContent = `Diferencias con el estudio: ${errores.map((e, i) => `${r.escenarios[i + 1].nombre.toLowerCase()}, ${e} %`).join("; ")}. Fíjese en qué categorías crecen con el fuego: órganos subterráneos y hojas se triplican; las semillas se duplican.`;
     resultado.classList.add("ok"); fin(true);
   };
   cont.append(el("div", { class: "reto" }, el("p", { class: "consigna" }, r.consigna), entradas.map(x => x.fila), zona,
@@ -224,11 +224,11 @@ function prediccionTai(r, cont, fin, { docente }) {
     if (elegido == null) { resultado.textContent = "Elija primero una predicción."; return; }
     lineaSur.setAttribute("opacity", 1); textoSur.setAttribute("opacity", 1);
     const bien = elegido === 1; preg.classList.toggle("correcta", bien); preg.classList.toggle("incorrecta", !bien);
-    resultado.textContent = (bien ? "Bien visto. " : "No exactamente. ") + "El grupo del sur sigue usando martillos de piedra (alrededor del 80 %) toda la temporada, aunque no tiene más piedras que sus vecinos: una «cultura del martillo de piedra» (p. 129).";
+    resultado.textContent = (bien ? "Bien visto. " : "No exactamente. ") + "El grupo del sur sigue usando martillos de piedra (alrededor del 80 %) toda la temporada, aunque no tiene más piedras que sus vecinos: una «cultura del martillo de piedra» (Luncz et al., 2012).";
     resultado.classList.add("ok"); fin(true);
   };
   cont.append(el("div", { class: "reto" }, el("p", { class: "consigna" }, r.consigna), g,
-    el("p", { class: "explicacion" }, "Esquema simplificado a partir de las cifras del texto (60-70 % al inicio, 10-20 % hacia la semana 20); no reproduce los datos de la fig. 6."),
+    el("p", { class: "explicacion" }, "Esquema simplificado (60-70 % al inicio, 10-20 % hacia la semana 20); no reproduce los datos originales."),
     preg, pie(resultado, [el("button", { class: "boton primario", type: "button", onclick: revelar }, "Revelar"), docente ? el("button", { class: "boton", type: "button", onclick: () => { bs[1].click(); revelar(); } }, "Ver solución") : null])));
 }
 

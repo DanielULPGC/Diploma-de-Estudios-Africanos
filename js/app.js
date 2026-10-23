@@ -20,8 +20,8 @@ const especies = [...S.especies].sort((a, b) => b.edad[0] - a.edad[0]);
 const porEspecie = new Map(especies.map(e => [e.id, e]));
 const progreso = leerLS();
 
-/* Orden del catálogo: cada ensayo seguido de su ficha de especie */
-const ORDEN_LIBRO = ["s01", "sahelanthropus", "s02", "ardipithecus", "s03", "afarensis", "s04", "africanus", "s05", "boisei", "s06", "rudolfensis", "s07", "habilis", "s08", "ergaster", "s09", "erectus", "s10", "heidelbergensis", "s11", "neanderthalensis", "s12", "sapiens", "s13"]
+/* Orden del recorrido guiado: cada sala seguida de una especie */
+const ORDEN_RECORRIDO = ["s01", "sahelanthropus", "s02", "ardipithecus", "s03", "afarensis", "s04", "africanus", "s05", "boisei", "s06", "rudolfensis", "s07", "habilis", "s08", "ergaster", "s09", "erectus", "s10", "heidelbergensis", "s11", "neanderthalensis", "s12", "sapiens", "s13"]
   .map(id => porSala.has(id) ? { tipo: "sala", id } : { tipo: "especie", id });
 
 const estado = { vista: "inicio", sel: null, recorrido: null };
@@ -66,7 +66,7 @@ function pintarRotulo() {
   const clave = h.tipo + h.id;
   if (rotulo.dataset.k !== clave) {
     rotulo.dataset.k = clave;
-    if (h.tipo === "sala") { const s = porSala.get(h.id); rotulo.replaceChildren(`Sala ${s.n} · ${s.autoria}`, el("small", {}, s.titulo.length > 54 ? s.titulo.slice(0, 52) + "…" : s.titulo)); }
+    if (h.tipo === "sala") { const s = porSala.get(h.id); rotulo.replaceChildren(`Sala ${s.n} · ${s.corto}`, el("small", {}, s.titulo.length > 54 ? s.titulo.slice(0, 52) + "…" : s.titulo)); }
     else { const e = porEspecie.get(h.id); rotulo.replaceChildren(e.nombre, el("small", {}, `${e.edadTexto} · ${e.cerebro[0]}-${e.cerebro[1]} cm³`)); }
   }
 }
@@ -82,7 +82,7 @@ function botonSala(s) {
   return el("li", {}, el("button", {
     class: "item-btn", type: "button", "aria-current": estado.sel?.tipo === "sala" && estado.sel.id === s.id ? "true" : null,
     onclick: () => abrirSala(s.id, { volar: true })
-  }, el("span", { class: "num" }, String(s.n).padStart(2, "0")), el("span", {}, s.autoria),
+  }, el("span", { class: "num" }, String(s.n).padStart(2, "0")), el("span", {}, s.corto),
     el("span", { class: "estado-sala" + (st === "montada" ? " hecha" : st === "parcial" ? " parcial" : ""), title: st === "montada" ? "Vitrina montada" : st === "parcial" ? "En montaje" : "Por montar", "aria-label": st === "montada" ? "vitrina montada" : st === "parcial" ? "vitrina en montaje" : "vitrina por montar" }),
     el("small", {}, s.titulo)));
 }
@@ -116,11 +116,20 @@ function enfocarFicha() {
   const t = $("#ficha-titulo"); if (t) t.focus({ preventScroll: true });
   if (window.matchMedia("(max-width: 900px)").matches) ficha.scrollIntoView({ block: "start", behavior: "smooth" });
 }
-function bloqueAviso(a) {
-  const tit = a.tipo === "actualizacion" ? "Actualización posterior al catálogo" : a.tipo === "errata" ? "Errata o imprecisión del catálogo" : "Nota de lectura crítica";
-  return el("section", { class: "seccion aviso" + (a.tipo === "actualizacion" ? " actualizacion" : ""), "aria-label": tit },
-    el("h3", {}, tit), el("p", {}, a.texto),
-    a.fuentes?.length ? el("ul", {}, a.fuentes.map(f => el("li", {}, f.cita, " ", f.doi ? el("a", { href: "https://doi.org/" + f.doi, target: "_blank", rel: "noopener" }, "doi:" + f.doi) : null))) : null);
+const REFS = S.refs || {};
+function bloqueDebates(lista) {
+  const l = (Array.isArray(lista) ? lista : [lista]).filter(Boolean);
+  if (!l.length) return null;
+  return el("section", { class: "seccion aviso", "aria-label": "En debate" }, el("h3", {}, "En debate"),
+    l.length === 1 ? el("p", {}, l[0]) : el("ul", {}, l.map(t => el("li", {}, t))));
+}
+function itemRef(clave) {
+  const r = REFS[clave]; if (!r) return null;
+  return el("li", {}, r.cita, " ", r.doi ? el("a", { href: "https://doi.org/" + r.doi, target: "_blank", rel: "noopener" }, "doi:" + r.doi) : null);
+}
+function bloqueReferencias(claves) {
+  if (!claves || !claves.length) return null;
+  return el("section", { class: "seccion referencias" }, el("h3", {}, "Referencias"), el("ul", { class: "lista-refs" }, claves.map(itemRef)));
 }
 
 /* ---------- Fotografías de yacimientos ---------- */
@@ -135,26 +144,12 @@ function figuraYacimiento(clave, { titulo = null, compacta = false } = {}) {
 }
 const IMG_ESPECIE = { sahelanthropus: "Toros-Menalla", afarensis: "Laetoli", africanus: "Sterkfontein", boisei: "KoobiFora", rudolfensis: "KoobiFora", habilis: "Hadar", ergaster: "KoobiFora", erectus: "Dmanisi", heidelbergensis: "Mauer", neanderthalensis: "Neander", sapiens: "JebelIrhoud" };
 
-/* ---------- Investigación reciente (datos/novedades.js) ---------- */
-const NOV = S.novedades || { salas: {}, especies: {} };
-function itemNovedad(n) {
-  return el("li", {}, n.t ? el("strong", {}, n.t + ". ") : null, n.texto,
-    n.fuentes?.length ? el("ul", { class: "fuentes" }, n.fuentes.map(f => el("li", {}, f.cita, " ", f.doi ? el("a", { href: "https://doi.org/" + f.doi, target: "_blank", rel: "noopener" }, "doi:" + f.doi) : null))) : null,
-    n.resena ? el("p", { class: "resena" }, "Reseña: ", el("a", { href: n.resena, target: "_blank", rel: "noopener" }, NOV.fuente?.nombre || "fuente")) : null);
-}
-function bloqueNovedades(lista) {
-  if (!lista || !lista.length) return null;
-  return el("section", { class: "seccion novedades", "aria-label": "Investigación reciente" },
-    el("h3", {}, "Investigación reciente (2025-2026)"), el("ul", { class: "lista-novedades" }, lista.map(itemNovedad)),
-    el("p", { class: "explicacion" }, `Selección a partir de las reseñas de ${NOV.fuente?.nombre} (${NOV.fuente?.autor}); referencias cotejadas en Crossref. No forma parte del catálogo.`));
-}
-
 /* ---------- Vistas ---------- */
 function vistaInicio() {
   estado.vista = "inicio"; estado.sel = null; if (museo) museo.marcar(null); pintarIndice();
   const n = contarMontadas();
   poner(ficha,
-    cabecera("Comisariado en prácticas", "Las vitrinas están vacías", el("p", { class: "sub" }, "A partir del catálogo Being Human. The Beginnings of Our Culture (Archäologisches Museum Frankfurt, 2022)")),
+    cabecera("Comisariado en prácticas", "Las vitrinas están vacías", el("p", { class: "sub" }, "Los primeros tres millones de años de la cultura humana, en trece salas")),
     DOCENTE ? el("p", { class: "docente" }, "Modo docente: vitrinas abiertas y soluciones visibles") : null,
     el("div", { class: "texto" },
       el("p", {}, "Las cajas de la exposición han llegado, pero las vitrinas están vacías. Su tarea, como comisario o comisaria en prácticas, es montar las trece salas: leer cada sala, comprender su idea central y superar sus retos. Cada vitrina se ilumina cuando la sala queda montada."),
@@ -167,7 +162,7 @@ function vistaInicio() {
       el("ul", { class: "texto", style: "padding-left: 1.1em; font-size: var(--t-sm)" },
         el("li", {}, "Arrastre para girar, rueda o pellizco para acercarse y clic derecho o dos dedos para desplazarse."),
         el("li", {}, "Pulse una vitrina o una esfera para abrir su ficha; el índice permite hacerlo con el teclado."),
-        el("li", {}, "«Recorrido guiado» sigue el orden del catálogo: cada ensayo y, a continuación, su ficha de especie."))),
+        el("li", {}, "«Recorrido guiado» alterna las trece salas con las doce especies, de los primeros homininos a Homo sapiens."))),
     el("div", { class: "nav-ficha" },
       el("button", { class: "boton primario", type: "button", onclick: () => iniciarRecorrido() }, "Empezar el recorrido"),
       el("button", { class: "boton", type: "button", onclick: vistaGuia }, "Guía de uso"),
@@ -183,17 +178,17 @@ function abrirSala(id, { volar = false } = {}) {
   cerrarVisor(); pintarIndice(); try { history.replaceState(null, "", "#" + id); } catch (e) {}
   const p = progreso[id] || {};
   poner(ficha,
-    cabecera(`Sala ${s.n} · pp. ${s.paginas}`, s.titulo, el("p", { class: "sub" }, s.autoria), el("p", { class: "original", lang: "en" }, s.original)),
+    cabecera(`Sala ${s.n}`, s.titulo),
     el("p", { class: "idea" }, s.idea),
     el("div", { class: "texto" }, s.sintesis.map(t => el("p", {}, t))),
     el("section", { class: "seccion" }, el("h3", {}, "Retos para montar la vitrina"),
       el("ul", { class: "lista-retos" }, s.retos.map((r, i) => el("li", { class: p[i] || DOCENTE ? "hecho" : "" },
         el("button", { class: "boton", type: "button", onclick: () => abrirReto(id, i) }, r.titulo, el("span", { class: "estado" }, p[i] ? "superado" : "pendiente")))))),
     el("section", { class: "seccion" }, el("h3", {}, "Conceptos clave"),
-      el("dl", { class: "glosario" }, s.conceptos.map(c => el("div", {}, el("dt", {}, c.t, el("span", { class: "mono" }, "p. " + c.p)), el("dd", {}, c.d))))),
+      el("dl", { class: "glosario" }, s.conceptos.map(c => el("div", {}, el("dt", {}, c.t), el("dd", {}, c.d))))),
     el("section", { class: "seccion" }, el("h3", {}, "Para pensar"), el("p", { class: "pensar" }, s.pensar)),
-    s.avisos.map(bloqueAviso),
-    bloqueNovedades(NOV.salas?.[s.id]),
+    bloqueDebates(s.debates),
+    bloqueReferencias(s.refs),
     navegacion({ tipo: "sala", id }));
   actualizarRecorrido(); enfocarFicha();
 }
@@ -225,7 +220,7 @@ function abrirEspecie(id, { volar = false } = {}) {
   cerrarVisor(); pintarIndice(); try { history.replaceState(null, "", "#e-" + id); } catch (e) {}
   const l = S.linajes[e.linaje];
   poner(ficha,
-    cabecera(`Ficha de especie · p. ${e.p}`, el("i", {}, e.nombre), el("span", { class: "chip" }, el("span", { class: "muestra", style: `--c: var(${l.color})` }), l.nombre)),
+    cabecera("Ficha de especie", el("i", {}, e.nombre), el("span", { class: "chip" }, el("span", { class: "muestra", style: `--c: var(${l.color})` }), l.nombre)),
     el("dl", { class: "meta" },
       el("dt", {}, "Edad"), el("dd", { class: "mono" }, e.edadTexto),
       el("dt", {}, "Cerebro"), el("dd", { class: "mono" }, `${e.cerebro[0].toLocaleString("es-ES")}-${e.cerebro[1].toLocaleString("es-ES")} cm³`),
@@ -234,9 +229,9 @@ function abrirEspecie(id, { volar = false } = {}) {
       e.hallazgos !== "—" ? [el("dt", {}, "Restos"), el("dd", {}, e.hallazgos)] : null),
     el("div", { class: "texto" }, el("p", {}, e.rasgos)),
     IMG_ESPECIE[e.id] ? el("section", { class: "seccion" }, el("h3", {}, "Un yacimiento de la especie"), figuraYacimiento(IMG_ESPECIE[e.id])) : null,
-    e.nota ? bloqueAviso(e.nota) : null,
-    bloqueNovedades(NOV.especies?.[e.id]),
+    bloqueDebates(e.debate),
     el("section", { class: "seccion" }, el("h3", {}, "Comparar"), comparador(e)),
+    bloqueReferencias(e.refs),
     navegacion({ tipo: "especie", id }));
   actualizarRecorrido(); enfocarFicha();
 }
@@ -248,17 +243,18 @@ function comparador(actual) {
   especies.forEach((e, i) => {
     const y = 4 + i * fila, x0 = 118, k = (W - x0 - 10) / max;
     const sel = e.id === actual.id;
-    s.append(el("text", { __svg: true, x: x0 - 6, y: y + 9, "text-anchor": "end", "font-size": 9, style: sel ? "font-weight:700" : "", class: sel ? "" : "tenue" }, e.nombre.replace("Australopithecus", "Au.").replace("Paranthropus", "P.").replace("Homo (sapiens) neanderthalensis", "H. neanderthalensis").replace("Homo ", "H. ").replace("Ardipithecus kadabba y A. ramidus", "Ardipithecus").replace("Sahelanthropus tchadensis", "Sahelanthropus")));
+    s.append(el("text", { __svg: true, x: x0 - 6, y: y + 9, "text-anchor": "end", "font-size": 9, style: sel ? "font-weight:700" : "", class: sel ? "" : "tenue" }, e.nombre.replace("Australopithecus", "Au.").replace("Paranthropus", "P.").replace("Homo neanderthalensis", "H. neanderthalensis").replace("Homo ", "H. ").replace("Ardipithecus kadabba y A. ramidus", "Ardipithecus").replace("Sahelanthropus tchadensis", "Sahelanthropus")));
     s.append(el("rect", { __svg: true, x: x0 + e.cerebro[0] * k, y: y + 2, width: Math.max(2, (e.cerebro[1] - e.cerebro[0]) * k), height: 9, rx: 2, style: `fill: var(${S.linajes[e.linaje].color}); opacity: ${sel ? 1 : 0.45}` }));
   });
   const y = especies.length * fila + 16;
   [0, 500, 1000, 1500].forEach(v => s.append(el("text", { __svg: true, x: 118 + v * (W - 128) / max, y, "font-size": 8, "text-anchor": "middle", class: "tenue" }, v)));
-  return el("div", {}, s, el("p", { class: "explicacion" }, "Rango de volumen cerebral (cm³) según las fichas del catálogo."));
+  return el("div", {}, s, el("p", { class: "explicacion" }, "Rango de volumen cerebral (cm³) según las estimaciones de cada ficha."));
 }
 
 function navegacion(actual) {
-  const i = ORDEN_LIBRO.findIndex(p => p.tipo === actual.tipo && p.id === actual.id);
-  const ant = ORDEN_LIBRO[i - 1], sig = ORDEN_LIBRO[i + 1];
+  const serie = ORDEN_RECORRIDO.filter(p => p.tipo === actual.tipo);
+  const i = serie.findIndex(p => p.id === actual.id);
+  const ant = serie[i - 1], sig = serie[i + 1];
   const ir = p => p.tipo === "sala" ? abrirSala(p.id, { volar: true }) : abrirEspecie(p.id, { volar: true });
   const nombre = p => p.tipo === "sala" ? `Sala ${porSala.get(p.id).n}` : porEspecie.get(p.id).nombre.split(" ").slice(0, 2).join(" ");
   return el("div", { class: "nav-ficha" },
@@ -272,22 +268,22 @@ function vistaGuia() {
   poner(ficha,
     cabecera("Para el profesorado", "Guía de uso", el("p", { class: "sub" }, "Propuesta para la docencia universitaria y la divulgación")),
     el("section", { class: "seccion" }, el("h3", {}, "Destinatarios y finalidad"),
-      el("p", { class: "texto" }, "Estudiantes universitarios de Antropología, Historia, Arqueología y Biología, y cualquier persona interesada en la evolución humana. El recurso convierte el catálogo en un itinerario de lectura activa: cada sala sintetiza un ensayo, plantea conceptos y preguntas, señala erratas, actualizaciones e investigación reciente, y exige superar retos para «montar» su vitrina.")),
+      el("p", { class: "texto" }, "Estudiantes universitarios de Antropología, Historia, Arqueología y Biología, y cualquier persona interesada en la evolución humana. El recurso es un itinerario de lectura activa: cada sala sintetiza un tema con bibliografía actualizada, plantea conceptos, preguntas y debates abiertos, y exige superar retos para «montar» su vitrina.")),
     el("section", { class: "seccion" }, el("h3", {}, "Objetivos"),
       lista("Comprender la cultura como práctica aprendida y transmitida, y su papel en la evolución humana.",
         "Situar especies, tecnologías y procesos en una escala temporal profunda.",
         "Distinguir hecho, interpretación y debate en la investigación paleoantropológica, y reconocer el carácter provisional de las fechas «más antiguas».",
-        "Contrastar una obra de 2022 con la investigación publicada después y valorar críticamente las fuentes.")),
+        "Valorar críticamente las fuentes y reconocer qué resultados recientes siguen en debate.")),
     el("section", { class: "seccion" }, el("h3", {}, "Secuencia propuesta (3 sesiones)"),
       lista(
         "Sesión 1 · Recorrido guiado en modo presentación por las salas 1-3 y debate «¿dónde empieza la cultura?».",
-        "Sesión 2 · Comisariado por equipos: reparto de las trece salas. Cada equipo supera sus retos y redacta una cartela propia (60-80 palabras, con página del catálogo) que incorpore al menos un estudio de «Investigación reciente».",
-        "Sesión 3 · Visita cruzada: cada equipo presenta su vitrina; examen de comisariado y debate sobre cómo ha cambiado el conocimiento entre 2022 y hoy.")),
+        "Sesión 2 · Comisariado por equipos: reparto de las trece salas. Cada equipo supera sus retos y redacta una cartela propia (60-80 palabras) que cite al menos dos referencias de la sala, una de ellas de 2023-2026.",
+        "Sesión 3 · Visita cruzada: cada equipo presenta su vitrina; examen de comisariado y debate sobre los recuadros «En debate»: qué sabemos, qué no y cómo podría resolverse.")),
     el("section", { class: "seccion" }, el("h3", {}, "Evaluación orientativa"),
-      lista("Rigor conceptual de la cartela y uso correcto de la página o el DOI.", "Lectura crítica: identificación de al menos una errata, un debate o una actualización.", "Contraste de fuentes: distinguir el artículo original de su reseña divulgativa.", "Comunicación oral en la visita cruzada.")),
+      lista("Rigor conceptual de la cartela y uso correcto de las referencias.", "Lectura crítica: identificación de al menos un debate abierto y de las pruebas de cada postura.", "Contraste de fuentes: distinguir el artículo original de su difusión divulgativa.", "Comunicación oral en la visita cruzada.")),
     el("section", { class: "seccion aviso" }, el("h3", {}, "Límites del recurso"),
-      lista("Las síntesis son de redacción propia y no sustituyen la lectura del catálogo, que no se reproduce.",
-        "El catálogo es de 2022: las notas verdes recogen hallazgos posteriores con su DOI; las amarillas, erratas y debates; «Investigación reciente» resume estudios de 2025-2026 a partir de las reseñas de Nutcracker Man (Roberto Sáez), con las referencias cotejadas en Crossref.",
+      lista("Las síntesis son de redacción propia; cada sala y cada ficha citan sus fuentes, reunidas en «Bibliografía y créditos».",
+        "El contenido está actualizado a octubre de 2026. Las cuestiones abiertas se señalan en los recuadros «En debate»; la investigación de 2023-2026 se localizó en buena parte gracias a las reseñas de Nutcracker Man (Roberto Sáez), y sus referencias se cotejaron en Crossref.",
         "Las piezas 3D son evocaciones, no réplicas; las coordenadas del mapa son aproximadas; la escala temporal es de raíz cuadrada.",
         "Las fotografías proceden de Wikimedia Commons, con licencias libres (dominio público, CC0, CC BY, CC BY-SA, Licence Ouverte); cada pie indica autoría, licencia y si la imagen muestra el yacimiento o solo su entorno. Al reutilizarlas, mantenga esos créditos.",
         "El progreso se guarda solo en este navegador; no se recogen datos personales.",
@@ -298,18 +294,17 @@ function vistaGuia() {
   enfocarFicha();
 }
 
-function vistaNovedades() {
-  estado.vista = "novedades"; terminarRecorrido(); cerrarVisor(); estado.sel = null; if (museo) museo.marcar(null); pintarIndice();
-  const total = Object.values(NOV.salas).flat().length + Object.values(NOV.especies).flat().length;
+function vistaBibliografia() {
+  estado.vista = "bibliografia"; terminarRecorrido(); cerrarVisor(); estado.sel = null; if (museo) museo.marcar(null); pintarIndice();
+  const usadas = new Set([...salas.flatMap(x => x.refs || []), ...especies.flatMap(x => x.refs || [])]);
+  const lista = [...usadas].filter(k => REFS[k]).sort((a, b) => REFS[a].cita.localeCompare(REFS[b].cita, "es"));
   poner(ficha,
-    cabecera("Más allá del catálogo", "Investigación reciente", el("p", { class: "sub" }, `${total} estudios de 2025-2026 relacionados con las salas y las especies`)),
-    el("p", { class: "consigna" }, "El catálogo es de 2022. Estas notas recogen estudios posteriores reseñados en ", el("a", { href: NOV.fuente.url, target: "_blank", rel: "noopener" }, `${NOV.fuente.nombre}`), `, el blog de divulgación paleoantropológica de ${NOV.fuente.autor} (consultado el ${NOV.fuente.consulta}). Autoría, revista y DOI se han cotejado en Crossref; cuando falta el DOI, el texto lo indica. Son resultados recientes: algunos están en debate y pueden revisarse.`),
-    salas.filter(s => NOV.salas[s.id]?.length).map(s => el("section", { class: "seccion" },
-      el("h3", {}, el("button", { class: "enlace", type: "button", onclick: () => abrirSala(s.id, { volar: true }) }, `Sala ${s.n} · ${s.titulo}`)),
-      el("ul", { class: "lista-novedades" }, NOV.salas[s.id].map(itemNovedad)))),
-    especies.filter(e => NOV.especies[e.id]?.length).map(e => el("section", { class: "seccion" },
-      el("h3", {}, el("button", { class: "enlace", type: "button", onclick: () => abrirEspecie(e.id, { volar: true }) }, e.nombre)),
-      el("ul", { class: "lista-novedades" }, NOV.especies[e.id].map(itemNovedad)))),
+    cabecera("Fuentes", "Bibliografía y créditos", el("p", { class: "sub" }, `${lista.length} referencias citadas en las salas y las fichas`)),
+    el("section", { class: "seccion" }, el("h3", {}, "Créditos"),
+      el("p", { class: "texto" }, S.creditos.linea),
+      el("p", { class: "texto" }, S.creditos.novedades),
+      el("p", { class: "texto" }, "Fotografías de Wikimedia Commons con licencias libres (autoría y licencia en cada pie). Cartografía: Natural Earth (dominio público).")),
+    el("section", { class: "seccion referencias" }, el("h3", {}, "Referencias"), el("ul", { class: "lista-refs" }, lista.map(itemRef))),
     el("div", { class: "nav-ficha" }, el("button", { class: "boton", type: "button", onclick: vistaInicio }, "Volver al inicio")));
   enfocarFicha();
 }
@@ -348,7 +343,7 @@ function reiniciar() {
 }
 
 /* ---------- Recorrido guiado ---------- */
-function iniciarRecorrido() { estado.recorrido = ORDEN_LIBRO; irPaso(0); }
+function iniciarRecorrido() { estado.recorrido = ORDEN_RECORRIDO; irPaso(0); }
 function irPaso(i) { const p = estado.recorrido[i]; if (!p) return; p.tipo === "sala" ? abrirSala(p.id, { volar: true }) : abrirEspecie(p.id, { volar: true }); }
 function terminarRecorrido() { estado.recorrido = null; $("#recorrido").hidden = true; }
 function actualizarRecorrido() {
@@ -378,7 +373,7 @@ function abrirVisor(alVisitar) {
   function verSitio(s) {
     elegido = s;
     capa.querySelectorAll(".marca-sitio").forEach(m => m.classList.toggle("activa", m.dataset.n === s.n));
-    lado.replaceChildren(el("h4", {}, s.n), el("p", { class: "mono" }, s.a + (s.nuevo ? " · hallazgo posterior al catálogo" : "")),
+    lado.replaceChildren(el("h4", {}, s.n), el("p", { class: "mono" }, s.a + (s.nuevo ? " · hallazgo o datación de 2023-2026" : "")),
       s.img && IMG[s.img] ? figuraYacimiento(s.img) : el("p", { class: "explicacion" }, "No se ha localizado una fotografía de este yacimiento con licencia libre."),
       el("p", { class: "explicacion" }, "Ubicación aproximada en el mapa."));
   }
@@ -421,7 +416,7 @@ function abrirVisor(alVisitar) {
     actual = i; visitadas.add(i);
     botones.forEach((b, k) => b.setAttribute("aria-pressed", String(k === i)));
     const e = etapas[i];
-    pieV.replaceChildren(el("strong", {}, `${e.rango} · ${e.titulo}`), el("p", {}, e.texto), el("p", { class: "mono" }, "Punto de color: etapa en curso · gris: etapas anteriores · anillo verde: hallazgo posterior al catálogo · punto blanco central: con fotografía. Ubicaciones aproximadas."));
+    pieV.replaceChildren(el("strong", {}, `${e.rango} · ${e.titulo}`), el("p", {}, e.texto), el("p", { class: "mono" }, "Punto de color: etapa en curso · gris: etapas anteriores · anillo verde: hallazgo o datación de 2023-2026 · punto blanco central: con fotografía. Ubicaciones aproximadas."));
     elegido = null; listaSitios(); dibujar(); alVisitar(visitadas.size);
   }
   new ResizeObserver(dibujar).observe(mapa);
@@ -442,7 +437,7 @@ $("#btn-recorrido").addEventListener("click", iniciarRecorrido);
 $("#btn-guia").addEventListener("click", vistaGuia);
 $("#btn-examen").addEventListener("click", vistaExamen);
 $("#btn-galeria").addEventListener("click", vistaGaleria);
-$("#btn-novedades").addEventListener("click", vistaNovedades);
+$("#btn-bibliografia").addEventListener("click", vistaBibliografia);
 $("#btn-general").addEventListener("click", () => museo && museo.vistaGeneral());
 document.addEventListener("keydown", ev => {
   if (/input|textarea|select/i.test(document.activeElement.tagName)) return;
@@ -454,7 +449,7 @@ document.addEventListener("keydown", ev => {
 });
 
 /* ---------- Arranque ---------- */
-$("#fuente").textContent = `${S.fuente.cita} ISBN ${S.fuente.isbn}. ${S.fuente.nota}`;
+$("#fuente").textContent = S.creditos.linea;
 pintarLeyenda(); pintarIndice();
 const ancla = decodeURIComponent(location.hash.slice(1));
 if (porSala.has(ancla)) abrirSala(ancla, { volar: true });

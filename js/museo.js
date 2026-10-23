@@ -176,8 +176,8 @@ export function crearMuseo(contenedor, { salas, especies, linajes, tierra, onSel
     aristas.position.copy(vidrio.position); g.add(aristas);
     const matLuz = new THREE.MeshBasicMaterial({ color: "#6d6255" });
     const luz = new THREE.Mesh(geoLuz, matLuz); luz.position.y = 2.03; g.add(luz);
-    const placa = new THREE.Mesh(new THREE.PlaneGeometry(1.3, 0.42), new THREE.MeshBasicMaterial({ map: texturaTexto([`Sala ${s.n}`, s.autoria], { color: "#f3ead9", tam: 56, fondo: "#3a2a20" }) }));
-    placa.userData.texto = [`Sala ${s.n}`, s.autoria]; placas.push(placa);
+    const placa = new THREE.Mesh(new THREE.PlaneGeometry(1.3, 0.42), new THREE.MeshBasicMaterial({ map: texturaTexto([`Sala ${s.n}`, s.corto], { color: "#f3ead9", tam: 56, fondo: "#3a2a20" }) }));
+    placa.userData.texto = [`Sala ${s.n}`, s.corto]; placas.push(placa);
     placa.position.set(0, 0.6, 0.556); g.add(placa);
     const obj = crearObjeto(s.objeto, tierra); obj.position.y = 1.45; obj.scale.setScalar(1.25); g.add(obj);
     const originales = new Map(); obj.traverse(o => { if (o.isMesh || o.isPoints || o.isLine) originales.set(o, o.material); });

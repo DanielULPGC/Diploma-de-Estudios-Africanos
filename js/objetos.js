@@ -1,7 +1,7 @@
 /*
  * OBJETOS · piezas procedimentales para las vitrinas (sin modelos externos).
  * Cada función devuelve un THREE.Group de unos 0,6 unidades de alto, centrado en el origen.
- * Las piezas son evocaciones, no réplicas de objetos concretos del catálogo.
+ * Las piezas son evocaciones, no réplicas de objetos concretos.
  */
 import * as THREE from "three";
 
