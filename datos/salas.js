@@ -124,7 +124,7 @@ window.SH.salas = [
       ]
     },
     {
-      tipo: "ordenar", titulo: "La galería de antepasados",
+      tipo: "ordenar", titulo: "La galería de antepasados", explicacion: "El orden sigue la primera aparición conocida de cada especie, no una línea de descendencia: varias especies convivieron (por ejemplo, Paranthropus boisei y los primeros Homo en África oriental), y cada nuevo hallazgo puede adelantar o retrasar estas fechas.",
       consigna: "Ordene de más antigua a más reciente según su primera aparición conocida en el registro fósil.",
       items: [
         { t: "Sahelanthropus tchadensis", d: "hacia 7 Ma" },
@@ -214,7 +214,7 @@ window.SH.salas = [
   refs: ["giemsch2022a", "lepre2011", "beyene2013", "key2026", "muller2026", "shipton2026", "parfitt2026", "rodriguez2025", "barham2023"],
   retos: [
     {
-      tipo: "ordenar", titulo: "Las fases del Achelense",
+      tipo: "ordenar", titulo: "Las fases del Achelense", explicacion: "La secuencia refleja una tendencia general hacia piezas más finas, simétricas y regulares, con más negativos de lasca y percusión blanda en las fases tardías. Después, la Edad de Piedra Media sustituye los grandes bifaces por útiles más pequeños, a menudo enmangados, y por la talla Levallois. Es una tendencia, no una ley: las formas conviven y dependen también de la materia prima.",
       consigna: "Ordene de más antigua a más reciente. Los bifaces de Konso muestran la misma tendencia: de piezas casi unifaciales a una talla bifacial extensa (Beyene et al., 2013).",
       items: [
         { t: "Base gruesa y redondeada, extremo estrecho y apuntado", d: "Achelense temprano, 1,76-1 Ma" },
@@ -263,7 +263,7 @@ window.SH.salas = [
   refs: ["giemsch2022b", "pruetz2017", "berna2012", "marin2026", "shaar2021", "gorenInbar2004", "allue2026", "davis2025", "cuddihy2026"],
   retos: [
     {
-      tipo: "ordenar", titulo: "Cuatro pasos hacia el fuego",
+      tipo: "ordenar", titulo: "Cuatro pasos hacia el fuego", explicacion: "Cada paso exige más control y anticipación que el anterior: habituarse supone perder el miedo; usar, aprovechar lo que deja el incendio; mantener, alimentar y transportar las llamas; producir, saber encenderlo a voluntad. Entre usar el fuego y producirlo media más de un millón de años.",
       consigna: "Ordene los pasos desde el contacto con el fuego natural hasta su producción.",
       items: [
         { t: "Habituarse: no huir ante un incendio natural", d: "como hacen hoy los chimpancés de sabana" },
@@ -273,7 +273,7 @@ window.SH.salas = [
       ]
     },
     {
-      tipo: "ordenar", titulo: "Cronología de las evidencias",
+      tipo: "ordenar", titulo: "Cronología de las evidencias", explicacion: "Las pruebas más antiguas son también las más discutidas, porque los restos quemados al aire libre pueden deberse a incendios naturales. Las evidencias en el interior de una cueva (Wonderwerk) y los hogares reiterados (Gesher Benot Ya‘aqov) son más sólidas; la producción de fuego solo se documenta mucho después, con pirita, en Barnham.",
       consigna: "Ordene de más antigua a más reciente.",
       items: [
         { t: "Koobi Fora (Kenia): materiales alterados por el calor, discutidos", d: "hacia 1,5 Ma" },
@@ -341,7 +341,7 @@ window.SH.salas = [
   refs: ["haidle2022a", "key2026", "arteaga2026"],
   retos: [
     {
-      tipo: "ordenar", titulo: "Rodeos cada vez más largos",
+      tipo: "ordenar", titulo: "Rodeos cada vez más largos", explicacion: "Cada paso alarga la distancia entre la necesidad y su satisfacción: primero una herramienta, después varias combinadas y, por último, una herramienta que sirve para fabricar otra. Cuanto más largo es el rodeo, más memoria, planificación y aprendizaje exige.",
       consigna: "Ordene de menor a mayor distancia entre necesidad y satisfacción.",
       items: [
         { t: "El antílope hambriento pace", d: "sin rodeo" },
@@ -351,7 +351,7 @@ window.SH.salas = [
       ]
     },
     {
-      tipo: "ordenar", titulo: "Una cadena de módulos",
+      tipo: "ordenar", titulo: "Una cadena de módulos", explicacion: "Ningún módulo tiene sentido aislado: cada uno prepara el siguiente y todos dependen de la necesidad final. Esta secuencia, llamada cadena operativa, permite comparar la complejidad de conductas distintas, de los chimpancés a los primeros talladores.",
       consigna: "Reconstruya la cadena operativa para descarnar una presa con una lasca.",
       items: [
         { t: "Recordar dónde hay buena materia prima", d: "memoria del paisaje" },
@@ -471,7 +471,7 @@ window.SH.salas = [
     { tipo: "mapa", titulo: "Seis momentos de la expansión",
       consigna: "Recorra las seis etapas del mapa y ordene después los hitos de llegada." },
     {
-      tipo: "ordenar", titulo: "¿Quién llegó antes?",
+      tipo: "ordenar", titulo: "¿Quién llegó antes?", explicacion: "La expansión no fue un único viaje: los homininos salieron de África muy pronto y varias veces (Zarqa, Shangchen, Dmanisi), mientras que llegar a Filipinas o a Sahul exigió cruzar el mar. Homo sapiens se expandió mucho más tarde. Varias de estas fechas siguen en revisión.",
       consigna: "Ordene de más antiguo a más reciente.",
       items: [
         { t: "Australopitecos en el sur de África", d: "hasta 3,67 Ma" },

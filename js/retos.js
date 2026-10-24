@@ -37,11 +37,17 @@ function clasificar(r, cont, fin, { docente }) {
     return { it, sel, exp, caja };
   });
   const resultado = el("p", { class: "resultado", "aria-live": "polite" });
+  let intentos = 0;
   const comprobar = () => {
-    let ok = 0;
-    filas.forEach(f => { const bien = f.sel.value !== "" && Number(f.sel.value) === f.it.c; f.caja.classList.toggle("correcta", bien); f.caja.classList.toggle("incorrecta", !bien); f.exp.hidden = !bien; if (bien) ok++; });
+    let ok = 0; intentos++;
+    filas.forEach(f => {
+      const bien = f.sel.value !== "" && Number(f.sel.value) === f.it.c; f.caja.classList.toggle("correcta", bien); f.caja.classList.toggle("incorrecta", !bien);
+      if (bien) { f.exp.hidden = false; f.exp.replaceChildren(el("strong", {}, "Correcto. "), f.it.e); if (bien) ok++; }
+      else if (intentos >= 2 && f.sel.value !== "") { f.exp.hidden = false; f.exp.replaceChildren(el("strong", {}, `Respuesta: ${r.categorias[f.it.c]}. `), f.it.e); }
+      else f.exp.hidden = true;
+    });
     const todo = ok === filas.length;
-    resultado.textContent = todo ? (r.ok || "¡Todo correcto! La vitrina se ilumina.") : `${ok} de ${filas.length} correctas. Revise las marcadas en rojo y vuelva a comprobar.`;
+    resultado.textContent = todo ? (r.ok || "¡Todo correcto! La vitrina se ilumina.") : intentos >= 2 ? `${ok} de ${filas.length} correctas. Las respuestas equivocadas muestran ahora la solución y su explicación; corrija y vuelva a comprobar.` : `${ok} de ${filas.length} correctas. Revise las marcadas en rojo y vuelva a comprobar; en el siguiente intento verá la explicación.`;
     resultado.classList.toggle("ok", todo); if (todo) fin(true);
   };
   const solucion = () => { filas.forEach(f => { f.sel.value = f.it.c; }); comprobar(); };
@@ -54,7 +60,8 @@ function ordenar(r, cont, fin, { docente }) {
   let orden = barajar(r.items).map(([, i]) => i);
   const lista = el("ol", { class: "ord-lista" });
   const resultado = el("p", { class: "resultado", "aria-live": "polite" });
-  let comprobado = false;
+  let comprobado = false, intentosOrd = 0;
+  const expOrd = el("div", { class: "explicacion bloque-exp", hidden: true });
   const pintar = (foco) => {
     lista.replaceChildren(...orden.map((idx, pos) => {
       const it = r.items[idx];
@@ -68,12 +75,16 @@ function ordenar(r, cont, fin, { docente }) {
   };
   const mover = (pos, dir) => { const j = pos + dir; if (j < 0 || j >= orden.length) return; [orden[pos], orden[j]] = [orden[j], orden[pos]]; comprobado = false; resultado.textContent = ""; pintar({ pos: j, dir }); };
   const comprobar = () => {
-    comprobado = true; pintar(); const ok = orden.filter((idx, pos) => idx === pos).length; const todo = ok === orden.length;
+    comprobado = true; intentosOrd++; pintar(); const ok = orden.filter((idx, pos) => idx === pos).length; const todo = ok === orden.length;
     resultado.textContent = todo ? "¡Orden correcto! La vitrina se ilumina." : `${ok} de ${orden.length} en su sitio. Ahora ve las fechas: reordene y vuelva a comprobar.`;
+    if ((todo || intentosOrd >= 2) && r.explicacion) {
+      expOrd.hidden = false;
+      expOrd.replaceChildren(el("p", {}, el("strong", {}, todo ? "Por qué este orden. " : "Orden correcto: "), todo ? r.explicacion : r.items.map(x => x.t).join(" → ") + "."), todo ? null : el("p", {}, r.explicacion));
+    }
     resultado.classList.toggle("ok", todo); if (todo) fin(true);
   };
   pintar();
-  cont.append(el("div", { class: "reto" }, el("p", { class: "consigna" }, r.consigna), lista,
+  cont.append(el("div", { class: "reto" }, el("p", { class: "consigna" }, r.consigna), lista, expOrd,
     pie(resultado, [el("button", { class: "boton primario", type: "button", onclick: comprobar }, "Comprobar orden"), docente ? el("button", { class: "boton", type: "button", onclick: () => { orden = r.items.map((_, i) => i); comprobar(); } }, "Ver solución") : null])));
 }
 
@@ -93,8 +104,11 @@ export function test(preguntas, cont, fin, { docente, umbral = 0.7, prefijo = "t
     preguntas.forEach((pr, i) => {
       const sel = form.querySelector(`input[name=${prefijo}${i}]:checked`);
       form.querySelectorAll(`input[name=${prefijo}${i}]`).forEach(inp => { const lab = inp.closest(".opcion"); lab.classList.remove("correcta", "incorrecta"); if (Number(inp.value) === pr.c) lab.classList.add("correcta"); else if (inp === sel) lab.classList.add("incorrecta"); });
-      form.querySelectorAll("fieldset")[i].querySelector(".explicacion").hidden = false;
-      if (sel && Number(sel.value) === pr.c) ok++;
+      const bien = sel && Number(sel.value) === pr.c; const exp = form.querySelectorAll("fieldset")[i].querySelector(".explicacion");
+      exp.hidden = false;
+      if (sel) exp.replaceChildren(el("strong", {}, bien ? "Correcto. " : `Incorrecto. La respuesta es «${pr.o[pr.c]}». `), pr.e || "");
+      else exp.replaceChildren(el("strong", {}, "Sin responder. "), "Elija una opción y vuelva a comprobar para ver la explicación.");
+      if (bien) ok++;
     });
     const sup = ok / preguntas.length >= umbral;
     resultado.textContent = `${ok} de ${preguntas.length} correctas.` + (sup ? " Superado." : ` Necesita al menos ${Math.ceil(umbral * preguntas.length)}.`);
@@ -108,10 +122,11 @@ function numerico(r, cont, fin, { docente }) {
   const inp = el("input", { type: "number", id: "num-resp", inputmode: "numeric", min: 0, step: "any" });
   const resultado = el("p", { class: "resultado", "aria-live": "polite" });
   const exp = el("p", { class: "explicacion", hidden: true }, r.explicacion);
+  let intentosNum = 0;
   const comprobar = () => {
-    const v = Number(String(inp.value).replace(/\s/g, "")); const ok = Number.isFinite(v) && Math.abs(v - r.respuesta) <= r.respuesta * r.tolerancia;
-    resultado.textContent = ok ? `Correcto: ${fmt(r.respuesta)} ${r.unidad}.` : "Todavía no. Piense en cuántas generaciones hacen falta y cuántos años dura cada una.";
-    resultado.classList.toggle("ok", ok); exp.hidden = !ok; if (ok) fin(true);
+    const v = Number(String(inp.value).replace(/\s/g, "")); const ok = Number.isFinite(v) && Math.abs(v - r.respuesta) <= r.respuesta * r.tolerancia; intentosNum++;
+    resultado.textContent = ok ? `Correcto: ${fmt(r.respuesta)} ${r.unidad}.` : intentosNum >= 2 ? `Todavía no. La respuesta es ${fmt(r.respuesta)} ${r.unidad}: lea la explicación y escríbala para superar el reto.` : "Todavía no. Piense en cuántas generaciones hacen falta y cuántos años dura cada una.";
+    resultado.classList.toggle("ok", ok); exp.hidden = !(ok || intentosNum >= 2); if (ok) fin(true);
   };
   cont.append(el("div", { class: "reto" }, el("p", { class: "consigna" }, r.consigna),
     el("div", { class: "campo" }, el("label", { for: "num-resp" }, "Respuesta"), inp, el("span", {}, r.unidad)), exp,

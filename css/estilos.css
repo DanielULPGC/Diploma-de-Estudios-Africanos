@@ -364,3 +364,5 @@ body.modo-presentacion .idea { font-size: 1.4rem; }
   .ficha > *:nth-child(n+4) { animation-delay: 90ms; }
 }
 @keyframes aparecer { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.explicacion strong { color: var(--ink); font-family: var(--f-display); }
+.bloque-exp { border-left: 3px solid var(--accent); padding: var(--s-2) var(--s-3); background: var(--bg); border-radius: 0 var(--r) var(--r) 0; display: flex; flex-direction: column; gap: 6px; font-size: var(--t-sm); }
