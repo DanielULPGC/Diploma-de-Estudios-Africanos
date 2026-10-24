@@ -7,7 +7,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
-import { crearObjeto } from "./objetos.js";
+import { crearObjeto, crearEmblema } from "./objetos.js";
 
 const L = 56;               // longitud de la línea del tiempo (7 Ma → 0)
 const EDAD_MAX = 7;
@@ -102,7 +102,7 @@ function arcoApuntado(ancho, alto) {
   return { forma: s, altura: tope };
 }
 
-export function crearMuseo(contenedor, { salas, especies, linajes, tierra, onSeleccion, onHover } = {}) {
+export function crearMuseo(contenedor, { salas, especies, linajes, tierra, casos = [], tonosEje = {}, onSeleccion, onHover } = {}) {
   /* Calidad automática: equipos modestos o táctiles reciben sombras y resolución más ligeras */
   const modesto = (navigator.hardwareConcurrency || 4) <= 4 || window.matchMedia("(pointer: coarse)").matches;
   const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
@@ -137,6 +137,7 @@ export function crearMuseo(contenedor, { salas, especies, linajes, tierra, onSel
   const mMuro = new THREE.MeshStandardMaterial({ roughness: 0.95, map: aTextura(cEstuco, 8, 1) });
   const mMadera = new THREE.MeshStandardMaterial({ roughness: 0.7 });
   const mLab = new THREE.MeshStandardMaterial({ roughness: 0.7, map: aTextura(cLosas, 3.4, 3.1) });
+  const mFieltro = new THREE.MeshStandardMaterial({ color: "#2d2420", roughness: 1 });
   const mLaton = new THREE.MeshStandardMaterial({ color: "#b28a4c", roughness: 0.35, metalness: 0.75 });
   /* Manchas de luz y sombras de contacto: planos con degradado radial, baratos de dibujar */
   const texPozo = texturaHalo("rgba(255,214,150,1)");
@@ -245,6 +246,7 @@ export function crearMuseo(contenedor, { salas, especies, linajes, tierra, onSel
     const placa = new THREE.Mesh(new THREE.PlaneGeometry(1.3, 0.42), new THREE.MeshBasicMaterial({ map: texturaTexto([`Sala ${s.n}`, s.corto], { color: "#f3ead9", tam: 56, fondo: "#3a2a20" }) }));
     placa.userData.texto = [`Sala ${s.n}`, s.corto]; placas.push(placa);
     placa.position.set(0, 0.6, 0.556); g.add(placa);
+    const peana = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.07, 0.7), mFieltro); peana.position.y = 0.985; peana.receiveShadow = true; g.add(peana);
     const obj = crearObjeto(s.objeto, tierra); obj.position.y = 1.45; obj.scale.setScalar(1.25); g.add(obj);
     const originales = new Map(); obj.traverse(o => { if (o.isMesh || o.isPoints || o.isLine) originales.set(o, o.material); });
     const toque = new THREE.Mesh(new THREE.BoxGeometry(1.6, 2.2, 1.2), new THREE.MeshBasicMaterial({ visible: false })); toque.position.y = 1.1; toque.userData.clave = "s:" + s.id; g.add(toque);
@@ -253,12 +255,45 @@ export function crearMuseo(contenedor, { salas, especies, linajes, tierra, onSel
     marcas.set("s:" + s.id, { tipo: "sala", id: s.id, toque, ancla, obj, originales, matLuz, pozo, halo, grupo: g, estado: "cerrada", lado: s.lado, x, z });
   }
 
+  /* ---- Gabinete de etología: vitrinas de pared en la galería lateral derecha ---- */
+  const GAB = { x: 9.6, z0: 12.2, paso: 1.75 };
+  const geoCaja = new THREE.BoxGeometry(0.9, 0.62, 0.4);
+  const mVidrioG = new THREE.MeshStandardMaterial({ color: "#e9f1f2", transparent: true, opacity: 0.12, roughness: 0.05, metalness: 0.1, depthWrite: false });
+  const mAristaG = new THREE.LineBasicMaterial({ color: "#b28a4c", transparent: true, opacity: 0.85 });
+  const placasCaso = [];
+  casos.forEach((c, k) => {
+    const z = GAB.z0 - k * GAB.paso;
+    const g = new THREE.Group(); g.position.set(GAB.x - 0.02, 0, z); g.rotation.y = -Math.PI / 2;
+    const tono = new THREE.Color(token(tonosEje[c.eje] || "--accent"));
+    const fondo = new THREE.Mesh(new THREE.PlaneGeometry(1.05, 1.05), new THREE.MeshStandardMaterial({ color: tono.clone().lerp(new THREE.Color("#1c1611"), 0.72), roughness: 1 }));
+    fondo.position.set(0, 1.33, 0.01); g.add(fondo);
+    const filete = new THREE.Mesh(new THREE.PlaneGeometry(1.05, 0.035), new THREE.MeshBasicMaterial({ color: tono })); filete.position.set(0, 1.84, 0.012); g.add(filete);
+    const repisa = new THREE.Mesh(new THREE.BoxGeometry(0.96, 0.05, 0.44), mMadera); repisa.position.set(0, 1.0, 0.22); repisa.castShadow = true; g.add(repisa);
+    const mensula = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.3, 0.3), mMadera); mensula.position.set(0, 0.82, 0.16); g.add(mensula);
+    const caja = new THREE.Mesh(geoCaja, mVidrioG); caja.position.set(0, 1.335, 0.22); g.add(caja);
+    const aristas = new THREE.LineSegments(new THREE.EdgesGeometry(geoCaja), mAristaG); aristas.position.copy(caja.position); g.add(aristas);
+    const emblema = crearEmblema(c.id); emblema.position.set(0, 1.3, 0.22); emblema.scale.setScalar(1.35); g.add(emblema);
+    const texto = [`${String(k + 1).padStart(2, "0")} · ${c.corto}`];
+    const placa = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 0.18), new THREE.MeshBasicMaterial({ map: texturaTexto(texto, { color: "#f3ead9", tam: 50, fondo: "#3a2a20", alto: 102 }) }));
+    placa.position.set(0, 0.9, 0.445); placa.userData.texto = texto; placasCaso.push(placa); g.add(placa);
+    const pozo = mancha(texPozo, 1.6, 1.4, 0.16, true); pozo.position.set(0, -0.0 + 0.016, 0.9); g.add(pozo);
+    const toque = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.3, 0.6), new THREE.MeshBasicMaterial({ visible: false })); toque.position.set(0, 1.2, 0.25); toque.userData.clave = "c:" + c.id; g.add(toque);
+    const ancla = new THREE.Object3D(); ancla.position.set(0, 1.72, 0.3); g.add(ancla);
+    escena.add(g);
+    marcas.set("c:" + c.id, { tipo: "caso", id: c.id, toque, ancla, emblema, grupo: g, pozo, z });
+  });
+  if (casos.length) {
+    const zMedio = GAB.z0 - (casos.length - 1) * GAB.paso / 2;
+    const rotuloGab = cartel("GABINETE DE ETOLOGÍA", "Comportamiento animal y comienzos de la cultura", GAB.x - 0.03, 2.75, zMedio, -Math.PI / 2, 6);
+    carteles.push(rotuloGab);
+  }
+
   function setEstadoSala(id, estado) {
     const m = marcas.get("s:" + id); if (!m) return;
     m.estado = estado;
     const abierta = estado === "montada";
     m.obj.traverse(o => { if (m.originales.has(o)) o.material = abierta ? m.originales.get(o) : (o.isMesh ? fantasma : m.originales.get(o)); });
-    m.obj.traverse(o => { if (o.isPointLight) o.visible = abierta; });
+    m.obj.traverse(o => { if (o.isPointLight || o.userData.soloAbierta) o.visible = abierta; });
     m.matLuz.color.set(abierta ? "#ffe2b0" : estado === "parcial" ? "#c99a5a" : "#6d6255");
     m.pozo.material.opacity = abierta ? 0.42 : estado === "parcial" ? 0.2 : 0.08;
     m.halo.material.opacity = abierta ? 0.22 : 0;
@@ -289,11 +324,15 @@ export function crearMuseo(contenedor, { salas, especies, linajes, tierra, onSel
       if (m.lado === 0) pos = new THREE.Vector3(0, 2.6, m.z + 5);
       else pos = new THREE.Vector3(m.x - m.lado * 4.2, 2.5, m.z + 2.2);
       volarA(pos, c);
+    } else if (m.tipo === "caso") {
+      volarA(new THREE.Vector3(7.85, 1.65, m.z + 1.5), new THREE.Vector3(9.4, 1.3, m.z));
     } else {
       const p = m.pos; volarA(new THREE.Vector3(p.x + 2.6, 2.5, p.z + 4.6), new THREE.Vector3(p.x, 0.9, p.z));
     }
   }
   function vistaGeneral() { volarA(VISTA_GENERAL.pos, VISTA_GENERAL.tgt); }
+  function vistaGabinete() { volarA(new THREE.Vector3(8.0, 2.3, 15.2), new THREE.Vector3(9.3, 1.2, 1.5)); }
+  const prefijo = tipo => tipo === "sala" ? "s:" : tipo === "caso" ? "c:" : "e:";
 
   /* ---- Interacción ---- */
   const ray = new THREE.Raycaster(); const raton = new THREE.Vector2();
@@ -317,9 +356,9 @@ export function crearMuseo(contenedor, { salas, especies, linajes, tierra, onSel
   });
   renderer.domElement.addEventListener("pointerleave", () => { if (encima) { encima = null; if (onHover) onHover(null); } });
 
-  function marcar(tipo, id) { seleccion = tipo ? (tipo === "sala" ? "s:" : "e:") + id : null; }
+  function marcar(tipo, id) { seleccion = tipo ? prefijo(tipo) + id : null; }
   function aPantalla(tipo, id) {
-    const m = marcas.get((tipo === "sala" ? "s:" : "e:") + id); if (!m) return null;
+    const m = marcas.get(prefijo(tipo) + id); if (!m) return null;
     const v = m.ancla.getWorldPosition(new THREE.Vector3());
     const delante = v.clone().sub(camara.position).dot(camara.getWorldDirection(new THREE.Vector3())) > 0;
     v.project(camara); const r = renderer.domElement.getBoundingClientRect();
@@ -346,6 +385,7 @@ export function crearMuseo(contenedor, { salas, especies, linajes, tierra, onSel
     /* Las placas de edad son siempre oscuras con texto claro: se leen igual en los dos temas */
     carteles[0].material.map = texturaTexto(["SER HUMANOS", "Los comienzos de nuestra cultura"], { color: colTexto, tam: 64 }); carteles[0].material.needsUpdate = true;
     carteles[1].material.map = texturaTexto(["LABORATORIO DEL PRESENTE", "Lo que observamos hoy para entender el pasado"], { color: colTexto, tam: 64 }); carteles[1].material.needsUpdate = true;
+    if (carteles[2]) { carteles[2].material.map = texturaTexto(["GABINETE DE ETOLOGÍA", "Comportamiento animal y comienzos de la cultura"], { color: colTexto, tam: 64 }); carteles[2].material.needsUpdate = true; }
     for (const p of placas) { p.material.map.dispose(); p.material.map = texturaTexto(p.userData.texto, { color: "#f3ead9", tam: 56, fondo: "#3a2a20" }); p.material.needsUpdate = true; }
   }
   actualizarTema();
@@ -367,6 +407,10 @@ export function crearMuseo(contenedor, { salas, especies, linajes, tierra, onSel
         if (m.obj.userData.animar && m.estado === "montada" && !quieto) m.obj.userData.animar(t);
         const s = sel ? 1.08 : hov ? 1.04 : 1; m.grupo.scale.setScalar(s);
         if (m.estado === "montada") m.halo.material.opacity = (sel || hov ? 0.3 : 0.2) + (quieto ? 0 : Math.sin(t * 1.6 + m.z) * 0.04);
+      } else if (m.tipo === "caso") {
+        if (!quieto) m.emblema.rotation.y = t * 0.4 + m.z;
+        m.emblema.scale.setScalar(1.35 * (sel ? 1.15 : hov ? 1.08 : 1));
+        m.pozo.material.opacity = sel ? 0.38 : hov ? 0.26 : 0.16;
       } else {
         const s = sel ? 1.25 + (quieto ? 0 : Math.sin(t * 3) * 0.05) : hov ? 1.15 : 1; m.ancla.scale.setScalar(s);
         m.matEsf.emissiveIntensity = sel ? 0.45 : hov ? 0.3 : 0.08;
@@ -379,5 +423,5 @@ export function crearMuseo(contenedor, { salas, especies, linajes, tierra, onSel
   }
   requestAnimationFrame(bucle);
 
-  return { setEstadoSala, enfocar: (tipo, id) => enfocar((tipo === "sala" ? "s:" : "e:") + id), vistaGeneral, marcar, aPantalla, actualizarTema, onCuadro: f => oyentes.push(f) };
+  return { setEstadoSala, enfocar: (tipo, id) => enfocar(prefijo(tipo) + id), vistaGeneral, vistaGabinete, marcar, aPantalla, actualizarTema, onCuadro: f => oyentes.push(f) };
 }
