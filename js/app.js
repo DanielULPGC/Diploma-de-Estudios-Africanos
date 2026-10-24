@@ -105,6 +105,12 @@ function pintarIndice() {
       class: "item-btn", type: "button", "aria-current": estado.sel?.tipo === "caso" && estado.sel.id === c.id ? "true" : null,
       onclick: () => abrirCaso(c.id)
     }, el("span", { class: "num" }, String(k + 1).padStart(2, "0")), el("span", {}, c.corto), el("span"), el("small", {}, c.taxon.split(" (")[0])))));
+  const cuenta = (k, txt) => { const c = $("#cuenta-" + k); if (c) c.textContent = txt; };
+  const gal = salas.filter(s => s.edad != null), labs = salas.filter(s => s.edad == null);
+  cuenta("galeria", `${gal.filter(s => estadoSala(s) === "montada").length}/${gal.length}`);
+  cuenta("lab", `${labs.filter(s => estadoSala(s) === "montada").length}/${labs.length}`);
+  cuenta("etologia", String(ETO.casos.length));
+  cuenta("especies", String(especies.length));
   const n = contarMontadas();
   $("#progreso-relleno").style.width = (n / salas.length * 100) + "%";
   $(".barra-progreso").setAttribute("aria-valuenow", n);
@@ -124,6 +130,8 @@ function cabecera(etq, titulo, ...extra) {
 let arrancando = true;
 function enfocarFicha() {
   ficha.scrollTop = 0;
+  const cab = ficha.querySelector(".ficha-cab");
+  if (cab) { const tono = estado.sel?.tipo === "especie" ? S.linajes[porEspecie.get(estado.sel.id).linaje].color : estado.sel?.tipo === "caso" ? TONO_EJE[porCaso.get(estado.sel.id).eje] : null; if (tono) cab.style.setProperty("--tono", `var(${tono})`); }
   if (arrancando) return;
   const t = $("#ficha-titulo"); if (t) t.focus({ preventScroll: true });
   if (window.matchMedia("(max-width: 900px)").matches) ficha.scrollIntoView({ block: "start", behavior: "smooth" });
@@ -344,6 +352,16 @@ function vistaGaleria() {
 }
 
 /* ---------- Gabinete de etología ---------- */
+/* Pone en cursiva los nombres científicos (género + epíteto y, si lo hay, subespecie) */
+const BINOMIO = /\b(Pan|Homo|Macaca|Cacatua|Psittacus|Pongo|Gorilla|Papio|Australopithecus|Paranthropus|Drosophila|Saccharomyces|Megarcys)( [a-z]{3,})( [a-z]{3,})?\b/g;
+function cursivas(texto) {
+  const partes = []; let i = 0;
+  for (const m of texto.matchAll(BINOMIO)) {
+    if (m[3] && /^ (y|de|del|en|al)$/.test(m[3])) m[0] = m[1] + m[2];
+    partes.push(texto.slice(i, m.index), el("i", {}, m[0])); i = m.index + m[0].length;
+  }
+  partes.push(texto.slice(i)); return partes;
+}
 function bloqueEtologiaRelacionada(salaId) {
   const casos = ETO.casos.filter(c => c.salas.includes(salaId));
   if (!casos.length) return null;
@@ -351,6 +369,7 @@ function bloqueEtologiaRelacionada(salaId) {
     el("p", { class: "explicacion" }, "Casos del gabinete de etología que dialogan con esta sala."),
     el("div", { class: "botonera" }, casos.map(c => el("button", { class: "boton", type: "button", onclick: () => abrirCaso(c.id) }, c.corto))));
 }
+const TONO_EJE = { cultura: "--l4", tecnica: "--l2", alimentacion: "--l3", social: "--l1" };
 function salirDeEscena() { terminarRecorrido(); cerrarVisor(); estado.sel = null; if (museo) museo.marcar(null); }
 function vistaEtologia() {
   salirDeEscena(); estado.vista = "etologia"; pintarIndice();
@@ -380,14 +399,14 @@ function abrirCaso(id) {
   try { history.replaceState(null, "", "#t-" + id); } catch (e) {}
   const i = ETO.casos.indexOf(c), ant = ETO.casos[i - 1], sig = ETO.casos[i + 1];
   poner(ficha,
-    cabecera(`Etología · ${ETO.ejes[c.eje]}`, c.titulo),
+    cabecera(`Etología · ${ETO.ejes[c.eje]}`, c.titulo, el("span", { class: "chip" }, el("span", { class: "muestra", style: `--c: var(${TONO_EJE[c.eje]})` }), ETO.ejes[c.eje])),
     el("dl", { class: "meta" },
-      el("dt", {}, "Especie"), el("dd", {}, c.taxon),
+      el("dt", {}, "Especie"), el("dd", {}, cursivas(c.taxon)),
       el("dt", {}, "Lugar"), el("dd", {}, c.lugar),
       el("dt", {}, "Método"), el("dd", {}, c.metodo)),
-    el("div", { class: "texto" }, c.hallazgo.map(t => el("p", {}, t))),
-    el("section", { class: "seccion" }, el("h3", {}, "Por qué importa para la evolución humana"), el("p", { class: "texto" }, c.importa)),
-    el("section", { class: "seccion aviso", "aria-label": "Límites de la interpretación" }, el("h3", {}, "Límites de la interpretación"), el("p", {}, c.cautela)),
+    el("div", { class: "texto" }, c.hallazgo.map(t => el("p", {}, cursivas(t)))),
+    el("section", { class: "seccion" }, el("h3", {}, "Por qué importa para la evolución humana"), el("p", { class: "texto" }, cursivas(c.importa))),
+    el("section", { class: "seccion aviso", "aria-label": "Límites de la interpretación" }, el("h3", {}, "Límites de la interpretación"), el("p", {}, cursivas(c.cautela))),
     el("section", { class: "seccion" }, el("h3", {}, "Salas relacionadas"),
       el("div", { class: "botonera" }, c.salas.map(sid => { const s = porSala.get(sid); return s ? el("button", { class: "boton", type: "button", onclick: () => abrirSala(sid, { volar: true }) }, `Sala ${s.n} · ${s.corto}`) : null; }))),
     bloqueReferencias(c.refs),
@@ -533,6 +552,13 @@ document.addEventListener("keydown", ev => {
     const i = estado.recorrido.findIndex(p => p.tipo === estado.sel.tipo && p.id === estado.sel.id);
     irPaso(i + (ev.key === "ArrowRight" ? 1 : -1));
   }
+});
+
+/* ---------- Grupos plegables del índice (estado recordado en la sesión) ---------- */
+document.querySelectorAll("details.grupo").forEach(d => {
+  const k = "sh-grupo-" + d.dataset.grupo;
+  if (sesion.get(k) === "0") d.open = false;
+  d.addEventListener("toggle", () => sesion.set(k, d.open ? "1" : "0"));
 });
 
 /* ---------- Arranque ---------- */
