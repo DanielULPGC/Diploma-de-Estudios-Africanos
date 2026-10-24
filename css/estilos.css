@@ -331,3 +331,9 @@ body.modo-presentacion .idea { font-size: 1.4rem; }
 .lista-refs { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--s-2); font-size: var(--t-xs); }
 .lista-refs li { padding-left: 1.4em; text-indent: -1.4em; overflow-wrap: anywhere; }
 .lista-refs a { color: var(--muted); font-family: var(--f-mono); }
+
+/* Gabinete de etología */
+.botonera { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.lista-casos { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s-2); }
+.lista-casos .boton { display: flex; flex-direction: column; align-items: flex-start; text-align: left; gap: 2px; height: auto; padding-block: 8px; white-space: normal; }
+.lista-casos .boton small { color: var(--muted); font-size: var(--t-xs); font-weight: 400; }

@@ -41,7 +41,7 @@ function clasificar(r, cont, fin, { docente }) {
     let ok = 0;
     filas.forEach(f => { const bien = f.sel.value !== "" && Number(f.sel.value) === f.it.c; f.caja.classList.toggle("correcta", bien); f.caja.classList.toggle("incorrecta", !bien); f.exp.hidden = !bien; if (bien) ok++; });
     const todo = ok === filas.length;
-    resultado.textContent = todo ? "¡Todo correcto! La vitrina se ilumina." : `${ok} de ${filas.length} correctas. Revise las marcadas en rojo y vuelva a comprobar.`;
+    resultado.textContent = todo ? (r.ok || "¡Todo correcto! La vitrina se ilumina.") : `${ok} de ${filas.length} correctas. Revise las marcadas en rojo y vuelva a comprobar.`;
     resultado.classList.toggle("ok", todo); if (todo) fin(true);
   };
   const solucion = () => { filas.forEach(f => { f.sel.value = f.it.c; }); comprobar(); };

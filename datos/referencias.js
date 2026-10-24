@@ -105,6 +105,21 @@ window.SH.refs = {
   williams2026: { cita: "Williams, S. A. et al. (2026). Earliest evidence of hominin bipedalism in Sahelanthropus tchadensis. Science Advances, 12(1).", doi: "10.1126/sciadv.adv0130" },
   zhang2026: { cita: "Zhang, Y. et al. (2026). Recovering signatures of archaic hominin introgression using ancestral recombination graphs. Science, 393, eaef8874.", doi: "10.1126/science.aef8874" },
   zhong2026: { cita: "Zhong, J. et al. (2026). Modern human presence in eastern Asia before 130 ka: evidence from U-series re-dating of Daoxian site. Journal of Archaeological Science: Reports, 70, 105631.", doi: "10.1016/j.jasrep.2026.105631" },
-  zhu2018: { cita: "Zhu, Z. et al. (2018). Hominin occupation of the Chinese Loess Plateau since about 2.1 million years ago. Nature, 559, 608-612.", doi: "10.1038/s41586-018-0299-4" }
+  zhu2018: { cita: "Zhu, Z. et al. (2018). Hominin occupation of the Chinese Loess Plateau since about 2.1 million years ago. Nature, 559, 608-612.", doi: "10.1038/s41586-018-0299-4" },
+  /* Etología comparada */
+  benedict2022: { cita: "Benedict, L. et al. (2022). A survey of vocal mimicry in companion parrots. Scientific Reports, 12, 20271.", doi: "10.1038/s41598-022-24335-x" },
+  bowland2024: { cita: "Bowland, A. C. et al. (2024). The evolutionary ecology of ethanol. Trends in Ecology & Evolution. Publicado en línea el 30 de octubre de 2024.", doi: "10.1016/j.tree.2024.09.005" },
+  braun2025stone: { cita: "Braun, D. R. et al. (2025). Stone selection by wild chimpanzees shares patterns with Oldowan hominins. Journal of Human Evolution, 199, 103625.", doi: "10.1016/j.jhevol.2024.103625" },
+  delaFuente2022: { cita: "De la Fuente, M. F., Souto, A., Albuquerque, U. P. y Schiel, N. (2022). Self-medication in nonhuman primates: A systematic evaluation of the possible function of the use of medicinal plants. American Journal of Primatology, 84(11), e23438.", doi: "10.1002/ajp.23438" },
+  ibanez2023: { cita: "Ibáñez de Aldecoa, P., Auersperg, A. M. I., Griffin, A. S. y Tebbich, S. (2023). Ratcheting up tool innovation in Goffin's cockatoos (Cacatua goffiniana): The effect of contextually diverse prior experience. Ethology, 129(3), 133-145.", doi: "10.1111/eth.13351" },
+  kalan2025: { cita: "Kalan, A. K., Nakano, R. y Warshawski, L. (2025). What we know and don't know about great ape cultural communication in the wild. American Journal of Primatology, 87(1), e23560 (en línea desde 2023).", doi: "10.1002/ajp.23560" },
+  lameira2023: { cita: "Lameira, A. R. y Perlman, M. (2023). Great apes reach momentary altered mental states by spinning. Primates, 64, 319-323.", doi: "10.1007/s10329-023-01056-x" },
+  maro2025: { cita: "Maro, A. et al. (2025). Ethanol ingestion via frugivory in wild chimpanzees. Science Advances, 11(38), eadw1665.", doi: "10.1126/sciadv.adw1665" },
+  rosati2023: { cita: "Rosati, A. G., Emery Thompson, M., Atencia, R. y Buckholtz, J. W. (2023). Distinct developmental trajectories for risky and impulsive decision-making in chimpanzees. Journal of Experimental Psychology: General, 152(6), 1551-1564.", doi: "10.1037/xge0001347" },
+  samuni2023: { cita: "Samuni, L. y Surbeck, M. (2023). Cooperation across social borders in bonobos. Science, 382(6672), 805-809.", doi: "10.1126/science.adg0844" },
+  shimada2023: { cita: "Shimada, M. y Yano, W. (2023). Behavioral responses of wild chimpanzees toward a juvenile that suddenly lost its animacy due to a fall accident. Scientific Reports, 13, 16661.", doi: "10.1038/s41598-023-43229-0" },
+  silk2023: { cita: "Silk, J. B. (2023). Between-group cooperation in bonobos. Science, 382(6672), 760-761.", doi: "10.1126/science.adl1813" },
+  takenaka2022: { cita: "Takenaka, M. et al. (2022). Behavior of snow monkeys hunting fish to survive winter. Scientific Reports, 12, 20324.", doi: "10.1038/s41598-022-23799-1" },
+  tinbergen1963: { cita: "Tinbergen, N. (1963). On aims and methods of ethology. Zeitschrift für Tierpsychologie, 20(4), 410-433.", doi: "10.1111/j.1439-0310.1963.tb01161.x" },
 };
 })();
