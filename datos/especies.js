@@ -19,13 +19,13 @@ window.SH.especies = [
   },
   {
     id: "ardipithecus", nombre: "Ardipithecus kadabba y A. ramidus", linaje: "primeros",
-    edad: [5.8, 3.9], edadTexto: "kadabba 5,8-5,18 Ma · ramidus 4,42-3,9 Ma", cerebro: [280, 350],
+    edad: [5.8, 4.32], edadTexto: "kadabba 5,8-5,18 Ma · ramidus hacia 4,5-4,3 Ma", cerebro: [280, 350],
     descubrimiento: "Gen Suwa halló en 1992 un primer molar en Aramis (Etiopía); «Ardi», un esqueleto en buena parte conservado, se excavó entre 1994 y 1996. Yohannes Haile-Selassie encontró el primer fósil de A. kadabba en 1997.",
-    yacimientos: "Etiopía: Aramis, río Awash (triángulo de Afar).",
+    yacimientos: "Etiopía: Aramis y otras localidades del Middle Awash; As Duma, en Gona (triángulo de Afar).",
     hallazgos: "ramidus: esqueleto y dientes. kadabba: fragmento de mandíbula con molar y dientes aislados.",
-    rasgos: "Hasta 1,9 millones de años separan ambos registros, por lo que se consideran dos especies. Combinaba la marcha bípeda con la trepa: el dedo gordo separado y la pelvis lo muestran, y el tobillo de A. ramidus apunta a una trepa vertical semejante a la de los grandes simios africanos (Prang et al., 2025). El esmalte y los incisivos sugieren una dieta con menos fruta que la del chimpancé actual.",
+    rasgos: "Los dos registros están separados en el tiempo (kadabba termina hacia 5,2 Ma y ramidus aparece hacia 4,5 Ma) y difieren en la dentición, por lo que se consideran dos especies. Las edades de A. ramidus proceden de Aramis, hacia 4,4 Ma (White et al., 2009), y de As Duma, entre 4,51 y 4,32 Ma (Semaw et al., 2005). Combinaba la marcha bípeda con la trepa: el dedo gordo separado y la pelvis lo muestran, y el tobillo de A. ramidus apunta a una trepa vertical semejante a la de los grandes simios africanos (Prang et al., 2025). El esmalte y los incisivos sugieren una dieta con menos fruta que la del chimpancé actual.",
     debate: "",
-    refs: ["volumen2022", "prang2025"]
+    refs: ["volumen2022", "white2009", "semaw2005", "prang2025"]
   },
   {
     id: "afarensis", nombre: "Australopithecus afarensis", linaje: "australo",
@@ -39,13 +39,13 @@ window.SH.especies = [
   },
   {
     id: "africanus", nombre: "Australopithecus africanus", linaje: "australo",
-    edad: [3.0, 2.1], edadTexto: "3,0-2,1 Ma", cerebro: [450, 550],
+    edad: [3.0, 2.1], edadTexto: "3,0-2,1 Ma (cronología clásica, en revisión)", cerebro: [450, 550],
     descubrimiento: "Raymond Dart identificó en 1924 el cráneo infantil de Taung (Sudáfrica) y lo publicó en 1925 como primera descripción del género Australopithecus.",
     yacimientos: "Sudáfrica: Sterkfontein, Makapansgat, Taung.",
     hallazgos: "Cráneo y mandíbula del «niño de Taung», molde endocraneal, cráneo «Mrs. Ples» (STS 5), dientes y fragmentos mandibulares.",
     rasgos: "Solo se conoce en el sur de África. Cara algo prognata, frente huidiza y arcos superciliares marcados. La posición del agujero occipital sugiere bipedismo constante. Unos 1,30 m y 30-40 kg; omnívoro, vivía en bosques de galería junto a los ríos.",
-    debate: "La diversidad de los australopitecos sudafricanos se discute: el esqueleto «Little Foot» (StW 573), de Sterkfontein, se ha atribuido a una especie aparte, Au. prometheus, atribución que otros rechazan (Martin et al., 2025).",
-    refs: ["volumen2022", "martin2025"]
+    debate: "La diversidad de los australopitecos sudafricanos se discute: el esqueleto «Little Foot» (StW 573), de Sterkfontein, se ha atribuido a una especie aparte, Au. prometheus, atribución que otros rechazan (Martin et al., 2025). También se discute su cronología: la datación por nucleidos cosmogénicos sitúa el Miembro 4 de Sterkfontein, del que procede la mayor parte de sus fósiles, hacia 3,4-3,6 Ma, frente a los 2,6-2,1 Ma estimados a partir de coladas de calcita (Granger et al., 2022). Otros equipos defienden una edad más reciente a partir de los monos fósiles del yacimiento, y la cuestión sigue abierta (Granger et al., 2023).",
+    refs: ["volumen2022", "martin2025", "granger2022", "granger2023"]
   },
   {
     id: "boisei", nombre: "Paranthropus boisei", linaje: "parantropo",
@@ -54,7 +54,7 @@ window.SH.especies = [
     yacimientos: "Tanzania: Peninj, Olduvai. Malaui: Malema. Kenia: Koobi Fora, Nachukui, Chesowanja. Etiopía: Konso, Shungura.",
     hallazgos: "Cráneos, dientes, mandíbulas, una mano parcial (KNM-ER 101000), huesos del pie y de la pierna; probablemente, huellas.",
     rasgos: "Cráneo grande, cara larga, pómulos muy anchos y molares enormes, con una cresta sagital para los músculos masticadores. Dieta rica en vegetales duros. Su mano combina un agarre potente, útil para trepar y alimentarse, con algunos rasgos manipuladores parecidos a los de Homo (Mongle et al., 2025). Las 21 huellas de GaJi10 (Turkana, hacia 1,43 Ma) se atribuyen probablemente a esta especie (Hatala et al., 2026).",
-    debate: "Si Paranthropus fabricó o usó herramientas sigue abierto: en Nyayanga aparece junto a útiles olduvayenses de 3,0-2,6 Ma (Plummer et al., 2023).",
+    debate: "Si Paranthropus fabricó o usó herramientas sigue abierto: en Nyayanga aparece junto a útiles olduvayenses de 3,0-2,6 Ma (Plummer et al., 2023). Una mandíbula parcial de Paranthropus de 2,6 Ma hallada en Mille-Logya (Afar, Etiopía), aún sin asignar a especie, es uno de los fósiles más antiguos del género y lleva su área conocida unos 1000 km más al norte (Alemseged et al., 2026).",
     refs: ["volumen2022", "mongle2025", "hatala2026", "plummer2023", "alemseged2026"]
   },
   {

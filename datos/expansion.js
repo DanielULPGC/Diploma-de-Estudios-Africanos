@@ -13,7 +13,7 @@ window.SH.expansion = [
     sitios: [
       { n: "Toros-Menalla (Sahelanthropus)", img: "Toros-Menalla", lat: 16.2, lon: 17.5, a: "hacia 7 Ma" },
       { n: "Colinas Tugen (Orrorin)", img: "Tugen", lat: 0.7, lon: 35.8, a: "hacia 6 Ma" },
-      { n: "Aramis, Awash (Ardipithecus)", lat: 10.5, lon: 40.4, a: "5,8-3,9 Ma" },
+      { n: "Aramis, Awash (Ardipithecus)", lat: 10.5, lon: 40.4, a: "5,8-4,3 Ma" },
       { n: "Grecia (Graecopithecus, discutido)", lat: 38.0, lon: 23.7, a: "hacia 7 Ma" },
       { n: "Azmaka, Bulgaria (fémur atribuido a Graecopithecus)", lat: 42.3, lon: 25.4, a: "7,2 Ma; bipedismo discutido", nuevo: true }
     ]

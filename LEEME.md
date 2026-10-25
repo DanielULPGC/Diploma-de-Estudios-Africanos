@@ -10,7 +10,8 @@ Recurso docente sobre los comienzos de la cultura humana, con contenido de redac
 - `js/retos.js` · motores de retos (clasificar, ordenar, test, numérico, caja, predicciones, mapa).
 - `js/app.js` · interfaz, progreso, recorrido, guía docente.
 - `js/tierra.js` · costas Natural Earth 1:110m (dominio público).
-- `datos/novedades.js` · investigación 2025-2026 por sala y especie, a partir de las reseñas del blog Nutcracker Man (Roberto Sáez, https://nutcrackerman.com/); referencias cotejadas en Crossref (22-10-2026).
+- `datos/imagenes.js` · 32 fotografías de yacimientos (Wikimedia Commons) con autoría, licencia y página de origen.
+- `datos/etologia.js` · contenido de etología comparada.
 - `datos/referencias.js` · bibliografía (cita APA y DOI). La investigación 2023-2026 se localizó en buena parte gracias a las reseñas del blog Nutcracker Man (Roberto Sáez, https://nutcrackerman.com/); referencias cotejadas en Crossref (octubre de 2026).
 - `datos/salas.js`, `datos/especies.js`, `datos/expansion.js` · todo el contenido. Corregir o ampliar contenido no exige tocar `js/`.
 
@@ -23,4 +24,7 @@ Suba la carpeta completa a un repositorio y active Pages en la rama principal. N
 ## Privacidad
 No recoge datos. El progreso se guarda solo en el navegador (localStorage).
 
-Licencia del recurso: CC BY-NC 4.0. Las síntesis son de redacción propia y no reproducen textos de terceros.
+Licencia del recurso: CC BY-NC 4.0. Las síntesis son de redacción propia y no reproducen textos de terceros. Las fotografías no quedan bajo esa licencia: conservan la suya, indicada en cada pie y en `datos/imagenes.js`.
+
+## Cambios
+- v0.9 (25-10-2026) · Cronología revisada tras el cotejo con PaleoBot. *Ardipithecus ramidus*: el límite de 3,9 Ma, sin respaldo en las fuentes, se sustituye por 4,51-4,32 Ma (As Duma, Gona) y 4,4 Ma (Aramis), con Semaw et al. (2005) y White et al. (2009). *Au. africanus*: la ficha advierte que su cronología está en revisión (Granger et al., 2022 y 2023). *P. boisei*: el debate integra la mandíbula de *Paranthropus* de 2,6 Ma de Mille-Logya (Alemseged et al., 2026). Se completa el volumen y número de Martin et al. (2025).
