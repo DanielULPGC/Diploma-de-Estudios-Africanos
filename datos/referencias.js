@@ -3,8 +3,9 @@
  * Catálogo único de referencias, citado por clave desde salas.js y especies.js.
  * Autoría, año, título, revista y DOI cotejados en Crossref o en doi.org (22-23 de octubre de 2026),
  * salvo los capítulos del volumen de 2022 y las obras sin DOI, tomadas de la publicación original.
- * granger2022, granger2023, semaw2005 y white2009 (añadidas el 25-10-2026) se cotejaron con fichas editoriales,
- * institucionales y bibliográficas abiertas, no con Crossref; conviene confirmarlas allí.
+ * granger2022, granger2023, frost2022, semaw2005, white2009 y woldegabriel2009 (añadidas el 25-10-2026) se cotejaron con fichas
+ * editoriales, institucionales y bibliográficas abiertas, no con Crossref; el DOI de woldegabriel2009 lo confirmó la persona
+ * responsable en la página de Science. Conviene confirmarlas todas en Crossref.
  */
 window.SH = window.SH || {};
 (() => {
@@ -53,6 +54,7 @@ window.SH.refs = {
   dominguez2026: { cita: "Domínguez-Rodrigo, M. et al. (2026). Earliest evidence of elephant butchery at Olduvai Gorge (Tanzania) reveals the evolutionary impact of early human megafaunal exploitation. eLife, 14, RP108298.", doi: "10.7554/eLife.108298.5" },
   fan2025: { cita: "Fan, B. et al. (2025). Relatively open vegetation landscapes promoted early Pleistocene hominin evolution. Communications Earth & Environment, 6, 1014.", doi: "10.1038/s43247-025-02983-x" },
   forrest2026: { cita: "Forrest, F. et al. (2026). Early evidence for a stable and flexible foraging niche in the evolution of Homo. PNAS, 123, e2537631123.", doi: "10.1073/pnas.2537631123" },
+  frost2022: { cita: "Frost, S. R., White, F. J., Reda, H. G. y Gilbert, C. C. (2022). Biochronology of South African hominin-bearing sites: A reassessment using cercopithecid primates. PNAS, 119(45), e2210627119.", doi: "10.1073/pnas.2210627119" },
   fu2025a: { cita: "Fu, Q. et al. (2025). The proteome of the Late Middle Pleistocene Harbin individual. Science.", doi: "10.1126/science.adu9677" },
   fu2025b: { cita: "Fu, Q. et al. (2025). Denisovan mitochondrial DNA from dental calculus of the >146,000-year-old Harbin cranium. Cell.", doi: "10.1016/j.cell.2025.05.040" },
   fu2026: { cita: "Fu, Q. et al. (2026). Enamel proteins from six Homo erectus specimens across China. Nature, 655, 141-147.", doi: "10.1038/s41586-026-10478-8" },
@@ -109,6 +111,7 @@ window.SH.refs = {
   white2009: { cita: "White, T. D. et al. (2009). Ardipithecus ramidus and the paleobiology of early hominids. Science, 326, 75-86.", doi: "10.1126/science.1175802" },
   whiten1999: { cita: "Whiten, A. et al. (1999). Cultures in chimpanzees. Nature, 399, 682-685.", doi: "10.1038/21415" },
   williams2026: { cita: "Williams, S. A. et al. (2026). Earliest evidence of hominin bipedalism in Sahelanthropus tchadensis. Science Advances, 12(1).", doi: "10.1126/sciadv.adv0130" },
+  woldegabriel2009: { cita: "WoldeGabriel, G. et al. (2009). The geological, isotopic, botanical, invertebrate, and lower vertebrate surroundings of Ardipithecus ramidus. Science, 326(5949), 65e1-65e5.", doi: "10.1126/science.1175817" },
   zhang2026: { cita: "Zhang, Y. et al. (2026). Recovering signatures of archaic hominin introgression using ancestral recombination graphs. Science, 393, eaef8874.", doi: "10.1126/science.aef8874" },
   zhong2026: { cita: "Zhong, J. et al. (2026). Modern human presence in eastern Asia before 130 ka: evidence from U-series re-dating of Daoxian site. Journal of Archaeological Science: Reports, 70, 105631.", doi: "10.1016/j.jasrep.2026.105631" },
   zhu2018: { cita: "Zhu, Z. et al. (2018). Hominin occupation of the Chinese Loess Plateau since about 2.1 million years ago. Nature, 559, 608-612.", doi: "10.1038/s41586-018-0299-4" },
