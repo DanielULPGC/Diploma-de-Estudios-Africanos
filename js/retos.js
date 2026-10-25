@@ -125,7 +125,7 @@ function numerico(r, cont, fin, { docente }) {
   let intentosNum = 0;
   const comprobar = () => {
     const v = Number(String(inp.value).replace(/\s/g, "")); const ok = Number.isFinite(v) && Math.abs(v - r.respuesta) <= r.respuesta * r.tolerancia; intentosNum++;
-    resultado.textContent = ok ? `Correcto: ${fmt(r.respuesta)} ${r.unidad}.` : intentosNum >= 2 ? `Todavía no. La respuesta es ${fmt(r.respuesta)} ${r.unidad}: lea la explicación y escríbala para superar el reto.` : "Todavía no. Piense en cuántas generaciones hacen falta y cuántos años dura cada una.";
+    resultado.textContent = ok ? `Correcto: ${fmt(r.respuesta)} ${r.unidad}.` : intentosNum >= 2 ? `Todavía no. La respuesta es ${fmt(r.respuesta)} ${r.unidad}: lea la explicación y escríbala para superar el reto.` : (r.pista || "Todavía no. Piense en cuántas generaciones hacen falta y cuántos años dura cada una.");
     resultado.classList.toggle("ok", ok); exp.hidden = !(ok || intentosNum >= 2); if (ok) fin(true);
   };
   cont.append(el("div", { class: "reto" }, el("p", { class: "consigna" }, r.consigna),

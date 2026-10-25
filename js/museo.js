@@ -227,7 +227,8 @@ export function crearMuseo(contenedor, { salas, especies, linajes, tierra, casos
   const geoLuz = new THREE.BoxGeometry(1.42, 0.06, 1.02);
   for (const s of salas) {
     let x, z, ry = 0;
-    if (s.lado === 0) { x = 0; z = Z0 + 3.2; ry = 0; }
+    if (s.lab === 2) { x = 0; z = 12.6; ry = Math.PI; }
+    else if (s.lado === 0) { x = 0; z = Z0 + 3.2; ry = 0; }
     else if (s.edad == null) { x = s.lado * 4.6; z = LAB[s.lab]; ry = -s.lado * Math.PI / 2; }
     else { x = s.lado * 5.6; z = zDe(s.edad); ry = -s.lado * Math.PI / 2; }
     const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = ry;
@@ -252,7 +253,7 @@ export function crearMuseo(contenedor, { salas, especies, linajes, tierra, casos
     const toque = new THREE.Mesh(new THREE.BoxGeometry(1.6, 2.2, 1.2), new THREE.MeshBasicMaterial({ visible: false })); toque.position.y = 1.1; toque.userData.clave = "s:" + s.id; g.add(toque);
     grupoVitrinas.add(g);
     const ancla = new THREE.Object3D(); ancla.position.y = 2.15; g.add(ancla);
-    marcas.set("s:" + s.id, { tipo: "sala", id: s.id, toque, ancla, obj, originales, matLuz, pozo, halo, grupo: g, estado: "cerrada", lado: s.lado, x, z });
+    marcas.set("s:" + s.id, { tipo: "sala", id: s.id, toque, ancla, obj, originales, matLuz, pozo, halo, grupo: g, estado: "cerrada", lado: s.lado, fondo: s.lab === 2, x, z });
   }
 
   /* ---- Gabinete de etología: vitrinas de pared en la galería lateral derecha ---- */
@@ -321,7 +322,8 @@ export function crearMuseo(contenedor, { salas, especies, linajes, tierra, casos
     if (m.tipo === "sala") {
       const c = new THREE.Vector3(m.x, 1.4, m.z);
       let pos;
-      if (m.lado === 0) pos = new THREE.Vector3(0, 2.6, m.z + 5);
+      if (m.fondo) pos = new THREE.Vector3(0.6, 2.5, m.z - 4.6);
+      else if (m.lado === 0) pos = new THREE.Vector3(0, 2.6, m.z + 5);
       else pos = new THREE.Vector3(m.x - m.lado * 4.2, 2.5, m.z + 2.2);
       volarA(pos, c);
     } else if (m.tipo === "caso") {

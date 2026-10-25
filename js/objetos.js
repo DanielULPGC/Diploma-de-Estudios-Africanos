@@ -282,6 +282,40 @@ function helice() {
   return g;
 }
 
+function estratos() {
+  // Perfil estratigráfico (sala 14): capas de sedimento, una ceniza volcánica clara fechable
+  // y un fósil esquemático hallado en superficie, cuya relación con las capas hay que demostrar
+  const g = new THREE.Group();
+  const c = document.createElement("canvas"); c.width = 256; c.height = 256; const x = c.getContext("2d"); const r = rnd(1414);
+  let y = 0; const ceniza = [92, 104];
+  while (y < 256) {
+    const h = 10 + r() * 22; const l = 105 + r() * 70;
+    x.fillStyle = `rgb(${l + 26},${l + 8},${l - 22})`; x.fillRect(0, y, 256, h + 1);
+    x.fillStyle = "rgba(40,25,15,0.18)"; for (let i = 0; i < 40; i++) x.fillRect(r() * 256, y + r() * h, 2 + r() * 3, 1.5);
+    y += h;
+  }
+  x.fillStyle = "#e9e4da"; x.fillRect(0, ceniza[0], 256, ceniza[1] - ceniza[0]);
+  x.fillStyle = "rgba(120,110,100,0.35)"; for (let i = 0; i < 70; i++) x.fillRect(r() * 256, ceniza[0] + r() * 12, 1.5, 1.5);
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+  const lado = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.95 });
+  const techo = mat("#9c7f5c", { roughness: 1 });
+  const bloque = new THREE.Mesh(new THREE.BoxGeometry(0.78, 0.46, 0.3), [lado, lado, techo, techo, lado, lado]);
+  bloque.position.y = -0.08; g.add(bloque);
+  // La ceniza sobresale un poco: es la capa que se fecha
+  const banda = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.022, 0.32), mat("#efe9df", { roughness: 0.9 }));
+  banda.position.y = -0.08 + 0.23 - (ceniza[0] + 6) / 256 * 0.46; g.add(banda);
+  // Fósil en superficie: bóveda y cara esquemáticas
+  const hueso = mat("#c9b48e", { roughness: 0.7 });
+  const boveda = new THREE.Mesh(new THREE.SphereGeometry(0.085, 24, 16), hueso);
+  boveda.scale.set(1.25, 0.8, 1); boveda.position.set(0.12, 0.2, 0.02); g.add(boveda);
+  const cara = new THREE.Mesh(new THREE.SphereGeometry(0.05, 18, 12), hueso);
+  cara.scale.set(1, 0.9, 1.1); cara.position.set(0.21, 0.18, 0.03); g.add(cara);
+  // Etiqueta de latón con una flecha: «¿qué se fechó?»
+  const etiqueta = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.05, 0.01), mat("#b28a4c", { roughness: 0.35, metalness: 0.7 }));
+  etiqueta.position.set(-0.28, banda.position.y, 0.17); g.add(etiqueta);
+  return g;
+}
+
 export function crearObjeto(tipo, tierra) {
   switch (tipo) {
     case "red": return red();
@@ -297,6 +331,7 @@ export function crearObjeto(tipo, tierra) {
     case "globo": return globo(tierra);
     case "nuez": return nuez();
     case "helice": return helice();
+    case "estratos": return estratos();
     default: return new THREE.Group();
   }
 }
