@@ -1,9 +1,10 @@
 /*
- * SER HUMANOS · las trece salas
+ * SER HUMANOS · las catorce salas
  * Contenido armonizado y actualizado (octubre de 2026). Redacción propia con citas de autor y año;
  * las referencias completas están en datos/referencias.js y se citan por clave en «refs».
  * edad: anclaje en la línea del tiempo (Ma); lado: -1 izquierda, 1 derecha, 0 portada; edad null = laboratorio del presente.
- * Tipos de reto: clasificar, ordenar, test, numerico, caja, prediccion-dieta, prediccion-tai, mapa.
+ * lab: fila del laboratorio (0 y 1, vitrinas laterales; 2, vitrina central del fondo).
+ * Tipos de reto: clasificar, ordenar, test, numerico (pista opcional para el primer fallo), caja, prediccion-dieta, prediccion-tai, mapa.
  */
 window.SH = window.SH || {};
 
@@ -567,6 +568,81 @@ window.SH.salas = [
       { t: "¿Alguien ayudaba a comer a un individuo sin dientes?", c: 6, e: "El individuo desdentado de Dmanisi (Lordkipanidze et al., 2005)." }
     ]
   }]
+},
+/* ------------------------------------------------------------------ 14 */
+{
+  id: "s14", n: 14, objeto: "estratos", edad: null, lado: 0, lab: 2,
+  corto: "Laboratorio de cronología",
+  titulo: "¿Qué edad tiene un fósil? Laboratorio de cronología",
+  idea: "Una fecha no es un dato aislado, sino una inferencia: dice qué se dató, con qué método y con qué margen de error.",
+  sintesis: [
+    "Antes de leer una fecha conviene preguntar a qué se refiere. El rango de una especie es la envolvente de sus fósiles conocidos y cambia con cada hallazgo: Paranthropus boisei se documenta entre unos 2,3 y 1,4 Ma, mientras que su holotipo, OH 5, procede de un nivel de Olduvai de hacia 1,84 Ma (Blumenschine et al., 2012). Las dos cifras no se contradicen: responden a preguntas distintas. Lo mismo ocurre con una mandíbula de Paranthropus de 2,6 Ma hallada en Mille-Logya (Etiopía): es la edad de un fósil del género, aún sin especie asignada, y no amplía por sí sola el rango de P. boisei (Alemseged et al., 2026).",
+    "Pocas veces se fecha el propio fósil. En Toros-Menalla (Chad) se dataron con nucleidos cosmogénicos los sedimentos próximos al hallazgo de Toumaï, entre 7,2 y 6,8 Ma (Lebatard et al., 2008); como el cráneo apareció en superficie, la asociación con esos niveles se ha discutido. En Jebel Irhoud (Marruecos), la edad de 315 000 ± 34 000 años procede de sílex calentados en el fuego y fechados por termoluminiscencia (Richter et al., 2017). La cifra vale para el fósil solo si su relación con lo fechado es segura.",
+    "Algunas fechas son edades mínimas. En Etiopía, los restos de Omo I están por debajo de una ceniza volcánica correlacionada con una erupción del volcán Shala de hace 233 000 ± 22 000 años (Vidal et al., 2022). Omo I puede ser más antiguo, pero no más reciente, mientras esa correlación se mantenga. El margen (±) indica el intervalo plausible: una conclusión prudente usa su extremo más desfavorable.",
+    "Las fechas también se discuten. Para el Miembro 4 de Sterkfontein (Sudáfrica), del que procede buena parte de los fósiles de Australopithecus africanus, la datación por nucleidos cosmogénicos del cuarzo da unos 3,4-3,6 Ma y considera más jóvenes, por intrusivas, las coladas de calcita que habían dado 2,6-2,1 Ma (Granger et al., 2022). En cambio, el tamaño de los molares del mono Theropithecus oswaldi, comparado con la secuencia de África oriental, indica que ninguna cueva sudafricana supera unos 2,8 Ma (Frost et al., 2022). Los autores de la datación cosmogénica atribuyen esa fauna más reciente a mezclas de depósitos (Granger et al., 2023). Hoy ninguna de las dos posiciones puede darse por demostrada."
+  ],
+  conceptos: [
+    { t: "Rango de una especie", d: "Intervalo entre sus fósiles más antiguos y más recientes conocidos; cambia con los hallazgos." },
+    { t: "Edad del contexto", d: "Edad de los sedimentos o de la ceniza asociados a un fósil, no del fósil mismo." },
+    { t: "Edad mínima", d: "Límite que indica que un fósil es al menos así de antiguo." },
+    { t: "Margen de incertidumbre (±)", d: "Intervalo plausible de una fecha; cada artículo indica cómo lo calcula." },
+    { t: "Nucleidos cosmogénicos", d: "Isótopos producidos por rayos cósmicos en rocas expuestas; su desintegración tras el enterramiento permite fecharlo." },
+    { t: "Biocronología", d: "Datación de un depósito por comparación con la fauna de secuencias ya fechadas." }
+  ],
+  pensar: "Un manual dice: «Australopithecus africanus vivió hace 3-2 millones de años». ¿Qué tendría que añadir para que la frase fuera fiel a la evidencia?",
+  debates: [
+    "La edad del Miembro 4 de Sterkfontein: datación cosmogénica (3,4-3,6 Ma) frente a biocronología de cercopitécidos (no más de unos 2,8 Ma).",
+    "La asociación entre el cráneo de Toumaï, hallado en superficie, y los sedimentos fechados.",
+    "Los márgenes de error no siempre se expresan igual: conviene comprobar en cada artículo si corresponden a una o a dos desviaciones típicas."
+  ],
+  refs: ["blumenschine2012", "alemseged2026", "lebatard2008", "richter2017", "vidal2022", "granger2022", "frost2022", "granger2023"],
+  retos: [
+    {
+      tipo: "clasificar", titulo: "Estación 1 · ¿Especie o ejemplar?",
+      consigna: "Prediga antes de mirar la síntesis: ¿qué representa cada fecha?",
+      categorias: ["Rango de una especie", "Edad de un ejemplar o de su contexto", "Edad mínima"],
+      items: [
+        { t: "Paranthropus boisei: 2,3-1,4 Ma.", c: 0, e: "Envolvente de los fósiles atribuidos a la especie." },
+        { t: "Australopithecus afarensis: 3,76-2,92 Ma.", c: 0, e: "Envolvente del registro, no una duración continua demostrada." },
+        { t: "OH 5, holotipo de P. boisei, en un nivel de Olduvai: hacia 1,84 Ma.", c: 1, e: "Edad del nivel que contiene el holotipo (Blumenschine et al., 2012)." },
+        { t: "Sedimentos de Toros-Menalla junto a Toumaï: 7,2-6,8 Ma.", c: 1, e: "Edad del contexto, no del cráneo (Lebatard et al., 2008)." },
+        { t: "Mandíbula de Paranthropus de Mille-Logya: 2,6 Ma.", c: 1, e: "Un fósil del género sin especie asignada: no amplía por sí solo el rango de P. boisei." },
+        { t: "Omo I: al menos 233 000 ± 22 000 años.", c: 2, e: "Los restos están por debajo de una ceniza fechada (Vidal et al., 2022)." }
+      ]
+    },
+    {
+      tipo: "test", titulo: "Estación 2 · ¿Qué se ha fechado?",
+      preguntas: [
+        { q: "La edad de 7,2-6,8 Ma de Toros-Menalla procede de…", o: ["El cráneo de Toumaï, fechado directamente", "Los sedimentos próximos al hallazgo, con nucleidos cosmogénicos", "Los dientes, con radiocarbono"], c: 1, e: "Lebatard et al. (2008) fecharon los sedimentos; como el cráneo apareció en superficie, la asociación se ha discutido. El radiocarbono no alcanza más de unos 50 000 años." },
+        { q: "En Omo I, Vidal et al. (2022) fecharon…", o: ["El cráneo", "Una ceniza volcánica situada por encima de los restos", "Una ceniza situada por debajo de los restos"], c: 1, e: "Una ceniza por encima da una edad mínima: los restos son al menos así de antiguos." },
+        { q: "La edad de 315 000 ± 34 000 años de Jebel Irhoud procede sobre todo de…", o: ["Sílex calentados, fechados por termoluminiscencia", "Radiocarbono de huesos", "La comparación con fauna de África oriental"], c: 0, e: "Richter et al. (2017): el fuego «pone a cero» el reloj de la termoluminiscencia del sílex." }
+      ]
+    },
+    { tipo: "numerico", titulo: "Estación 3 · Una edad mínima prudente",
+      consigna: "La ceniza situada por encima de Omo I tiene 233 000 ± 22 000 años. Tomando el extremo más desfavorable del margen, ¿qué edad mínima puede afirmarse con más seguridad?",
+      respuesta: 211000, tolerancia: 0.01, unidad: "años",
+      pista: "Todavía no. La ceniza está por encima de los restos: busque el valor más bajo que permite el margen de error.",
+      explicacion: "233 000 − 22 000 = 211 000 años. Omo I tiene al menos esa edad mientras se mantenga la correlación de la ceniza; puede ser bastante más antiguo (Vidal et al., 2022)." },
+    {
+      tipo: "clasificar", titulo: "Estación 4 · Sterkfontein en debate",
+      consigna: "Antes de leer el debate, vote: ¿3,5 Ma o menos de 2,8 Ma? Después clasifique cada argumento según la edad que apoya.",
+      categorias: ["Apoya una edad antigua (3,4-3,6 Ma)", "Apoya una edad reciente (2,8 Ma o menos)"],
+      items: [
+        { t: "Aluminio-26 y berilio-10 en el cuarzo del relleno de la cueva.", c: 0, e: "Datación por nucleidos cosmogénicos (Granger et al., 2022)." },
+        { t: "Las coladas de calcita son intrusivas y más jóvenes que la brecha con fósiles.", c: 0, e: "Por eso, según Granger et al. (2022), las fechas de 2,6-2,1 Ma subestiman la edad." },
+        { t: "Coladas de calcita fechadas en 2,6-2,1 Ma dentro del depósito.", c: 1, e: "Base de la cronología anterior, más reciente." },
+        { t: "Tamaño de los molares de Theropithecus oswaldi comparado con África oriental.", c: 1, e: "Biocronología de cercopitécidos (Frost et al., 2022)." },
+        { t: "Los fósiles de monos más recientes proceden de mezclas por voladuras y del Miembro 5.", c: 0, e: "Réplica de Granger et al. (2023) a la biocronología." }
+      ]
+    },
+    {
+      tipo: "test", titulo: "Estación 4 · Una conclusión proporcionada",
+      preguntas: [
+        { q: "¿Qué frase se ajusta mejor a la evidencia sobre el Miembro 4 de Sterkfontein?", o: ["Tiene 3,5 Ma: la datación radiométrica siempre prevalece", "Tiene menos de 2,8 Ma: la fauna lo demuestra", "Su edad está en debate: dos métodos independientes dan resultados incompatibles y cada equipo explica los datos del otro"], c: 2, e: "Ningún método «gana» por principio: la cuestión depende de la asociación entre lo fechado y los fósiles, y sigue abierta." },
+        { q: "¿Cómo debería presentarse la edad de Australopithecus africanus en una cartela?", o: ["«Hace 3-2 millones de años»", "«Entre unos 3,6 y 2,1 Ma, según el método; la edad de Sterkfontein se discute»", "No debe darse ninguna fecha"], c: 1, e: "Dar la horquilla, decir de dónde sale y advertir el debate es más honesto que una cifra cerrada o que el silencio." }
+      ]
+    }
+  ]
 }
 ];
 
@@ -584,5 +660,6 @@ window.SH.examen = [
   { q: "Para Bourdieu, el habitus…", o: ["Se aprende mediante enseñanza explícita", "Se absorbe del medio social y se percibe como rasgo individual", "Es una disposición genética"], c: 1, e: "Sala 10." },
   { q: "Con 1 km por generación de 20 años, 10 000 km se recorren en…", o: ["20 000 años", "200 000 años", "2 millones de años"], c: 1, e: "Sala 11." },
   { q: "¿Qué hicieron las hembras que emigraron al grupo sur de Taï?", o: ["Mantuvieron su costumbre", "Adoptaron la costumbre local de los martillos de piedra", "Dejaron de cascar nueces"], c: 1, e: "Conformismo (sala 12)." },
-  { q: "¿Qué método permite identificar especie y sexo cuando el ADN no se conserva?", o: ["La estratigrafía", "La paleoproteómica", "La datación radiométrica"], c: 1, e: "Las proteínas antiguas duran más que el ADN (sala 13)." }
+  { q: "¿Qué método permite identificar especie y sexo cuando el ADN no se conserva?", o: ["La estratigrafía", "La paleoproteómica", "La datación radiométrica"], c: 1, e: "Las proteínas antiguas duran más que el ADN (sala 13)." },
+  { q: "Si un fósil está bajo una ceniza fechada en 233 000 ± 22 000 años, el fósil…", o: ["Tiene exactamente 233 000 años", "Tiene al menos unos 211 000 años y puede ser más antiguo", "Es más reciente que la ceniza"], c: 1, e: "Edad mínima, como en Omo I (sala 14)." }
 ];

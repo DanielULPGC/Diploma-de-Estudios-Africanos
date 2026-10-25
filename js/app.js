@@ -23,7 +23,7 @@ const ETO = S.etologia || { casos: [], retos: [], ejes: {}, intro: null };
 const porCaso = new Map(ETO.casos.map(c => [c.id, c]));
 
 /* Orden del recorrido guiado: cada sala seguida de una especie */
-const ORDEN_RECORRIDO = ["s01", "sahelanthropus", "s02", "ardipithecus", "s03", "afarensis", "s04", "africanus", "s05", "boisei", "s06", "rudolfensis", "s07", "habilis", "s08", "ergaster", "s09", "erectus", "s10", "heidelbergensis", "s11", "neanderthalensis", "s12", "sapiens", "s13"]
+const ORDEN_RECORRIDO = ["s01", "sahelanthropus", "s02", "ardipithecus", "s03", "afarensis", "s04", "africanus", "s05", "boisei", "s06", "rudolfensis", "s07", "habilis", "s08", "ergaster", "s09", "erectus", "s10", "heidelbergensis", "s11", "neanderthalensis", "s12", "sapiens", "s13", "s14"]
   .map(id => porSala.has(id) ? { tipo: "sala", id } : { tipo: "especie", id });
 
 const estado = { vista: "inicio", sel: null, recorrido: null };
@@ -115,7 +115,7 @@ function pintarIndice() {
   cuenta("especies", String(especies.length));
   const n = contarMontadas();
   $("#progreso-relleno").style.width = (n / salas.length * 100) + "%";
-  $(".barra-progreso").setAttribute("aria-valuenow", n);
+  $(".barra-progreso").setAttribute("aria-valuenow", n); $(".barra-progreso").setAttribute("aria-valuemax", salas.length);
   $("#progreso-texto").textContent = `${n} de ${salas.length}` + (DOCENTE ? " · modo docente" : "");
 }
 function pintarLeyenda() {
@@ -171,10 +171,10 @@ function vistaInicio() {
   estado.vista = "inicio"; estado.sel = null; if (museo) museo.marcar(null); pintarIndice();
   const n = contarMontadas();
   poner(ficha,
-    cabecera("Comisariado en prácticas", "Las vitrinas están vacías", el("p", { class: "sub" }, "Los primeros tres millones de años de la cultura humana, en trece salas")),
+    cabecera("Comisariado en prácticas", "Las vitrinas están vacías", el("p", { class: "sub" }, "Los primeros tres millones de años de la cultura humana, en catorce salas")),
     DOCENTE ? el("p", { class: "docente" }, "Modo docente: vitrinas abiertas y soluciones visibles") : null,
     el("div", { class: "texto" },
-      el("p", {}, "Las cajas de la exposición han llegado, pero las vitrinas están vacías. Su tarea, como comisario o comisaria en prácticas, es montar las trece salas: leer cada sala, comprender su idea central y superar sus retos. Cada vitrina se ilumina cuando la sala queda montada."),
+      el("p", {}, "Las cajas de la exposición han llegado, pero las vitrinas están vacías. Su tarea, como comisario o comisaria en prácticas, es montar las catorce salas: leer cada sala, comprender su idea central y superar sus retos. Cada vitrina se ilumina cuando la sala queda montada."),
       el("p", {}, "La galería recorre el tiempo desde hace siete millones de años (al fondo) hasta hoy. En el suelo, las bandas de color señalan cuánto duró cada especie y las esferas, su volumen cerebral medio. Al final espera el laboratorio del presente: lo que hoy observamos en bebés, en chimpancés o en los huesos para entender el pasado.")),
     el("div", { class: "cifras" },
       el("div", {}, el("strong", {}, `${n}/${salas.length}`), "vitrinas montadas"),
@@ -184,7 +184,7 @@ function vistaInicio() {
       el("ul", { class: "texto", style: "padding-left: 1.1em; font-size: var(--t-sm)" },
         el("li", {}, "Arrastre para girar, rueda o pellizco para acercarse y clic derecho o dos dedos para desplazarse."),
         el("li", {}, "Pulse una vitrina o una esfera para abrir su ficha; el índice permite hacerlo con el teclado."),
-        el("li", {}, "«Recorrido guiado» alterna las trece salas con las doce especies, de los primeros homininos a Homo sapiens."),
+        el("li", {}, "«Recorrido guiado» alterna las catorce salas con las doce especies, de los primeros homininos a Homo sapiens."),
         el("li", {}, "El «Gabinete de etología», en la galería lateral derecha del claustro, reúne doce vitrinas de pared con casos de comportamiento animal (simios, monos, loros y cacatúas) que dialogan con las salas."))),
     el("div", { class: "nav-ficha" },
       el("button", { class: "boton primario", type: "button", onclick: () => iniciarRecorrido() }, "Empezar el recorrido"),
@@ -301,7 +301,7 @@ function vistaGuia() {
     el("section", { class: "seccion" }, el("h3", {}, "Secuencia propuesta (3 sesiones)"),
       lista(
         "Sesión 1 · Recorrido guiado en modo presentación por las salas 1-3 y debate «¿dónde empieza la cultura?».",
-        "Sesión 2 · Comisariado por equipos: reparto de las trece salas. Cada equipo supera sus retos y redacta una cartela propia (60-80 palabras) que cite al menos dos referencias de la sala, una de ellas de 2023-2026.",
+        "Sesión 2 · Comisariado por equipos: reparto de las catorce salas. Cada equipo supera sus retos y redacta una cartela propia (60-80 palabras) que cite al menos dos referencias de la sala, una de ellas de 2023-2026.",
         "Sesión 3 · Visita cruzada: cada equipo presenta su vitrina; examen de comisariado y debate sobre los recuadros «En debate»: qué sabemos, qué no y cómo podría resolverse.",
         "Ampliación · Gabinete de etología: cada equipo elige un caso, lo relaciona con su sala y explica qué pregunta de Tinbergen responde, si la comparación es por homología o por convergencia y cuáles son sus límites.")),
     el("section", { class: "seccion" }, el("h3", {}, "Evaluación orientativa"),

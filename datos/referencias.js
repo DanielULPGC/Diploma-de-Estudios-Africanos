@@ -3,8 +3,9 @@
  * Catálogo único de referencias, citado por clave desde salas.js y especies.js.
  * Autoría, año, título, revista y DOI cotejados en Crossref o en doi.org (22-23 de octubre de 2026),
  * salvo los capítulos del volumen de 2022 y las obras sin DOI, tomadas de la publicación original.
- * granger2022, granger2023, semaw2005 y white2009 (añadidas el 25-10-2026) se cotejaron con fichas editoriales,
- * institucionales y bibliográficas abiertas, no con Crossref; conviene confirmarlas allí.
+ * granger2022, granger2023, frost2022, semaw2005, white2009, woldegabriel2009, lebatard2008, vidal2022 y blumenschine2012 (añadidas el 25-10-2026) se cotejaron con fichas
+ * editoriales, institucionales y bibliográficas abiertas, no con Crossref; el DOI de woldegabriel2009 lo confirmó la persona
+ * responsable en la página de Science. Conviene confirmarlas todas en Crossref.
  */
 window.SH = window.SH || {};
 (() => {
@@ -38,6 +39,7 @@ window.SH.refs = {
   baykara2026: { cita: "Baykara, İ. et al. (2026). Long-term cultural continuity across the Neanderthal–modern human sequence at Üçağızlı II Cave, northern Levant. PNAS, 123, e2609061123.", doi: "10.1073/pnas.2609061123" },
   berna2012: { cita: "Berna, F. et al. (2012). Microstratigraphic evidence of in situ fire in the Acheulean strata of Wonderwerk Cave, Northern Cape province, South Africa. PNAS, 109, E1215-E1220.", doi: "10.1073/pnas.1117620109" },
   beyene2013: { cita: "Beyene, Y. et al. (2013). The characteristics and chronology of the earliest Acheulean at Konso, Ethiopia. PNAS, 110, 1584-1591.", doi: "10.1073/pnas.1221285110" },
+  blumenschine2012: { cita: "Blumenschine, R. J. et al. (2012). Environments and activity traces of Oldowan hominins across the FLK Peninsula during Zinjanthropus times (1.84 Ma), Olduvai Gorge, Tanzania. Journal of Human Evolution, 63(2), 364-383.", doi: "10.1016/j.jhevol.2011.10.001" },
   bons2019: { cita: "Bons, P. D. et al. (2019). Out of Africa by spontaneous migration waves. PLOS ONE, 14(4), e0201998.", doi: "10.1371/journal.pone.0201998" },
   bossoms2026: { cita: "Bossoms Mesa, A. et al. (2026). Genetic diversity of late Neanderthals in northwestern Europe. Nature, 655, 409-417.", doi: "10.1038/s41586-026-10625-1" },
   braun2019: { cita: "Braun, D. R. et al. (2019). Earliest known Oldowan artifacts at >2.58 Ma from Ledi-Geraru, Ethiopia, highlight early technological diversity. PNAS, 116, 11712-11717.", doi: "10.1073/pnas.1820177116" },
@@ -53,6 +55,7 @@ window.SH.refs = {
   dominguez2026: { cita: "Domínguez-Rodrigo, M. et al. (2026). Earliest evidence of elephant butchery at Olduvai Gorge (Tanzania) reveals the evolutionary impact of early human megafaunal exploitation. eLife, 14, RP108298.", doi: "10.7554/eLife.108298.5" },
   fan2025: { cita: "Fan, B. et al. (2025). Relatively open vegetation landscapes promoted early Pleistocene hominin evolution. Communications Earth & Environment, 6, 1014.", doi: "10.1038/s43247-025-02983-x" },
   forrest2026: { cita: "Forrest, F. et al. (2026). Early evidence for a stable and flexible foraging niche in the evolution of Homo. PNAS, 123, e2537631123.", doi: "10.1073/pnas.2537631123" },
+  frost2022: { cita: "Frost, S. R., White, F. J., Reda, H. G. y Gilbert, C. C. (2022). Biochronology of South African hominin-bearing sites: A reassessment using cercopithecid primates. PNAS, 119(45), e2210627119.", doi: "10.1073/pnas.2210627119" },
   fu2025a: { cita: "Fu, Q. et al. (2025). The proteome of the Late Middle Pleistocene Harbin individual. Science.", doi: "10.1126/science.adu9677" },
   fu2025b: { cita: "Fu, Q. et al. (2025). Denisovan mitochondrial DNA from dental calculus of the >146,000-year-old Harbin cranium. Cell.", doi: "10.1016/j.cell.2025.05.040" },
   fu2026: { cita: "Fu, Q. et al. (2026). Enamel proteins from six Homo erectus specimens across China. Nature, 655, 141-147.", doi: "10.1038/s41586-026-10478-8" },
@@ -73,6 +76,7 @@ window.SH.refs = {
   jesmer2018: { cita: "Jesmer, B. R. et al. (2018). Is ungulate migration culturally transmitted? Evidence of social learning from translocated animals. Science, 361, 1023-1025.", doi: "10.1126/science.aat0985" },
   key2026: { cita: "Key, A. (2026). The co-evolution of hominins and Stone Age culture. Proceedings of the Royal Society B, 293, 20260772.", doi: "10.1098/rspb.2026.0772" },
   kobayashi1997: { cita: "Kobayashi, H. y Kohshima, S. (1997). Unique morphology of the human eye. Nature, 387, 767-768.", doi: "10.1038/42842" },
+  lebatard2008: { cita: "Lebatard, A.-E. et al. (2008). Cosmogenic nuclide dating of Sahelanthropus tchadensis and Australopithecus bahrelghazali: Mio-Pliocene hominids from Chad. PNAS, 105(9), 3226-3231.", doi: "10.1073/pnas.0708015105" },
   lepre2011: { cita: "Lepre, C. J. et al. (2011). An earlier origin for the Acheulian. Nature, 477, 82-85.", doi: "10.1038/nature10372" },
   lordkipanidze2005: { cita: "Lordkipanidze, D. et al. (2005). The earliest toothless hominin skull. Nature, 434, 717-718.", doi: "10.1038/434717b" },
   lordkipanidze2013: { cita: "Lordkipanidze, D. et al. (2013). A complete skull from Dmanisi, Georgia, and the evolutionary biology of early Homo. Science, 342, 326-331.", doi: "10.1126/science.1238484" },
@@ -105,10 +109,12 @@ window.SH.refs = {
   spassov2026: { cita: "Spassov, N. et al. (2026). An early form of terrestrial hominine bipedalism in the Late Miocene of Bulgaria. Palaeobiodiversity and Palaeoenvironments, 106, 421-453.", doi: "10.1007/s12549-025-00691-0" },
   stout2002: { cita: "Stout, D. (2002). Skill and cognition in stone tool production: An ethnographic case study from Irian Jaya. Current Anthropology, 43(5), 693-722.", doi: "10.1086/342638" },
   verheijen2026: { cita: "Verheijen, I. et al. (2026). Faunal exploitation at the elephant hunting site of Lehringen, Germany, 125,000 years ago. Scientific Reports, 16, 9836.", doi: "10.1038/s41598-026-42538-4" },
+  vidal2022: { cita: "Vidal, C. M. et al. (2022). Age of the oldest known Homo sapiens from eastern Africa. Nature, 601(7894), 579-583.", doi: "10.1038/s41586-021-04275-8" },
   villmoare2015: { cita: "Villmoare, B. et al. (2015). Early Homo at 2.8 Ma from Ledi-Geraru, Afar, Ethiopia. Science, 347, 1352-1355.", doi: "10.1126/science.aaa1343" },
   white2009: { cita: "White, T. D. et al. (2009). Ardipithecus ramidus and the paleobiology of early hominids. Science, 326, 75-86.", doi: "10.1126/science.1175802" },
   whiten1999: { cita: "Whiten, A. et al. (1999). Cultures in chimpanzees. Nature, 399, 682-685.", doi: "10.1038/21415" },
   williams2026: { cita: "Williams, S. A. et al. (2026). Earliest evidence of hominin bipedalism in Sahelanthropus tchadensis. Science Advances, 12(1).", doi: "10.1126/sciadv.adv0130" },
+  woldegabriel2009: { cita: "WoldeGabriel, G. et al. (2009). The geological, isotopic, botanical, invertebrate, and lower vertebrate surroundings of Ardipithecus ramidus. Science, 326(5949), 65e1-65e5.", doi: "10.1126/science.1175817" },
   zhang2026: { cita: "Zhang, Y. et al. (2026). Recovering signatures of archaic hominin introgression using ancestral recombination graphs. Science, 393, eaef8874.", doi: "10.1126/science.aef8874" },
   zhong2026: { cita: "Zhong, J. et al. (2026). Modern human presence in eastern Asia before 130 ka: evidence from U-series re-dating of Daoxian site. Journal of Archaeological Science: Reports, 70, 105631.", doi: "10.1016/j.jasrep.2026.105631" },
   zhu2018: { cita: "Zhu, Z. et al. (2018). Hominin occupation of the Chinese Loess Plateau since about 2.1 million years ago. Nature, 559, 608-612.", doi: "10.1038/s41586-018-0299-4" },
