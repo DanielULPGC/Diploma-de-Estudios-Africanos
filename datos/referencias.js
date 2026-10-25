@@ -3,6 +3,8 @@
  * Catálogo único de referencias, citado por clave desde salas.js y especies.js.
  * Autoría, año, título, revista y DOI cotejados en Crossref o en doi.org (22-23 de octubre de 2026),
  * salvo los capítulos del volumen de 2022 y las obras sin DOI, tomadas de la publicación original.
+ * granger2022, granger2023, semaw2005 y white2009 (añadidas el 25-10-2026) se cotejaron con fichas editoriales,
+ * institucionales y bibliográficas abiertas, no con Crossref; conviene confirmarlas allí.
  */
 window.SH = window.SH || {};
 (() => {
@@ -56,6 +58,8 @@ window.SH.refs = {
   fu2026: { cita: "Fu, Q. et al. (2026). Enamel proteins from six Homo erectus specimens across China. Nature, 655, 141-147.", doi: "10.1038/s41586-026-10478-8" },
   gandini2025: { cita: "Gandini, F. et al. (2025). Genomic evidence supports the “long chronology” for the peopling of Sahul. Science Advances, 11, eady9493.", doi: "10.1126/sciadv.ady9493" },
   gorenInbar2004: { cita: "Goren-Inbar, N. et al. (2004). Evidence of hominin control of fire at Gesher Benot Ya‘aqov, Israel. Science, 304, 725-727.", doi: "10.1126/science.1095443" },
+  granger2022: { cita: "Granger, D. E. et al. (2022). Cosmogenic nuclide dating of Australopithecus at Sterkfontein, South Africa. PNAS, 119(27), e2123516119.", doi: "10.1073/pnas.2123516119" },
+  granger2023: { cita: "Granger, D. E. et al. (2023). Monkey fossils do not negate cosmogenic dating at Sterkfontein. PNAS, 120(13), e2300314120.", doi: "10.1073/pnas.2300314120" },
   gruber2009: { cita: "Gruber, T. et al. (2009). Wild chimpanzees rely on cultural knowledge to solve an experimental honey acquisition task. Current Biology, 19(21), 1806-1810.", doi: "10.1016/j.cub.2009.08.060" },
   haidleSchlaudt2020: { cita: "Haidle, M. N. y Schlaudt, O. (2020). Where does cumulative culture begin? A plea for a sociologically informed perspective. Biological Theory, 15, 161-174.", doi: "10.1007/s13752-020-00351-w" },
   harmand2015: { cita: "Harmand, S. et al. (2015). 3.3-million-year-old stone tools from Lomekwi 3, West Turkana, Kenya. Nature, 521, 310-315.", doi: "10.1038/nature14464" },
@@ -75,7 +79,7 @@ window.SH.refs = {
   luncz2012: { cita: "Luncz, L. V., Mundry, R. y Boesch, C. (2012). Evidence for cultural differences between neighboring chimpanzee communities. Current Biology, 22(10), 922-926.", doi: "10.1016/j.cub.2012.03.031" },
   macchiarelli2020: { cita: "Macchiarelli, R. et al. (2020). Nature and relationships of Sahelanthropus tchadensis. Journal of Human Evolution, 102898.", doi: "10.1016/j.jhevol.2020.102898" },
   marin2026: { cita: "Marin-Monfort, M. D. et al. (2026). New evidence for Early Pleistocene use of fire at Wonderwerk Cave (South Africa). PLOS ONE, 21, e0347480.", doi: "10.1371/journal.pone.0347480" },
-  martin2025: { cita: "Martin, J. M. et al. (2025). The StW 573 Little Foot fossil should not be attributed to Australopithecus prometheus. American Journal of Biological Anthropology, 188, e70177.", doi: "10.1002/ajpa.70177" },
+  martin2025: { cita: "Martin, J. M. et al. (2025). The StW 573 Little Foot fossil should not be attributed to Australopithecus prometheus. American Journal of Biological Anthropology, 188(4), e70177.", doi: "10.1002/ajpa.70177" },
   martin2026: { cita: "Martin, J. M. et al. (2026). New hominin cranial and mandibular remains from Drimolen Main Quarry, South Africa. Annals of Human Biology, 53, 2725046.", doi: "10.1080/03014460.2026.2725046" },
   martinFrances2026: { cita: "Martín-Francés, L. et al. (2026). Reconstructing dietary preferences in the Middle Pleistocene Sima de los Huesos population: A molar macrowear perspective. Journal of Human Evolution, 211, 103797.", doi: "10.1016/j.jhevol.2025.103797" },
   mateos2025: { cita: "Mateos, A. et al. (2025). Revisiting hominin scavenging through the lens of optimal foraging theory. Journal of Human Evolution, 209, 103762.", doi: "10.1016/j.jhevol.2025.103762" },
@@ -93,6 +97,7 @@ window.SH.refs = {
   richter2017: { cita: "Richter, D. et al. (2017). The age of the hominin fossils from Jebel Irhoud, Morocco, and the origins of the Middle Stone Age. Nature, 546, 293-296.", doi: "10.1038/nature22335" },
   rodriguez2025: { cita: "Rodriguez, A. et al. (2025). Use-wear analysis shows changing handaxe grip and use across time at La Noira (France). Journal of Paleolithic Archaeology, 8, 32.", doi: "10.1007/s41982-025-00241-2" },
   sahnouni2018: { cita: "Sahnouni, M. et al. (2018). 1.9-million- and 2.4-million-year-old artifacts and stone tool-cutmarked bones from Ain Boucherit, Algeria. Science, 362, 1297-1301.", doi: "10.1126/science.aau0008" },
+  semaw2005: { cita: "Semaw, S. et al. (2005). Early Pliocene hominids from Gona, Ethiopia. Nature, 433, 301-305.", doi: "10.1038/nature03177" },
   shaar2021: { cita: "Shaar, R. et al. (2021). Magnetostratigraphy and cosmogenic dating of Wonderwerk Cave. Quaternary Science Reviews, 106907.", doi: "10.1016/j.quascirev.2021.106907" },
   shipton2026: { cita: "Shipton, C. et al. (2026). Pronounced increase in biface knapping skill half a million years ago in Britain. Journal of Archaeological Science: Reports, 69, 105563.", doi: "10.1016/j.jasrep.2025.105563" },
   slon2018: { cita: "Slon, V. et al. (2018). The genome of the offspring of a Neanderthal mother and a Denisovan father. Nature, 561, 113-116.", doi: "10.1038/s41586-018-0455-x" },
@@ -101,6 +106,7 @@ window.SH.refs = {
   stout2002: { cita: "Stout, D. (2002). Skill and cognition in stone tool production: An ethnographic case study from Irian Jaya. Current Anthropology, 43(5), 693-722.", doi: "10.1086/342638" },
   verheijen2026: { cita: "Verheijen, I. et al. (2026). Faunal exploitation at the elephant hunting site of Lehringen, Germany, 125,000 years ago. Scientific Reports, 16, 9836.", doi: "10.1038/s41598-026-42538-4" },
   villmoare2015: { cita: "Villmoare, B. et al. (2015). Early Homo at 2.8 Ma from Ledi-Geraru, Afar, Ethiopia. Science, 347, 1352-1355.", doi: "10.1126/science.aaa1343" },
+  white2009: { cita: "White, T. D. et al. (2009). Ardipithecus ramidus and the paleobiology of early hominids. Science, 326, 75-86.", doi: "10.1126/science.1175802" },
   whiten1999: { cita: "Whiten, A. et al. (1999). Cultures in chimpanzees. Nature, 399, 682-685.", doi: "10.1038/21415" },
   williams2026: { cita: "Williams, S. A. et al. (2026). Earliest evidence of hominin bipedalism in Sahelanthropus tchadensis. Science Advances, 12(1).", doi: "10.1126/sciadv.adv0130" },
   zhang2026: { cita: "Zhang, Y. et al. (2026). Recovering signatures of archaic hominin introgression using ancestral recombination graphs. Science, 393, eaef8874.", doi: "10.1126/science.aef8874" },
