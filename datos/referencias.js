@@ -133,5 +133,18 @@ window.SH.refs = {
   silk2023: { cita: "Silk, J. B. (2023). Between-group cooperation in bonobos. Science, 382(6672), 760-761.", doi: "10.1126/science.adl1813" },
   takenaka2022: { cita: "Takenaka, M. et al. (2022). Behavior of snow monkeys hunting fish to survive winter. Scientific Reports, 12, 20324.", doi: "10.1038/s41598-022-23799-1" },
   tinbergen1963: { cita: "Tinbergen, N. (1963). On aims and methods of ethology. Zeitschrift für Tierpsychologie, 20(4), 410-433.", doi: "10.1111/j.1439-0310.1963.tb01161.x" },
+  /* Memoria oral */
+  daSilva2016: { cita: "Da Silva, S. G. y Tehrani, J. J. (2016). Comparative phylogenetic analyses uncover the ancient roots of Indo-European folktales. Royal Society Open Science, 3(1), 150645.", doi: "10.1098/rsos.150645" },
+  echoHawk2000: { cita: "Echo-Hawk, R. C. (2000). Ancient history in the New World: Integrating oral traditions and the archaeological record in deep time. American Antiquity, 65(2), 267-290.", doi: "10.2307/2694059" },
+  franks2024: { cita: "Franks, L., Nunn, P. D. y McCallum, A. (2024). The selective geography of volcanism in oral traditions. Quaternary Research, 122, 1-17.", doi: "10.1017/qua.2024.29" },
+  franks2025: { cita: "Franks, L., Nunn, P. D., McCallum, A. y Gertz, J. (2025). Stories in stone: Aboriginal oral traditions of volcanic impacts in northeastern Australia. Geoheritage, 17, 73.", doi: "10.1007/s12371-025-01116-2" },
+  hamacher2023: { cita: "Hamacher, D. W., Nunn, P., Gantevoort, M., Taylor, R., Lehman, G., Law, K. H. A. y Miles, M. (2023). The archaeology of orality: Dating Tasmanian Aboriginal oral traditions to the Late Pleistocene. Journal of Archaeological Science, 159, 105819.", doi: "10.1016/j.jas.2023.105819" },
+  hamacherGoldsmith2013: { cita: "Hamacher, D. W. y Goldsmith, J. (2013). Aboriginal oral traditions of Australian impact craters. Journal of Astronomical History and Heritage, 16(3), 295-311. Preprint: arXiv:1306.0278." },
+  henige2009: { cita: "Henige, D. (2009). Impossible to disprove yet impossible to believe: The unforgiving epistemology of deep-time oral tradition. History in Africa, 36, 127-234.", doi: "10.1353/hia.2010.0014" },
+  matchan2020: { cita: "Matchan, E. L., Phillips, D., Jourdan, F. y Oostingh, K. (2020). Early human occupation of southeastern Australia: New insights from 40Ar/39Ar dating of young volcanoes. Geology, 48(4), 390-394.", doi: "10.1130/G47166.1" },
+  nunn2025: { cita: "Nunn, P. et al., con la Ngarrindjeri Aboriginal Corporation (2025). Calibrating Holocene human-environment interactions using ancient narratives: The example of Ngurunderi in South Australia. The Journal of Island and Coastal Archaeology, 20(3), 563-587.", doi: "10.1080/15564894.2024.2337096" },
+  nunnReid2016: { cita: "Nunn, P. D. y Reid, N. J. (2016). Aboriginal memories of inundation of the Australian coast dating from more than 7000 years ago. Australian Geographer, 47(1), 11-47.", doi: "10.1080/00049182.2015.1077539" },
+  smith2017: { cita: "Smith, D. et al. (2017). Cooperation and the evolution of hunter-gatherer storytelling. Nature Communications, 8, 1853.", doi: "10.1038/s41467-017-02036-8" },
+  wiessner2014: { cita: "Wiessner, P. W. (2014). Embers of society: Firelight talk among the Ju/'hoansi Bushmen. Proceedings of the National Academy of Sciences, 111(39), 14027-14035.", doi: "10.1073/pnas.1404212111" },
 };
 })();

@@ -102,7 +102,7 @@ function arcoApuntado(ancho, alto) {
   return { forma: s, altura: tope };
 }
 
-export function crearMuseo(contenedor, { salas, especies, linajes, tierra, casos = [], tonosEje = {}, onSeleccion, onHover } = {}) {
+export function crearMuseo(contenedor, { salas, especies, linajes, tierra, gabinetes = [], onSeleccion, onHover } = {}) {
   /* Calidad automática: equipos modestos o táctiles reciben sombras y resolución más ligeras */
   const modesto = (navigator.hardwareConcurrency || 4) <= 4 || window.matchMedia("(pointer: coarse)").matches;
   const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
@@ -262,9 +262,11 @@ export function crearMuseo(contenedor, { salas, especies, linajes, tierra, casos
   const mVidrioG = new THREE.MeshStandardMaterial({ color: "#e9f1f2", transparent: true, opacity: 0.12, roughness: 0.05, metalness: 0.1, depthWrite: false });
   const mAristaG = new THREE.LineBasicMaterial({ color: "#b28a4c", transparent: true, opacity: 0.85 });
   const placasCaso = [];
+  const rotulosGab = [];
+  for (const { casos, tonos: tonosEje, lado, rotulo } of gabinetes) {
   casos.forEach((c, k) => {
     const z = GAB.z0 - k * GAB.paso;
-    const g = new THREE.Group(); g.position.set(GAB.x - 0.02, 0, z); g.rotation.y = -Math.PI / 2;
+    const g = new THREE.Group(); g.position.set(lado * (GAB.x - 0.02), 0, z); g.rotation.y = -lado * Math.PI / 2;
     const tono = new THREE.Color(token(tonosEje[c.eje] || "--accent"));
     const fondo = new THREE.Mesh(new THREE.PlaneGeometry(1.05, 1.05), new THREE.MeshStandardMaterial({ color: tono.clone().lerp(new THREE.Color("#1c1611"), 0.72), roughness: 1 }));
     fondo.position.set(0, 1.33, 0.01); g.add(fondo);
@@ -281,12 +283,13 @@ export function crearMuseo(contenedor, { salas, especies, linajes, tierra, casos
     const toque = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.3, 0.6), new THREE.MeshBasicMaterial({ visible: false })); toque.position.set(0, 1.2, 0.25); toque.userData.clave = "c:" + c.id; g.add(toque);
     const ancla = new THREE.Object3D(); ancla.position.set(0, 1.72, 0.3); g.add(ancla);
     escena.add(g);
-    marcas.set("c:" + c.id, { tipo: "caso", id: c.id, toque, ancla, emblema, grupo: g, pozo, z });
+    marcas.set("c:" + c.id, { tipo: "caso", id: c.id, toque, ancla, emblema, grupo: g, pozo, z, lado });
   });
   if (casos.length) {
     const zMedio = GAB.z0 - (casos.length - 1) * GAB.paso / 2;
-    const rotuloGab = cartel("GABINETE DE ETOLOGÍA", "Comportamiento animal y comienzos de la cultura", GAB.x - 0.03, 2.75, zMedio, -Math.PI / 2, 6);
-    carteles.push(rotuloGab);
+    const m = cartel(rotulo[0], rotulo[1], lado * (GAB.x - 0.03), 2.75, zMedio, -lado * Math.PI / 2, 6);
+    rotulosGab.push({ m, texto: rotulo });
+  }
   }
 
   function setEstadoSala(id, estado) {
@@ -327,13 +330,13 @@ export function crearMuseo(contenedor, { salas, especies, linajes, tierra, casos
       else pos = new THREE.Vector3(m.x - m.lado * 4.2, 2.5, m.z + 2.2);
       volarA(pos, c);
     } else if (m.tipo === "caso") {
-      volarA(new THREE.Vector3(7.85, 1.65, m.z + 1.5), new THREE.Vector3(9.4, 1.3, m.z));
+      volarA(new THREE.Vector3(m.lado * 7.85, 1.65, m.z + 1.5), new THREE.Vector3(m.lado * 9.4, 1.3, m.z));
     } else {
       const p = m.pos; volarA(new THREE.Vector3(p.x + 2.6, 2.5, p.z + 4.6), new THREE.Vector3(p.x, 0.9, p.z));
     }
   }
   function vistaGeneral() { volarA(VISTA_GENERAL.pos, VISTA_GENERAL.tgt); }
-  function vistaGabinete() { volarA(new THREE.Vector3(8.0, 2.3, 15.2), new THREE.Vector3(9.3, 1.2, 1.5)); }
+  function vistaGabinete(lado = 1) { volarA(new THREE.Vector3(lado * 8.0, 2.3, 15.2), new THREE.Vector3(lado * 9.3, 1.2, 1.5)); }
   const prefijo = tipo => tipo === "sala" ? "s:" : tipo === "caso" ? "c:" : "e:";
 
   /* ---- Interacción ---- */
@@ -387,7 +390,7 @@ export function crearMuseo(contenedor, { salas, especies, linajes, tierra, casos
     /* Las placas de edad son siempre oscuras con texto claro: se leen igual en los dos temas */
     carteles[0].material.map = texturaTexto(["SER HUMANOS", "Los comienzos de nuestra cultura"], { color: colTexto, tam: 64 }); carteles[0].material.needsUpdate = true;
     carteles[1].material.map = texturaTexto(["LABORATORIO DEL PRESENTE", "Lo que observamos hoy para entender el pasado"], { color: colTexto, tam: 64 }); carteles[1].material.needsUpdate = true;
-    if (carteles[2]) { carteles[2].material.map = texturaTexto(["GABINETE DE ETOLOGÍA", "Comportamiento animal y comienzos de la cultura"], { color: colTexto, tam: 64 }); carteles[2].material.needsUpdate = true; }
+    for (const r of rotulosGab) { r.m.material.map = texturaTexto(r.texto, { color: colTexto, tam: 64 }); r.m.material.needsUpdate = true; }
     for (const p of placas) { p.material.map.dispose(); p.material.map = texturaTexto(p.userData.texto, { color: "#f3ead9", tam: 56, fondo: "#3a2a20" }); p.material.needsUpdate = true; }
   }
   actualizarTema();

@@ -19,8 +19,16 @@ const porSala = new Map(salas.map(s => [s.id, s]));
 const especies = [...S.especies].sort((a, b) => b.edad[0] - a.edad[0]);
 const porEspecie = new Map(especies.map(e => [e.id, e]));
 const progreso = leerLS();
-const ETO = S.etologia || { casos: [], retos: [], ejes: {}, intro: null };
-const porCaso = new Map(ETO.casos.map(c => [c.id, c]));
+/* Gabinetes temáticos (etología, memoria oral): misma estructura de datos y de vistas */
+const GABINETES = [
+  S.etologia && { clave: "etologia", datos: S.etologia, lado: 1, m: { nombre: "Gabinete de etología", titulo: "Etología comparada", etiqueta: "Etología",
+    sub: n => `${n} casos de comportamiento animal para pensar los comienzos de la cultura`, campoTaxon: "Especie", importa: "Por qué importa para la evolución humana",
+    tonos: { cultura: "--l4", tecnica: "--l2", alimentacion: "--l3", social: "--l1" }, progreso: "eto", hash: "etologia", prefijo: "t-",
+    relacionada: "Etología relacionada", resumen: "Qué aporta comparar especies", rotulo: ["GABINETE DE ETOLOGÍA", "Comportamiento animal y comienzos de la cultura"] } },
+  S.oralidad && { clave: "oralidad", datos: S.oralidad, lado: -1, m: { ...S.oralidad.meta, relacionada: "Memoria oral relacionada", resumen: "La arqueología de la oralidad" } }
+].filter(Boolean);
+const porCaso = new Map(), gabDe = new Map();
+GABINETES.forEach(g => g.datos.casos.forEach(c => { porCaso.set(c.id, c); gabDe.set(c.id, g); }));
 
 /* Orden del recorrido guiado: cada sala seguida de una especie */
 const ORDEN_RECORRIDO = ["s01", "sahelanthropus", "s02", "ardipithecus", "s03", "afarensis", "s04", "africanus", "s05", "boisei", "s06", "rudolfensis", "s07", "habilis", "s08", "ergaster", "s09", "erectus", "s10", "heidelbergensis", "s11", "neanderthalensis", "s12", "sapiens", "s13", "s14"]
@@ -50,7 +58,7 @@ let museo = null; let hover = null;
 try {
   museo = crearMuseo($("#museo"), {
     salas, especies, linajes: S.linajes, tierra: window.ATLAS_TIERRA,
-    casos: ETO.casos, tonosEje: { cultura: "--l4", tecnica: "--l2", alimentacion: "--l3", social: "--l1" },
+    gabinetes: GABINETES.map(g => ({ casos: g.datos.casos, tonos: g.m.tonos, lado: g.lado, rotulo: g.m.rotulo })),
     onSeleccion: (tipo, id) => tipo === "sala" ? abrirSala(id, { volar: true }) : tipo === "caso" ? abrirCaso(id, { volar: true }) : abrirEspecie(id, { volar: true }),
     onHover: h => { hover = h; }
   });
@@ -70,7 +78,7 @@ function pintarRotulo() {
   if (rotulo.dataset.k !== clave) {
     rotulo.dataset.k = clave;
     if (h.tipo === "sala") { const s = porSala.get(h.id); rotulo.replaceChildren(`Sala ${s.n} · ${s.corto}`, el("small", {}, s.titulo.length > 54 ? s.titulo.slice(0, 52) + "…" : s.titulo)); }
-    else if (h.tipo === "caso") { const c = porCaso.get(h.id); rotulo.replaceChildren(c.corto, el("small", {}, `Etología · ${ETO.ejes[c.eje]}`)); }
+    else if (h.tipo === "caso") { const c = porCaso.get(h.id), g = gabDe.get(h.id); rotulo.replaceChildren(c.corto, el("small", {}, `${g.m.etiqueta} · ${g.datos.ejes[c.eje]}`)); }
     else { const e = porEspecie.get(h.id); rotulo.replaceChildren(e.nombre, el("small", {}, `${e.edadTexto} · ${e.cerebro[0]}-${e.cerebro[1]} cm³`)); }
   }
 }
@@ -97,21 +105,24 @@ function pintarIndice() {
     class: "item-btn", type: "button", "aria-current": estado.sel?.tipo === "especie" && estado.sel.id === e.id ? "true" : null,
     onclick: () => abrirEspecie(e.id, { volar: true })
   }, el("span", { class: "muestra", style: `--c: var(${S.linajes[e.linaje].color})` }), el("span", {}, el("i", {}, e.nombre)), el("span"), el("small", {}, e.edadTexto)))));
-  const pEto = progreso.eto || {};
-  poner($("#lista-etologia"),
-    el("li", {}, el("button", { class: "item-btn", type: "button", "aria-current": estado.vista === "etologia" ? "true" : null, onclick: vistaEtologia },
-      el("span", { class: "num" }, "§"), el("span", {}, "Presentación y retos"),
-      el("span", { class: "estado-sala" + (ETO.retos.every((_, i) => pEto[i] || DOCENTE) ? " hecha" : ETO.retos.some((_, i) => pEto[i]) ? " parcial" : ""), "aria-label": ETO.retos.every((_, i) => pEto[i] || DOCENTE) ? "retos superados" : "retos pendientes" }),
-      el("small", {}, "Qué aporta comparar especies"))),
-    ETO.casos.map((c, k) => el("li", {}, el("button", {
-      class: "item-btn", type: "button", "aria-current": estado.sel?.tipo === "caso" && estado.sel.id === c.id ? "true" : null,
-      onclick: () => abrirCaso(c.id, { volar: true })
-    }, el("span", { class: "num" }, String(k + 1).padStart(2, "0")), el("span", {}, c.corto), el("span"), el("small", {}, c.taxon.split(" (")[0])))));
+  for (const g of GABINETES) {
+    const pg = progreso[g.m.progreso] || {}, D = g.datos;
+    const hechos = D.retos.every((_, i) => pg[i] || DOCENTE), alguno = D.retos.some((_, i) => pg[i]);
+    poner($("#lista-" + g.clave),
+      el("li", {}, el("button", { class: "item-btn", type: "button", "aria-current": estado.vista === "gab-" + g.clave ? "true" : null, onclick: () => vistaGabinete(g) },
+        el("span", { class: "num" }, "§"), el("span", {}, "Presentación y retos"),
+        el("span", { class: "estado-sala" + (hechos ? " hecha" : alguno ? " parcial" : ""), "aria-label": hechos ? "retos superados" : "retos pendientes" }),
+        el("small", {}, g.m.resumen))),
+      D.casos.map((c, k) => el("li", {}, el("button", {
+        class: "item-btn", type: "button", "aria-current": estado.sel?.tipo === "caso" && estado.sel.id === c.id ? "true" : null,
+        onclick: () => abrirCaso(c.id, { volar: true })
+      }, el("span", { class: "num" }, String(k + 1).padStart(2, "0")), el("span", {}, c.corto), el("span"), el("small", {}, c.taxon.split(" (")[0])))));
+  }
   const cuenta = (k, txt) => { const c = $("#cuenta-" + k); if (c) c.textContent = txt; };
   const gal = salas.filter(s => s.edad != null), labs = salas.filter(s => s.edad == null);
   cuenta("galeria", `${gal.filter(s => estadoSala(s) === "montada").length}/${gal.length}`);
   cuenta("lab", `${labs.filter(s => estadoSala(s) === "montada").length}/${labs.length}`);
-  cuenta("etologia", String(ETO.casos.length));
+  GABINETES.forEach(g => cuenta(g.clave, String(g.datos.casos.length)));
   cuenta("especies", String(especies.length));
   const n = contarMontadas();
   $("#progreso-relleno").style.width = (n / salas.length * 100) + "%";
@@ -133,7 +144,7 @@ let arrancando = true;
 function enfocarFicha() {
   ficha.scrollTop = 0;
   const cab = ficha.querySelector(".ficha-cab");
-  if (cab) { const tono = estado.sel?.tipo === "especie" ? S.linajes[porEspecie.get(estado.sel.id).linaje].color : estado.sel?.tipo === "caso" ? TONO_EJE[porCaso.get(estado.sel.id).eje] : null; if (tono) cab.style.setProperty("--tono", `var(${tono})`); }
+  if (cab) { const tono = estado.sel?.tipo === "especie" ? S.linajes[porEspecie.get(estado.sel.id).linaje].color : estado.sel?.tipo === "caso" ? gabDe.get(estado.sel.id).m.tonos[porCaso.get(estado.sel.id).eje] : null; if (tono) cab.style.setProperty("--tono", `var(${tono})`); }
   if (arrancando) return;
   const t = $("#ficha-titulo"); if (t) t.focus({ preventScroll: true });
   if (window.matchMedia("(max-width: 900px)").matches) ficha.scrollIntoView({ block: "start", behavior: "smooth" });
@@ -185,7 +196,8 @@ function vistaInicio() {
         el("li", {}, "Arrastre para girar, rueda o pellizco para acercarse y clic derecho o dos dedos para desplazarse."),
         el("li", {}, "Pulse una vitrina o una esfera para abrir su ficha; el índice permite hacerlo con el teclado."),
         el("li", {}, "«Recorrido guiado» alterna las catorce salas con las doce especies, de los primeros homininos a Homo sapiens."),
-        el("li", {}, "El «Gabinete de etología», en la galería lateral derecha del claustro, reúne doce vitrinas de pared con casos de comportamiento animal (simios, monos, loros y cacatúas) que dialogan con las salas."))),
+        el("li", {}, "El «Gabinete de etología», en la galería lateral derecha del claustro, reúne doce vitrinas de pared con casos de comportamiento animal (simios, monos, loros y cacatúas) que dialogan con las salas."),
+        el("li", {}, "El «Archivo de la memoria oral», en la galería lateral izquierda, reúne estudios sobre cuánto pueden durar los relatos transmitidos de palabra y para qué sirven."))),
     el("div", { class: "nav-ficha" },
       el("button", { class: "boton primario", type: "button", onclick: () => iniciarRecorrido() }, "Empezar el recorrido"),
       el("button", { class: "boton", type: "button", onclick: vistaGuia }, "Guía de uso"),
@@ -211,7 +223,7 @@ function abrirSala(id, { volar = false } = {}) {
       el("dl", { class: "glosario" }, s.conceptos.map(c => el("div", {}, el("dt", {}, c.t), el("dd", {}, c.d))))),
     el("section", { class: "seccion" }, el("h3", {}, "Para pensar"), el("p", { class: "pensar" }, s.pensar)),
     bloqueDebates(s.debates),
-    bloqueEtologiaRelacionada(s.id),
+    GABINETES.map(g => bloqueGabineteRelacionado(g, s.id)),
     bloqueReferencias(s.refs),
     navegacion({ tipo: "sala", id }));
   actualizarRecorrido(); enfocarFicha();
@@ -303,7 +315,8 @@ function vistaGuia() {
         "Sesión 1 · Recorrido guiado en modo presentación por las salas 1-3 y debate «¿dónde empieza la cultura?».",
         "Sesión 2 · Comisariado por equipos: reparto de las catorce salas. Cada equipo supera sus retos y redacta una cartela propia (60-80 palabras) que cite al menos dos referencias de la sala, una de ellas de 2023-2026.",
         "Sesión 3 · Visita cruzada: cada equipo presenta su vitrina; examen de comisariado y debate sobre los recuadros «En debate»: qué sabemos, qué no y cómo podría resolverse.",
-        "Ampliación · Gabinete de etología: cada equipo elige un caso, lo relaciona con su sala y explica qué pregunta de Tinbergen responde, si la comparación es por homología o por convergencia y cuáles son sus límites.")),
+        "Ampliación · Gabinete de etología: cada equipo elige un caso, lo relaciona con su sala y explica qué pregunta de Tinbergen responde, si la comparación es por homología o por convergencia y cuáles son sus límites.",
+        "Ampliación · Archivo de la memoria oral: debate a partir de Echo-Hawk (2000) y Henige (2009). ¿Qué haría falta para aceptar que un relato recuerda un hecho de hace miles de años? Cada equipo aplica esos criterios a un caso.")),
     el("section", { class: "seccion" }, el("h3", {}, "Evaluación orientativa"),
       lista("Rigor conceptual de la cartela y uso correcto de las referencias.", "Lectura crítica: identificación de al menos un debate abierto y de las pruebas de cada postura.", "Contraste de fuentes: distinguir el artículo original de su difusión divulgativa.", "Comunicación oral en la visita cruzada.")),
     el("section", { class: "seccion aviso" }, el("h3", {}, "Límites del recurso"),
@@ -321,10 +334,10 @@ function vistaGuia() {
 
 function vistaBibliografia() {
   estado.vista = "bibliografia"; terminarRecorrido(); cerrarVisor(); estado.sel = null; if (museo) museo.marcar(null); pintarIndice();
-  const usadas = new Set([...salas, ...especies, ...ETO.casos, ETO.intro || {}].flatMap(x => x.refs || []));
+  const usadas = new Set([...salas, ...especies, ...GABINETES.flatMap(g => [...g.datos.casos, g.datos.intro || {}])].flatMap(x => x.refs || []));
   const lista = [...usadas].filter(k => REFS[k]).sort((a, b) => REFS[a].cita.localeCompare(REFS[b].cita, "es"));
   poner(ficha,
-    cabecera("Fuentes", "Bibliografía y créditos", el("p", { class: "sub" }, `${lista.length} referencias citadas en las salas, las fichas y el gabinete de etología`)),
+    cabecera("Fuentes", "Bibliografía y créditos", el("p", { class: "sub" }, `${lista.length} referencias citadas en las salas, las fichas y los gabinetes`)),
     el("section", { class: "seccion" }, el("h3", {}, "Créditos"),
       el("p", { class: "texto" }, S.creditos.linea),
       el("p", { class: "texto" }, S.creditos.novedades),
@@ -364,76 +377,76 @@ function cursivas(texto) {
   }
   partes.push(texto.slice(i)); return partes;
 }
-function bloqueEtologiaRelacionada(salaId) {
-  const casos = ETO.casos.filter(c => c.salas.includes(salaId));
+function bloqueGabineteRelacionado(g, salaId) {
+  const casos = g.datos.casos.filter(c => c.salas.includes(salaId));
   if (!casos.length) return null;
-  return el("section", { class: "seccion" }, el("h3", {}, "Etología relacionada"),
-    el("p", { class: "explicacion" }, "Casos del gabinete de etología que dialogan con esta sala."),
+  return el("section", { class: "seccion" }, el("h3", {}, g.m.relacionada),
+    el("p", { class: "explicacion" }, `Casos del ${g.m.nombre.charAt(0).toLowerCase() + g.m.nombre.slice(1)} que dialogan con esta sala.`),
     el("div", { class: "botonera" }, casos.map(c => el("button", { class: "boton", type: "button", onclick: () => abrirCaso(c.id, { volar: true }) }, c.corto))));
 }
-const TONO_EJE = { cultura: "--l4", tecnica: "--l2", alimentacion: "--l3", social: "--l1" };
 function salirDeEscena() { terminarRecorrido(); cerrarVisor(); estado.sel = null; if (museo) museo.marcar(null); }
-function vistaEtologia() {
-  salirDeEscena(); estado.vista = "etologia"; pintarIndice(); if (museo && museo.vistaGabinete) museo.vistaGabinete();
-  try { history.replaceState(null, "", "#etologia"); } catch (e) {}
-  const I = ETO.intro; const pEto = progreso.eto || {};
+function vistaGabinete(g) {
+  if (!g) return;
+  salirDeEscena(); estado.vista = "gab-" + g.clave; pintarIndice(); if (museo && museo.vistaGabinete) museo.vistaGabinete(g.lado);
+  try { history.replaceState(null, "", "#" + g.m.hash); } catch (e) {}
+  const D = g.datos, I = D.intro, pg = progreso[g.m.progreso] || {};
   poner(ficha,
-    cabecera("Gabinete de etología", "Etología comparada", el("p", { class: "sub" }, `${ETO.casos.length} casos de comportamiento animal para pensar los comienzos de la cultura`)),
+    cabecera(g.m.nombre, g.m.titulo, el("p", { class: "sub" }, g.m.sub(D.casos.length))),
     el("p", { class: "idea" }, I.idea),
     el("div", { class: "texto" }, I.texto.map(t => el("p", {}, t))),
-    el("section", { class: "seccion" }, el("h3", {}, "Retos del gabinete"),
+    el("section", { class: "seccion" }, el("h3", {}, "Retos"),
       el("p", { class: "explicacion" }, "No forman parte del montaje de las vitrinas; sirven para practicar la lectura crítica de los casos."),
-      el("ul", { class: "lista-retos" }, ETO.retos.map((r, i) => el("li", { class: pEto[i] || DOCENTE ? "hecho" : "" },
-        el("button", { class: "boton", type: "button", onclick: () => abrirRetoEto(i) }, r.titulo, el("span", { class: "estado" }, pEto[i] ? "superado" : "pendiente")))))),
-    Object.entries(ETO.ejes).map(([k, nombre]) => el("section", { class: "seccion" }, el("h3", {}, nombre),
-      el("ul", { class: "lista-casos" }, ETO.casos.filter(c => c.eje === k).map(c => el("li", {},
+      el("ul", { class: "lista-retos" }, D.retos.map((r, i) => el("li", { class: pg[i] || DOCENTE ? "hecho" : "" },
+        el("button", { class: "boton", type: "button", onclick: () => abrirRetoGabinete(g, i) }, r.titulo, el("span", { class: "estado" }, pg[i] ? "superado" : "pendiente")))))),
+    Object.entries(D.ejes).map(([k, nombre]) => el("section", { class: "seccion" }, el("h3", {}, nombre),
+      el("ul", { class: "lista-casos" }, D.casos.filter(c => c.eje === k).map(c => el("li", {},
         el("button", { class: "boton ancho", type: "button", onclick: () => abrirCaso(c.id, { volar: true }) }, el("span", {}, c.titulo), el("small", {}, `${c.taxon.split(" (")[0]} · ${c.metodo}`))))))),
     el("section", { class: "seccion" }, el("h3", {}, "Conceptos clave"),
       el("dl", { class: "glosario" }, I.conceptos.map(c => el("div", {}, el("dt", {}, c.t), el("dd", {}, c.d))))),
     el("section", { class: "seccion" }, el("h3", {}, "Para pensar"), el("p", { class: "pensar" }, I.pensar)),
     bloqueReferencias(I.refs),
-    el("div", { class: "nav-ficha" }, el("button", { class: "boton primario", type: "button", onclick: () => abrirCaso(ETO.casos[0].id, { volar: true }) }, "Empezar por el primer caso")));
+    el("div", { class: "nav-ficha" }, el("button", { class: "boton primario", type: "button", onclick: () => abrirCaso(D.casos[0].id, { volar: true }) }, "Empezar por el primer caso")));
   enfocarFicha();
 }
 function abrirCaso(id, { volar = false } = {}) {
-  const c = porCaso.get(id); if (!c) return;
+  const c = porCaso.get(id); if (!c) return; const g = gabDe.get(id), D = g.datos;
   terminarRecorrido(); cerrarVisor(); estado.vista = "caso"; estado.sel = { tipo: "caso", id }; pintarIndice();
   if (museo) { museo.marcar("caso", id); if (volar) museo.enfocar("caso", id); }
-  try { history.replaceState(null, "", "#t-" + id); } catch (e) {}
-  const i = ETO.casos.indexOf(c), ant = ETO.casos[i - 1], sig = ETO.casos[i + 1];
+  try { history.replaceState(null, "", "#" + g.m.prefijo + id); } catch (e) {}
+  const i = D.casos.indexOf(c), ant = D.casos[i - 1], sig = D.casos[i + 1];
   poner(ficha,
-    cabecera(`Etología · ${ETO.ejes[c.eje]}`, c.titulo, el("span", { class: "chip" }, el("span", { class: "muestra", style: `--c: var(${TONO_EJE[c.eje]})` }), ETO.ejes[c.eje])),
+    cabecera(`${g.m.etiqueta} · ${D.ejes[c.eje]}`, c.titulo, el("span", { class: "chip" }, el("span", { class: "muestra", style: `--c: var(${g.m.tonos[c.eje]})` }), D.ejes[c.eje])),
     el("dl", { class: "meta" },
-      el("dt", {}, "Especie"), el("dd", {}, cursivas(c.taxon)),
+      el("dt", {}, g.m.campoTaxon), el("dd", {}, cursivas(c.taxon)),
       el("dt", {}, "Lugar"), el("dd", {}, c.lugar),
       el("dt", {}, "Método"), el("dd", {}, c.metodo)),
     el("div", { class: "texto" }, c.hallazgo.map(t => el("p", {}, cursivas(t)))),
-    el("section", { class: "seccion" }, el("h3", {}, "Por qué importa para la evolución humana"), el("p", { class: "texto" }, cursivas(c.importa))),
+    el("section", { class: "seccion" }, el("h3", {}, g.m.importa), el("p", { class: "texto" }, cursivas(c.importa))),
     el("section", { class: "seccion aviso", "aria-label": "Límites de la interpretación" }, el("h3", {}, "Límites de la interpretación"), el("p", {}, cursivas(c.cautela))),
     el("section", { class: "seccion" }, el("h3", {}, "Salas relacionadas"),
       el("div", { class: "botonera" }, c.salas.map(sid => { const s = porSala.get(sid); return s ? el("button", { class: "boton", type: "button", onclick: () => abrirSala(sid, { volar: true }) }, `Sala ${s.n} · ${s.corto}`) : null; }))),
     bloqueReferencias(c.refs),
     el("div", { class: "nav-ficha" },
       el("button", { class: "boton", type: "button", disabled: !ant, onclick: () => ant && abrirCaso(ant.id, { volar: true }) }, ant ? "← " + ant.corto : "Anterior"),
-      el("button", { class: "boton", type: "button", onclick: vistaEtologia }, "Gabinete"),
+      el("button", { class: "boton", type: "button", onclick: () => vistaGabinete(g) }, "Presentación"),
       el("button", { class: "boton", type: "button", disabled: !sig, onclick: () => sig && abrirCaso(sig.id, { volar: true }) }, sig ? sig.corto + " →" : "Siguiente")));
   enfocarFicha();
 }
-function abrirRetoEto(i) {
-  const r = ETO.retos[i]; salirDeEscena(); estado.vista = "reto-eto";
+function abrirRetoGabinete(g, i) {
+  const D = g.datos, r = D.retos[i], k = g.m.progreso; salirDeEscena(); estado.vista = "reto-gab";
   const cont = el("div", {}); const aviso = el("div", { "aria-live": "polite" });
   const fin = () => {
-    progreso.eto = progreso.eto || {}; const nuevo = !progreso.eto[i];
-    progreso.eto[i] = true; guardarLS(progreso); pintarIndice();
-    if (nuevo) aviso.replaceChildren(el("p", { class: "celebra" }, "Reto del gabinete superado."));
+    progreso[k] = progreso[k] || {}; const nuevo = !progreso[k][i];
+    progreso[k][i] = true; guardarLS(progreso); pintarIndice();
+    if (nuevo) aviso.replaceChildren(el("p", { class: "celebra" }, "Reto superado."));
   };
   pintarReto(r, cont, fin, { docente: DOCENTE });
   poner(ficha,
-    cabecera(`Gabinete de etología · reto ${i + 1} de ${ETO.retos.length}`, r.titulo),
+    cabecera(`${g.m.nombre} · reto ${i + 1} de ${D.retos.length}`, r.titulo),
     cont, aviso,
     el("div", { class: "nav-ficha" },
-      el("button", { class: "boton", type: "button", onclick: vistaEtologia }, "Volver al gabinete"),
-      i < ETO.retos.length - 1 ? el("button", { class: "boton", type: "button", onclick: () => abrirRetoEto(i + 1) }, "Siguiente reto") : null));
+      el("button", { class: "boton", type: "button", onclick: () => vistaGabinete(g) }, "Volver a la presentación"),
+      i < D.retos.length - 1 ? el("button", { class: "boton", type: "button", onclick: () => abrirRetoGabinete(g, i + 1) }, "Siguiente reto") : null));
   enfocarFicha();
 }
 
@@ -570,8 +583,8 @@ pintarLeyenda(); pintarIndice();
 const ancla = decodeURIComponent(location.hash.slice(1));
 if (porSala.has(ancla)) abrirSala(ancla, { volar: true });
 else if (ancla.startsWith("e-") && porEspecie.has(ancla.slice(2))) abrirEspecie(ancla.slice(2), { volar: true });
-else if (ancla === "etologia") vistaEtologia();
-else if (ancla.startsWith("t-") && porCaso.has(ancla.slice(2))) abrirCaso(ancla.slice(2), { volar: true });
+else if (GABINETES.some(g => g.m.hash === ancla)) vistaGabinete(GABINETES.find(g => g.m.hash === ancla));
+else if (GABINETES.some(g => ancla.startsWith(g.m.prefijo) && porCaso.has(ancla.slice(g.m.prefijo.length)))) abrirCaso(ancla.slice(2), { volar: true });
 else vistaInicio();
 if (sesion.get("sh-presentacion") === "1") presentar(true);
 arrancando = false;

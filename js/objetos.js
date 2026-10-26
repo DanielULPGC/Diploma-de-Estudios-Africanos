@@ -432,4 +432,62 @@ const EMBLEMAS = {
     return g;
   }
 };
+/* Emblemas del archivo de la memoria oral */
+const agua = () => new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.05, 0.22), mat("#3d7fa8", { transparent: true, opacity: 0.6, roughness: 0.15 }));
+function volcan(color = "#5a4a3c", lava = true) {
+  const g = new THREE.Group();
+  const cono = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.14, 0.16, 20, 1, true), mat(color, { roughness: 0.95, side: THREE.DoubleSide })); g.add(cono);
+  if (lava) { const crater = new THREE.Mesh(new THREE.CircleGeometry(0.034, 16), new THREE.MeshBasicMaterial({ color: "#ff6a1f" })); crater.rotation.x = -Math.PI / 2; crater.position.y = 0.079; g.add(crater);
+    const colada = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.15, 0.006), new THREE.MeshBasicMaterial({ color: "#e8521a" })); colada.position.set(0.05, 0.01, 0.06); colada.rotation.set(-0.7, 0, -0.75); g.add(colada); }
+  return g;
+}
+function figura(color = "#7a5a3a") { const g = new THREE.Group(); const c = new THREE.Mesh(new THREE.CapsuleGeometry(0.018, 0.04, 4, 8), mat(color)); c.position.y = 0.03; g.add(c);
+  const h = new THREE.Mesh(new THREE.SphereGeometry(0.016, 10, 8), mat(color)); h.position.y = 0.085; g.add(h); return g; }
+const estrella = (c = "#ffe9a8", r = 0.03) => new THREE.Mesh(new THREE.OctahedronGeometry(r, 0), new THREE.MeshStandardMaterial({ color: c, emissive: c, emissiveIntensity: 0.9 }));
+Object.assign(EMBLEMAS, {
+  "tasmania-canopo": () => { // puente de tierra inundado bajo una estrella casi inmóvil
+    const g = new THREE.Group(); const w = agua(); w.position.y = -0.12; g.add(w);
+    for (const x of [-0.12, 0.12]) { const t = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.08, 0.18), mat("#7d6a4a")); t.position.set(x, -0.1, 0); g.add(t); }
+    const puente = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.02, 0.06), mat("#7d6a4a")); puente.position.y = -0.125; g.add(puente);
+    const e = estrella(); e.position.y = 0.13; g.add(e);
+    const arco = new THREE.Mesh(new THREE.TorusGeometry(0.04, 0.003, 6, 30), mat("#e8d3b0")); arco.position.y = 0.13; g.add(arco);
+    return g;
+  },
+  "costas-sumergidas": () => { // isla que fue costa
+    const g = new THREE.Group(); const isla = new THREE.Mesh(piedra(new THREE.SphereGeometry(0.11, 18, 12, 0, Math.PI * 2, 0, Math.PI / 2), 0.08, 101), mat("#8a7752")); isla.position.y = -0.12; g.add(isla);
+    const w = agua(); w.scale.set(1.1, 1.6, 1.2); w.position.y = -0.1; g.add(w);
+    const linea = new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.004, 0.004), mat("#e8d3b0")); linea.position.set(0, -0.15, 0.13); g.add(linea);
+    return g;
+  },
+  "ngurunderi": () => { // canoa y camino sobre el agua hacia una isla
+    const g = new THREE.Group(); const w = agua(); w.position.y = -0.12; g.add(w);
+    const canoa = new THREE.Mesh(new THREE.SphereGeometry(0.05, 16, 8, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2).scale(2, 0.5, 0.6), mat("#6b4a2e", { side: THREE.DoubleSide })); canoa.position.set(-0.05, -0.08, 0); g.add(canoa);
+    const isla = new THREE.Mesh(new THREE.SphereGeometry(0.04, 12, 8, 0, Math.PI * 2, 0, Math.PI / 2), mat("#8a7752")); isla.position.set(0.12, -0.095, -0.03); g.add(isla);
+    for (let i = 0; i < 4; i++) { const p = new THREE.Mesh(new THREE.SphereGeometry(0.008, 6, 5), mat("#e8d3b0")); p.position.set(-0.1 + i * 0.06, -0.04 + Math.sin(i) * 0.02, 0.05); g.add(p); }
+    return g;
+  },
+  "budj-bim": () => { const g = new THREE.Group(); const v = volcan(); v.position.y = -0.04; g.add(v);
+    const anguila = new THREE.Mesh(new THREE.TorusGeometry(0.05, 0.007, 6, 24, Math.PI * 1.4), mat("#3a3a2e")); anguila.position.set(0, -0.14, 0.09); anguila.rotation.x = -Math.PI / 2; g.add(anguila); return g; },
+  "kinrara": () => { const g = new THREE.Group(); const v = volcan("#4f4238"); v.position.y = -0.04; g.add(v);
+    const tubo = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.2, 12, 1, true), mat("#2a211b", { side: THREE.DoubleSide })); tubo.rotation.z = Math.PI / 2; tubo.position.set(0, -0.13, 0.06); g.add(tubo); return g; },
+  "volcanes-olvidados": () => { const g = new THREE.Group(); const a = volcan(); a.position.set(-0.08, -0.04, 0); g.add(a);
+    const b = volcan("#8d8780", false); b.position.set(0.1, -0.07, -0.03); b.scale.setScalar(0.7); g.add(b); return g; },
+  "henbury": () => { const g = new THREE.Group();
+    const borde = new THREE.Mesh(new THREE.TorusGeometry(0.1, 0.022, 8, 28), mat("#9a5a32", { roughness: 0.95 })); borde.rotation.x = Math.PI / 2; borde.scale.z = 0.6; borde.position.y = -0.13; g.add(borde);
+    const m = estrella("#ffb36b", 0.025); m.position.set(0.08, 0.1, 0); g.add(m);
+    const estela = new THREE.Mesh(new THREE.ConeGeometry(0.018, 0.16, 10), new THREE.MeshBasicMaterial({ color: "#ffd59a", transparent: true, opacity: 0.6 })); estela.position.set(0.13, 0.16, 0); estela.rotation.z = 0.6; g.add(estela);
+    return g; },
+  "cuentos-indoeuropeos": () => { // árbol filogenético
+    const g = new THREE.Group(); const m = mat("#b28a4c", { roughness: 0.35, metalness: 0.6 });
+    const rama = (x0, y0, x1, y1) => { const l = Math.hypot(x1 - x0, y1 - y0); const c = new THREE.Mesh(new THREE.CylinderGeometry(0.005, 0.005, l, 6), m); c.position.set((x0 + x1) / 2, (y0 + y1) / 2, 0); c.rotation.z = Math.atan2(x0 - x1, y1 - y0); g.add(c); };
+    rama(0, -0.15, 0, -0.05); rama(0, -0.05, -0.1, 0.05); rama(0, -0.05, 0.1, 0.05); rama(-0.1, 0.05, -0.14, 0.14); rama(-0.1, 0.05, -0.06, 0.14); rama(0.1, 0.05, 0.06, 0.14); rama(0.1, 0.05, 0.14, 0.14);
+    for (const x of [-0.14, -0.06, 0.06, 0.14]) { const h = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.04, 0.008), mat("#efe6d6")); h.position.set(x, 0.165, 0); g.add(h); }
+    return g; },
+  "conversacion-fuego": () => { const g = new THREE.Group(); const f = new THREE.Mesh(new THREE.ConeGeometry(0.03, 0.08, 10), new THREE.MeshBasicMaterial({ color: "#f2a33d" })); f.position.y = -0.1; g.add(f);
+    for (let i = 0; i < 4; i++) { const a = i / 4 * Math.PI * 2 + 0.4; const p = figura(i % 2 ? "#6b4a2e" : "#8a6a4a"); p.position.set(Math.cos(a) * 0.12, -0.15, Math.sin(a) * 0.12); g.add(p); }
+    const cielo = estrella("#ffffff", 0.012); cielo.position.set(-0.08, 0.12, 0); g.add(cielo); return g; },
+  "narradores-agta": () => { const g = new THREE.Group(); const n = figura("#5e3f2a"); n.position.set(0, -0.15, 0); n.scale.setScalar(1.3); g.add(n);
+    for (let i = 0; i < 5; i++) { const a = Math.PI * (0.15 + i * 0.17); const p = figura("#8a6a4a"); p.position.set(Math.cos(a) * 0.13, -0.15, Math.sin(a) * 0.1 + 0.03); g.add(p); }
+    const globo = new THREE.Mesh(new THREE.SphereGeometry(0.035, 14, 10).scale(1.5, 1, 0.4), mat("#efe6d6")); globo.position.set(0.06, 0.04, 0); g.add(globo); return g; }
+});
 export function crearEmblema(id) { const f = EMBLEMAS[id]; return f ? f() : new THREE.Group(); }
