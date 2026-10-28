@@ -2,7 +2,7 @@
  * ARCHIVO DE LA MEMORIA ORAL · casos de estudio sobre la antigüedad y la función de las tradiciones orales.
  * Misma estructura que datos/etologia.js (intro, ejes, casos, retos). Las tradiciones pertenecen a sus
  * comunidades: aquí solo se resume lo que describen los estudios publicados, sin reproducir los relatos.
- * Ejes: paisajes · cielo · transmision.
+ * Ejes: paisajes · cielo · sismos · transmision.
  */
 (function () {
 window.SH = window.SH || {};
@@ -11,14 +11,14 @@ window.SH.oralidad = {
     nombre: "Archivo de la memoria oral", titulo: "La memoria oral y el tiempo profundo", etiqueta: "Memoria oral",
     sub: n => `${n} estudios sobre cuánto duran los relatos y para qué sirven`,
     campoTaxon: "Pueblo o tradición", importa: "Por qué importa para la historia humana",
-    tonos: { paisajes: "--l3", cielo: "--l4", transmision: "--l2" }, progreso: "oral", hash: "memoria-oral", prefijo: "m-",
+    tonos: { paisajes: "--l3", cielo: "--l4", sismos: "--l1", transmision: "--l2" }, progreso: "oral", hash: "memoria-oral", prefijo: "m-",
     rotulo: ["ARCHIVO DE LA MEMORIA ORAL", "Relatos que recuerdan el pasado profundo"]
   },
   intro: {
     idea: "La cultura no se transmite solo con objetos: también viaja en relatos. Algunos estudios sostienen que ciertas tradiciones orales conservan recuerdos de hechos ocurridos hace miles de años; otros advierten que esa antigüedad es muy difícil de demostrar.",
     texto: [
       "La llamada «arqueología de la oralidad» compara relatos que describen fenómenos naturales (una subida del mar, una erupción, la caída de un meteorito, la posición de una estrella) con la fecha en que esos fenómenos ocurrieron según la geología o la astronomía. Si el relato solo pudo nacer de un testigo directo, la fecha del fenómeno da una edad mínima a la tradición.",
-      "Australia es un terreno privilegiado para esta comparación: sus pueblos aborígenes llevan allí decenas de miles de años y sus tradiciones describen paisajes que hoy están bajo el mar o volcanes que llevan milenios apagados. Otros enfoques miden la transmisión desde fuera: comparan versiones de un mismo cuento entre lenguas emparentadas o registran qué se cuenta, dónde y para qué.",
+      "Australia es un terreno privilegiado para esta comparación: sus pueblos aborígenes llevan allí decenas de miles de años y sus tradiciones describen paisajes que hoy están bajo el mar o volcanes que llevan milenios apagados. Fuera de Australia, relatos de la costa noroccidental de Norteamérica, de la isla indonesia de Simeulue o de la isla de Man permiten contrastar el método en otros contextos. Otros enfoques miden la transmisión desde fuera: comparan versiones de un mismo cuento entre lenguas emparentadas o registran qué se cuenta, dónde y para qué.",
       "El debate es real. Echo-Hawk (2000) defendió integrar las tradiciones orales en la historia profunda de América; Henige (2009) replicó que una correspondencia entre relato y hecho es fácil de encontrar y casi imposible de verificar. Los casos de este archivo deben leerse con esa tensión presente.",
       "Las tradiciones pertenecen a sus comunidades (palawa, gunditjmara, ngarrindjeri, gugu badhun, entre otras). Aquí solo se resume lo que describen los estudios publicados, varios de ellos firmados junto con esas comunidades; no se reproducen los relatos."
     ],
@@ -36,6 +36,7 @@ window.SH.oralidad = {
   ejes: {
     paisajes: "Paisajes sumergidos",
     cielo: "Volcanes, meteoritos y estrellas",
+    sismos: "Terremotos y tsunamis",
     transmision: "Cómo y para qué se transmiten los relatos"
   },
 
@@ -169,6 +170,71 @@ window.SH.oralidad = {
       importa: "Plantea que la narración no es un adorno de la cultura, sino una herramienta social con consecuencias medibles, y aporta una explicación de por qué contar historias existe en todas las sociedades humanas.",
       cautela: "Los datos son correlacionales y proceden de una sola sociedad actual; la interpretación evolutiva es una hipótesis que otros estudios tendrán que contrastar.",
       salas: ["s09", "s01"], refs: ["smith2017"]
+    },
+    {
+      id: "isla-de-man", eje: "paisajes", corto: "La isla que se hundió",
+      titulo: "Relatos de tierras sumergidas en la isla de Man",
+      taxon: "Tradición popular manesa (isla de Man)", lugar: "Isla de Man, mar de Irlanda (Reino Unido)",
+      metodo: "Comparación de relatos con curvas de nivel del mar",
+      hallazgo: [
+        "Nunn (2025) aplicó a Europa el método ensayado en Australia. Reunió relatos maneses sobre tierras que se hundieron: la isla de Manannán mac Lir, que emerge cada siete años; lugares sumergidos donde los marinos dicen oír campanas; y testimonios de los siglos XVIII y XIX según los cuales la isla fue antes mayor o estuvo casi unida a Escocia.",
+        "Estimó la profundidad actual de los antiguos puentes de tierra con Cumbria y con Escocia y la comparó con las curvas de nivel relativo del mar de la región. Los puentes habrían quedado sumergidos hace entre unos 10 700 y 8200 años, de modo que los relatos más antiguos tendrían, según el autor, al menos unos 8000 años."
+      ],
+      importa: "Muestra que la propuesta no depende de la singularidad australiana: también en un ámbito europeo, con siglos de escritura y de mezcla cultural, podrían sobrevivir recuerdos de paisajes perdidos.",
+      cautela: "El propio autor advierte que la interpretación de los relatos es incierta y que el resultado depende de la curva de nivel del mar elegida, de los movimientos isostáticos y de la erosión posterior del fondo marino. Los relatos son, además, folclore recogido muy tarde y mezclado con tradiciones cristianas.",
+      salas: ["s11", "s03"], refs: ["nunn2025man"]
+    },
+    {
+      id: "maar-relatos", eje: "cielo", corto: "Lagos que nacieron de una explosión",
+      titulo: "Relatos sobre la formación de los maares",
+      taxon: "Pueblos aborígenes australianos y tradiciones del Lacio (Italia)", lugar: "Australia y lago Albano (Italia)",
+      metodo: "Comparación de motivos narrativos con la vulcanología",
+      hallazgo: [
+        "Un maar es un cráter ancho y poco profundo que se forma cuando el magma entra en contacto con agua subterránea y provoca explosiones; con el tiempo suele llenarse de agua. Nunn et al. (2019) reunieron relatos de varias partes del mundo que parecen recordar la formación de estos lagos o lo que ocurrió después.",
+        "Identifican motivos recurrentes: chillidos de aves (quizá escapes de gas), un cielo rojo, un suelo que se retuerce y se agrieta, y más tarde cráteres que se llenan de agua, bordes que ceden e inundaciones aguas abajo. Destacan las tradiciones australianas y los relatos sobre el lago Albano, cerca de Roma."
+      ],
+      importa: "Los relatos pueden aportar detalles que la geología sola no ve, como la secuencia de lo ocurrido o sus efectos sobre las personas. El trabajo es uno de los antecedentes directos de los estudios sobre Kinrara y sobre las erupciones «recordadas» y «olvidadas» de este archivo.",
+      cautela: "La lectura de cada motivo (aves que chillan = gas) es una interpretación entre varias posibles, y los autores reconocen que algunos relatos son difíciles de descifrar. Que un motivo encaje con un fenómeno no prueba que lo recuerde.",
+      salas: ["s13"], refs: ["nunn2019maar"]
+    },
+    {
+      id: "cascadia-1700", eje: "sismos", corto: "La noche del gran terremoto",
+      titulo: "El terremoto de Cascadia de 1700 en los relatos nativos",
+      taxon: "Pueblos de la costa noroccidental de Norteamérica (nuu-chah-nulth, huu-ay-aht, makah, entre otros)", lugar: "Costa de Columbia Británica, Washington, Oregón y norte de California",
+      metodo: "Recuento de generaciones en relatos y contraste con registros independientes",
+      hallazgo: [
+        "Ludwin et al. (2005), entre ellos investigadores de las propias comunidades, reunieron 40 relatos de 32 fuentes que describen sacudidas del suelo o inundaciones del mar en la costa de Cascadia. Nueve tenían detalle suficiente para estimar una fecha contando las generaciones transcurridas desde el narrador.",
+        "Los puntos medios de esas nueve estimaciones caen entre 1690 y 1715. Varios relatos sitúan el suceso de noche o en invierno, lo que concuerda con la fecha que ya se conocía por otras vías: un tsunami registrado en Japón sin terremoto local la noche del 26 de enero de 1700 y los anillos de árboles de los «bosques fantasma» que murieron al hundirse la costa."
+      ],
+      importa: "Es uno de los pocos casos en que un relato oral puede compararse con una fecha documentada al día. Muestra que el conocimiento oral de un riesgo natural puede ser exacto a escala de siglos y útil para la prevención.",
+      cautela: "Los relatos se recogieron desde la década de 1860, cuando gran parte de la tradición ya se había perdido, y pasan por transcripciones y traducciones. Las fechas dependen de supuestos sobre la duración de una generación, y algunas inundaciones podrían deberse a tsunamis de terremotos lejanos.",
+      salas: ["s13", "s09"], refs: ["ludwin2005"]
+    },
+    {
+      id: "smong", eje: "sismos", corto: "«Smong»: la palabra que salvó vidas",
+      titulo: "La tradición oral que salvó a la isla de Simeulue en 2004",
+      taxon: "Habitantes de Simeulue (Indonesia)", lugar: "Isla de Simeulue, frente a Sumatra (Indonesia)",
+      metodo: "Encuestas y entrevistas tras el tsunami",
+      hallazgo: [
+        "El tsunami del 26 de diciembre de 2004 llegó al norte de Simeulue con olas de más de 10 m en unos diez minutos. Aun así, en la isla murieron siete personas, frente a decenas de miles en la costa de Sumatra.",
+        "McAdoo et al. (2006) atribuyen esa diferencia en buena parte a una tradición oral: el recuerdo del tsunami de 1907, transmitido con la palabra local «smong», enseñaba que tras un terremoto fuerte había que huir a las colinas. Los supervivientes conocían la consigna y la siguieron, también en el tsunami de marzo de 2005."
+      ],
+      importa: "El caso muestra la función de la memoria oral, no solo su antigüedad: un relato de un siglo bastó para guiar una respuesta colectiva eficaz. Es un argumento a favor de la tradición como forma de aprendizaje social acumulado.",
+      cautela: "La comparación entre lugares no es un experimento: la topografía, la distancia a zonas altas y la altura de las olas también influyen en la mortalidad. El relato conserva una consigna práctica de hace un siglo, no un recuerdo de milenios.",
+      salas: ["s09", "s10"], refs: ["mcadoo2006"]
+    },
+    {
+      id: "memoria-lugares", eje: "transmision", corto: "Recordar con el paisaje",
+      titulo: "Técnicas aborígenes de memorización en un aula universitaria",
+      taxon: "Técnica narrativa aborigen asociada a lugares", lugar: "Universidad de Monash (Victoria, Australia)",
+      metodo: "Ensayo controlado con estudiantes",
+      hallazgo: [
+        "Reser et al. (2021), con la participación del investigador aborigen Tyson Yunkaporta, enseñaron a estudiantes de Medicina una técnica de memorización que asocia la información a un relato y a lugares concretos del campus. La compararon con el «palacio de la memoria» de tradición grecolatina y con un grupo de control.",
+        "Tras una formación breve, los estudiantes que usaron la técnica aborigen mejoraron más su capacidad de recordar una lista de veinte nombres que los otros dos grupos."
+      ],
+      importa: "Hamacher et al. (2023) proponen que asociar el saber a lugares del paisaje es uno de los mecanismos que explicarían la larga duración de las tradiciones orales. Este estudio no data ningún relato, pero ofrece una prueba experimental de que ese tipo de técnica mejora la memoria.",
+      cautela: "La muestra es pequeña, de un solo campus, y el recuerdo se midió a corto plazo con una tarea artificial. Mostrar que una técnica funciona hoy no demuestra que haya mantenido un relato durante milenios.",
+      salas: ["s09", "s10"], refs: ["reser2021"]
     }
   ],
 
@@ -177,7 +243,7 @@ window.SH.oralidad = {
       tipo: "clasificar", titulo: "¿Cómo se fecha un relato?",
       ok: "¡Todo correcto! Ha identificado la vía de datación de cada estudio.",
       consigna: "Cada estudio estima la antigüedad o la función de los relatos por una vía distinta. Asigne a cada uno la vía principal.",
-      categorias: ["Cambio del nivel del mar o de la costa", "Erupción o impacto fechado", "Posición de los astros", "Comparación entre culturas o registro etnográfico"],
+      categorias: ["Cambio del nivel del mar o de la costa", "Erupción o impacto fechado", "Posición de los astros", "Comparación entre culturas o registro etnográfico", "Terremoto o tsunami fechado por otras fuentes"],
       items: [
         { t: "Nunn y Reid (2016): tierras costeras hoy sumergidas", c: 0, e: "Comparan lo descrito con la profundidad actual y con las curvas de subida del mar." },
         { t: "Nunn et al. (2025): el viaje de Ngurunderi", c: 0, e: "Relacionan cada episodio con cambios de la costa fechados por la geología." },
@@ -186,7 +252,10 @@ window.SH.oralidad = {
         { t: "Hamacher y Goldsmith (2013): cráteres de impacto", c: 1, e: "Comparan los relatos con la edad de los cráteres, como mucho unos 4700 años en Henbury." },
         { t: "Hamacher et al. (2023): la «gran estrella del sur»", c: 2, e: "Calculan cuándo Canopo estuvo casi inmóvil cerca del polo sur celeste; lo combinan con la inundación del estrecho de Bass." },
         { t: "Da Silva y Tehrani (2016): cuentos indoeuropeos", c: 3, e: "Comparan la distribución de los cuentos con el árbol de las lenguas." },
-        { t: "Wiessner (2014): conversación junto al fuego", c: 3, e: "Registran y comparan conversaciones diurnas y nocturnas en una sociedad actual." }
+        { t: "Wiessner (2014): conversación junto al fuego", c: 3, e: "Registran y comparan conversaciones diurnas y nocturnas en una sociedad actual." },
+        { t: "Nunn (2025): tierras sumergidas de la isla de Man", c: 0, e: "Compara la profundidad de los antiguos puentes de tierra con las curvas de nivel del mar del mar de Irlanda." },
+        { t: "Nunn et al. (2019): relatos sobre maares", c: 1, e: "Relacionan los motivos de los relatos con la formación de cráteres volcánicos de explosión." },
+        { t: "Ludwin et al. (2005): el terremoto de Cascadia", c: 4, e: "Contrastan los relatos con el tsunami registrado en Japón el 26 de enero de 1700 y con los anillos de los árboles." }
       ]
     },
     {
@@ -196,7 +265,9 @@ window.SH.oralidad = {
         { q: "¿Cuál es la objeción principal de Henige (2009) a este tipo de estudios?", o: ["Que la datación por radiocarbono es imprecisa.", "Que es fácil encontrar coincidencias entre un relato y un hecho, pero casi imposible demostrar que el relato lo recuerda y no lo explica después.", "Que las tradiciones orales no merecen estudiarse."], c: 1, e: "Su crítica es epistemológica: una coincidencia no prueba la transmisión continua de un recuerdo." },
         { q: "Matchan et al. (2020) fechan Budj Bim en unos 37 000 años. ¿Qué demuestra el artículo sobre las tradiciones gunditjmara?", o: ["Que tienen 37 000 años.", "Nada directamente: data los volcanes y plantea como hipótesis que los relatos pudieran reflejar su actividad.", "Que son posteriores a la colonización."], c: 1, e: "La relación entre relato y erupción es condicional; el método fecha la roca, no la narración." },
         { q: "Muchas tradiciones aborígenes se conocen por registros coloniales del siglo XIX. ¿Por qué importa?", o: ["Porque garantizan la exactitud de los relatos.", "Porque los relatos llegan filtrados por intermediarios, traducciones y un contexto de desposesión, lo que obliga a leerlos con cautela.", "No importa: el registro escrito equivale al relato oral."], c: 1, e: "La fuente escrita es otra capa de interpretación entre la tradición y el investigador." },
-        { q: "Wiessner (2014) observa que los relatos dominan la conversación nocturna junto al fuego. ¿Qué permite afirmar sobre el Pleistoceno?", o: ["Que los homininos de hace un millón de años contaban historias.", "Ofrece una analogía razonable para pensar el papel del fuego en la vida social, pero no una prueba directa del pasado.", "Que el fuego se controló para contar historias."], c: 1, e: "Es el estudio de una sociedad actual; proyectarlo al pasado requiere otras pruebas." }
+        { q: "Wiessner (2014) observa que los relatos dominan la conversación nocturna junto al fuego. ¿Qué permite afirmar sobre el Pleistoceno?", o: ["Que los homininos de hace un millón de años contaban historias.", "Ofrece una analogía razonable para pensar el papel del fuego en la vida social, pero no una prueba directa del pasado.", "Que el fuego se controló para contar historias."], c: 1, e: "Es el estudio de una sociedad actual; proyectarlo al pasado requiere otras pruebas." },
+        { q: "Reser et al. (2021) comprobaron que una técnica aborigen de memorización basada en lugares mejora el recuerdo. ¿Qué aporta al debate sobre la antigüedad de los relatos?", o: ["Demuestra que los relatos palawa tienen 12 000 años.", "Ofrece un mecanismo plausible de transmisión fiel, pero no data ningún relato.", "Nada, porque se hizo con estudiantes de Medicina."], c: 1, e: "Un experimento actual hace verosímil un mecanismo; la antigüedad de cada relato exige pruebas propias." },
+        { q: "En Simeulue, el recuerdo del tsunami de 1907 ayudó a salvar vidas en 2004 (McAdoo et al., 2006). ¿Qué muestra mejor el caso?", o: ["Que todos los relatos orales son exactos.", "Que una tradición oral puede transmitir una consigna práctica eficaz durante un siglo.", "Que la topografía no influyó en la mortalidad."], c: 1, e: "El caso ilustra la función de la memoria oral; la mortalidad también dependió de otros factores." }
       ]
     }
   ]

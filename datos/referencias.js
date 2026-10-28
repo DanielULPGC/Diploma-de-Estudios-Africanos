@@ -146,5 +146,11 @@ window.SH.refs = {
   nunnReid2016: { cita: "Nunn, P. D. y Reid, N. J. (2016). Aboriginal memories of inundation of the Australian coast dating from more than 7000 years ago. Australian Geographer, 47(1), 11-47.", doi: "10.1080/00049182.2015.1077539" },
   smith2017: { cita: "Smith, D. et al. (2017). Cooperation and the evolution of hunter-gatherer storytelling. Nature Communications, 8, 1853.", doi: "10.1038/s41467-017-02036-8" },
   wiessner2014: { cita: "Wiessner, P. W. (2014). Embers of society: Firelight talk among the Ju/'hoansi Bushmen. Proceedings of the National Academy of Sciences, 111(39), 14027-14035.", doi: "10.1073/pnas.1404212111" },
+  /* Memoria oral (ampliación) */
+  ludwin2005: { cita: "Ludwin, R. S., Dennis, R., Carver, D., McMillan, A. D., Losey, R., Clague, J., Jonientz-Trisler, C., Bowechop, J., Wray, J. y James, K. (2005). Dating the 1700 Cascadia earthquake: Great coastal earthquakes in native stories. Seismological Research Letters, 76(2), 140-148.", doi: "10.1785/gssrl.76.2.140" },
+  mcadoo2006: { cita: "McAdoo, B. G., Dengler, L., Prasetya, G. y Titov, V. (2006). Smong: How an oral history saved thousands on Indonesia's Simeulue Island during the December 2004 and March 2005 tsunamis. Earthquake Spectra, 22(S3).", doi: "10.1193/1.2204966" },
+  nunn2019maar: { cita: "Nunn, P. D., Lancini, L., Franks, L., Compatangelo-Soussignan, R. y McCallum, A. (2019). Maar stories: How oral traditions aid understanding of maar volcanism and associated phenomena during preliterate times. Annals of the American Association of Geographers, 109(5), 1618-1631.", doi: "10.1080/24694452.2019.1574550" },
+  nunn2025man: { cita: "Nunn, P. D. (2025). Hidden by mist and waves: Surviving stories about land submergence from the Isle of Man (Irish Sea) are thousands of years old. Geoheritage, 17, 89.", doi: "10.1007/s12371-025-01139-9" },
+  reser2021: { cita: "Reser, D., Simmons, M., Johns, E., Ghaly, A., Quayle, M., Dordevic, A. L., Tare, M., McArdle, A., Willems, J. y Yunkaporta, T. (2021). Australian Aboriginal techniques for memorization: Translation into a medical and allied health education setting. PLOS ONE, 16(5), e0251710.", doi: "10.1371/journal.pone.0251710" },
 };
 })();

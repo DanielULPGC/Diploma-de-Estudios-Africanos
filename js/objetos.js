@@ -490,4 +490,37 @@ Object.assign(EMBLEMAS, {
     for (let i = 0; i < 5; i++) { const a = Math.PI * (0.15 + i * 0.17); const p = figura("#8a6a4a"); p.position.set(Math.cos(a) * 0.13, -0.15, Math.sin(a) * 0.1 + 0.03); g.add(p); }
     const globo = new THREE.Mesh(new THREE.SphereGeometry(0.035, 14, 10).scale(1.5, 1, 0.4), mat("#efe6d6")); globo.position.set(0.06, 0.04, 0); g.add(globo); return g; }
 });
+Object.assign(EMBLEMAS, {
+  "isla-de-man": () => { // isla con una tierra sumergida bajo el agua
+    const g = new THREE.Group(); const w = agua(); w.position.y = -0.1; g.add(w);
+    const isla = new THREE.Mesh(piedra(new THREE.SphereGeometry(0.08, 16, 10, 0, Math.PI * 2, 0, Math.PI / 2), 0.08, 131), mat("#6f7a4a")); isla.position.set(-0.07, -0.095, 0); g.add(isla);
+    const hundida = new THREE.Mesh(new THREE.SphereGeometry(0.06, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2), mat("#5a6b6e", { transparent: true, opacity: 0.6 })); hundida.position.set(0.1, -0.13, 0.02); g.add(hundida);
+    const campana = new THREE.Mesh(new THREE.ConeGeometry(0.022, 0.035, 12, 1, true), mat("#b28a4c", { metalness: 0.6, roughness: 0.35, side: THREE.DoubleSide })); campana.position.set(0.1, 0.02, 0.02); g.add(campana);
+    return g; },
+  "maar-relatos": () => { // cráter ancho lleno de agua
+    const g = new THREE.Group();
+    const borde = new THREE.Mesh(new THREE.TorusGeometry(0.11, 0.035, 10, 32), mat("#6b5a45", { roughness: 0.95 })); borde.rotation.x = Math.PI / 2; borde.scale.z = 0.7; borde.position.y = -0.12; g.add(borde);
+    const lago = new THREE.Mesh(new THREE.CircleGeometry(0.105, 32), mat("#3f6f86", { roughness: 0.2, metalness: 0.1 })); lago.rotation.x = -Math.PI / 2; lago.position.y = -0.13; g.add(lago);
+    for (let i = 0; i < 3; i++) { const ave = new THREE.Mesh(new THREE.ConeGeometry(0.01, 0.04, 4), mat("#2a2622")); ave.rotation.z = Math.PI / 2; ave.position.set(-0.06 + i * 0.05, 0.06 + (i % 2) * 0.03, 0); g.add(ave); }
+    return g; },
+  "cascadia-1700": () => { // costa fracturada, ola y árboles muertos
+    const g = new THREE.Group(); const w = agua(); w.position.set(0.06, -0.12, 0); w.scale.x = 0.6; g.add(w);
+    const costa = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.05, 0.2), mat("#7d6a4a")); costa.position.set(-0.08, -0.13, 0); costa.rotation.z = -0.15; g.add(costa);
+    for (let i = 0; i < 3; i++) { const t = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.01, 0.16, 6), mat("#8c8478")); t.position.set(-0.12 + i * 0.035, -0.04, -0.05 + i * 0.04); g.add(t); }
+    const ola = new THREE.Mesh(new THREE.TorusGeometry(0.06, 0.014, 8, 24, Math.PI), mat("#3f6f86")); ola.position.set(0.08, -0.08, 0); g.add(ola);
+    return g; },
+  "smong": () => { // ola que llega y personas subiendo a la colina
+    const g = new THREE.Group(); const w = agua(); w.position.set(-0.08, -0.12, 0); w.scale.x = 0.6; g.add(w);
+    const colina = new THREE.Mesh(new THREE.ConeGeometry(0.12, 0.2, 18), mat("#5f7a3e")); colina.position.set(0.08, -0.05, 0); g.add(colina);
+    const ola = new THREE.Mesh(new THREE.TorusGeometry(0.06, 0.016, 8, 24, Math.PI), mat("#3f6f86")); ola.position.set(-0.1, -0.07, 0.02); g.add(ola);
+    for (let i = 0; i < 2; i++) { const p = figura(i ? "#8a6a4a" : "#6b4a2e"); p.scale.setScalar(0.9); p.position.set(0.04 + i * 0.04, -0.06 + i * 0.05, 0.05); g.add(p); }
+    return g; },
+  "memoria-lugares": () => { // camino con hitos: cada lugar guarda un dato
+    const g = new THREE.Group(); const m = mat("#b28a4c", { roughness: 0.35, metalness: 0.6 });
+    const pts = [[-0.14, -0.12, 0.05], [-0.06, -0.12, -0.04], [0.03, -0.12, 0.05], [0.12, -0.12, -0.03]].map(p => new THREE.Vector3(...p));
+    g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 40, 0.006, 6), mat("#e8d3b0")));
+    pts.forEach((p, i) => { const h = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.016, 0.06 + i * 0.03, 8), m); h.position.set(p.x, p.y + 0.03 + i * 0.015, p.z); g.add(h); });
+    const e = estrella("#ffe9a8", 0.022); e.position.set(0.12, 0.1, -0.03); g.add(e);
+    return g; }
+});
 export function crearEmblema(id) { const f = EMBLEMAS[id]; return f ? f() : new THREE.Group(); }
