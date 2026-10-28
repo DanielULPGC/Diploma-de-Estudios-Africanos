@@ -523,4 +523,42 @@ Object.assign(EMBLEMAS, {
     const e = estrella("#ffe9a8", 0.022); e.position.set(0.12, 0.1, -0.03); g.add(e);
     return g; }
 });
+Object.assign(EMBLEMAS, {
+  "aldeas-cascadia": () => { // casa de tablas cubierta por una capa de arena de tsunami
+    const g = new THREE.Group();
+    const casa = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.08, 0.12), mat("#6b4a2e")); casa.position.set(-0.04, -0.1, 0); g.add(casa);
+    const techo = new THREE.Mesh(new THREE.ConeGeometry(0.12, 0.05, 4), mat("#5a3d26")); techo.rotation.y = Math.PI / 4; techo.position.set(-0.04, -0.035, 0); g.add(techo);
+    for (const [y, c] of [[-0.155, "#4a3c2c"], [-0.17, "#d9c9a3"], [-0.185, "#4a3c2c"]]) { const l = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.014, 0.18), mat(c)); l.position.y = y; g.add(l); }
+    const ola = new THREE.Mesh(new THREE.TorusGeometry(0.055, 0.014, 8, 24, Math.PI), mat("#3f6f86")); ola.position.set(0.11, -0.1, 0); g.add(ola);
+    return g; },
+  "tseax-1700": () => { // volcán con colada que alcanza un río
+    const g = new THREE.Group(); const v = volcan(); v.position.set(-0.07, -0.04, 0); g.add(v);
+    const rio = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.01, 0.24), mat("#3d7fa8", { roughness: 0.2 })); rio.position.set(0.12, -0.15, 0); g.add(rio);
+    const colada = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.012, 0.05), new THREE.MeshBasicMaterial({ color: "#e8521a" })); colada.position.set(0.05, -0.145, 0.03); colada.rotation.y = -0.2; g.add(colada);
+    return g; },
+  "triquet-heiltsuk": () => { // franja de costa entre agua y hielo
+    const g = new THREE.Group(); const w = agua(); w.position.y = -0.12; g.add(w);
+    const costa = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.02, 0.05), mat("#9a8662")); costa.position.set(0, -0.09, 0); g.add(costa);
+    for (let i = 0; i < 3; i++) { const h = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.09 + i * 0.03, 0.06), mat("#e6eef2", { roughness: 0.3 })); h.position.set(-0.1 + i * 0.1, -0.05 + i * 0.015, -0.07); g.add(h); }
+    return g; },
+  "erebus-franklin": () => { // bote de madera sobre el hielo
+    const g = new THREE.Group();
+    const hielo = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.03, 0.22), mat("#e6eef2", { roughness: 0.3 })); hielo.position.y = -0.15; g.add(hielo);
+    const bote = new THREE.Mesh(new THREE.SphereGeometry(0.06, 16, 8, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2).scale(2.2, 0.7, 0.8), mat("#6b4a2e", { side: THREE.DoubleSide })); bote.position.y = -0.1; g.add(bote);
+    const mastil = new THREE.Mesh(new THREE.CylinderGeometry(0.004, 0.004, 0.16, 6), mat("#4b3a28")); mastil.position.y = -0.03; g.add(mastil);
+    return g; },
+  "tsodilo-colinas": () => { // tres colinas: macho, hembra y niño
+    const g = new THREE.Group();
+    [[-0.09, 0.2, 0.07], [0.04, 0.15, 0.06], [0.13, 0.08, 0.04]].forEach(([x, h, r], i) => { const c = new THREE.Mesh(piedra(new THREE.ConeGeometry(r, h, 12, 2), 0.06, 151 + i), mat("#8a6e52", { roughness: 0.95 })); c.position.set(x, -0.16 + h / 2, 0); g.add(c); });
+    const dibujo = new THREE.Mesh(new THREE.PlaneGeometry(0.04, 0.025), mat("#a8432c", { side: THREE.DoubleSide })); dibujo.position.set(-0.09, -0.1, 0.05); g.add(dibujo);
+    return g; },
+  "cueva-piton": () => { // pared con cazoletas y serpiente estilizada
+    const g = new THREE.Group();
+    const pared = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.2, 0.05), mat("#9a8a74", { roughness: 0.95 })); pared.position.set(0, -0.05, -0.05); g.add(pared);
+    for (let i = 0; i < 12; i++) { const c = new THREE.Mesh(new THREE.CircleGeometry(0.008, 10), mat("#4a3e32")); c.position.set(-0.12 + (i % 6) * 0.045, -0.02 - Math.floor(i / 6) * 0.05, -0.024); g.add(c); }
+    const curva = new THREE.CatmullRomCurve3([[-0.14, -0.16, 0.05], [-0.06, -0.14, 0.02], [0.02, -0.16, 0.06], [0.1, -0.14, 0.03], [0.15, -0.12, 0.05]].map(p => new THREE.Vector3(...p)));
+    g.add(new THREE.Mesh(new THREE.TubeGeometry(curva, 40, 0.013, 8), mat("#5d5a3a", { roughness: 0.6 })));
+    const punta = new THREE.Mesh(new THREE.ConeGeometry(0.018, 0.05, 6), mat("#c9473f")); punta.position.set(0.1, -0.08, 0.08); punta.rotation.z = 0.6; g.add(punta);
+    return g; }
+});
 export function crearEmblema(id) { const f = EMBLEMAS[id]; return f ? f() : new THREE.Group(); }

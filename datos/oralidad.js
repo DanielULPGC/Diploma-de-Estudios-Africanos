@@ -2,7 +2,7 @@
  * ARCHIVO DE LA MEMORIA ORAL · casos de estudio sobre la antigüedad y la función de las tradiciones orales.
  * Misma estructura que datos/etologia.js (intro, ejes, casos, retos). Las tradiciones pertenecen a sus
  * comunidades: aquí solo se resume lo que describen los estudios publicados, sin reproducir los relatos.
- * Ejes: paisajes · cielo · sismos · transmision.
+ * Ejes: paisajes · cielo · sismos · arqueologia · transmision.
  */
 (function () {
 window.SH = window.SH || {};
@@ -11,14 +11,14 @@ window.SH.oralidad = {
     nombre: "Archivo de la memoria oral", titulo: "La memoria oral y el tiempo profundo", etiqueta: "Memoria oral",
     sub: n => `${n} estudios sobre cuánto duran los relatos y para qué sirven`,
     campoTaxon: "Pueblo o tradición", importa: "Por qué importa para la historia humana",
-    tonos: { paisajes: "--l3", cielo: "--l4", sismos: "--l1", transmision: "--l2" }, progreso: "oral", hash: "memoria-oral", prefijo: "m-",
+    tonos: { paisajes: "--l3", cielo: "--l4", sismos: "--l1", arqueologia: "--accent", transmision: "--l2" }, progreso: "oral", hash: "memoria-oral", prefijo: "m-",
     rotulo: ["ARCHIVO DE LA MEMORIA ORAL", "Relatos que recuerdan el pasado profundo"]
   },
   intro: {
     idea: "La cultura no se transmite solo con objetos: también viaja en relatos. Algunos estudios sostienen que ciertas tradiciones orales conservan recuerdos de hechos ocurridos hace miles de años; otros advierten que esa antigüedad es muy difícil de demostrar.",
     texto: [
       "La llamada «arqueología de la oralidad» compara relatos que describen fenómenos naturales (una subida del mar, una erupción, la caída de un meteorito, la posición de una estrella) con la fecha en que esos fenómenos ocurrieron según la geología o la astronomía. Si el relato solo pudo nacer de un testigo directo, la fecha del fenómeno da una edad mínima a la tradición.",
-      "Australia es un terreno privilegiado para esta comparación: sus pueblos aborígenes llevan allí decenas de miles de años y sus tradiciones describen paisajes que hoy están bajo el mar o volcanes que llevan milenios apagados. Fuera de Australia, relatos de la costa noroccidental de Norteamérica, de la isla indonesia de Simeulue o de la isla de Man permiten contrastar el método en otros contextos. Otros enfoques miden la transmisión desde fuera: comparan versiones de un mismo cuento entre lenguas emparentadas o registran qué se cuenta, dónde y para qué.",
+      "Australia es un terreno privilegiado para esta comparación: sus pueblos aborígenes llevan allí decenas de miles de años y sus tradiciones describen paisajes que hoy están bajo el mar o volcanes que llevan milenios apagados. Fuera de Australia, relatos de la costa noroccidental de Norteamérica, del Ártico canadiense, de las colinas de Tsodilo (Botsuana), de la isla indonesia de Simeulue o de la isla de Man permiten contrastar el método en otros contextos, y también ver sus límites cuando la excavación no confirma lo que se esperaba. Otros enfoques miden la transmisión desde fuera: comparan versiones de un mismo cuento entre lenguas emparentadas o registran qué se cuenta, dónde y para qué.",
       "El debate es real. Echo-Hawk (2000) defendió integrar las tradiciones orales en la historia profunda de América; Henige (2009) replicó que una correspondencia entre relato y hecho es fácil de encontrar y casi imposible de verificar. Los casos de este archivo deben leerse con esa tensión presente.",
       "Las tradiciones pertenecen a sus comunidades (palawa, gunditjmara, ngarrindjeri, gugu badhun, entre otras). Aquí solo se resume lo que describen los estudios publicados, varios de ellos firmados junto con esas comunidades; no se reproducen los relatos."
     ],
@@ -37,6 +37,7 @@ window.SH.oralidad = {
     paisajes: "Paisajes sumergidos",
     cielo: "Volcanes, meteoritos y estrellas",
     sismos: "Terremotos y tsunamis",
+    arqueologia: "Relatos y excavación",
     transmision: "Cómo y para qué se transmiten los relatos"
   },
 
@@ -235,6 +236,84 @@ window.SH.oralidad = {
       importa: "Hamacher et al. (2023) proponen que asociar el saber a lugares del paisaje es uno de los mecanismos que explicarían la larga duración de las tradiciones orales. Este estudio no data ningún relato, pero ofrece una prueba experimental de que ese tipo de técnica mejora la memoria.",
       cautela: "La muestra es pequeña, de un solo campus, y el recuerdo se midió a corto plazo con una tarea artificial. Mostrar que una técnica funciona hoy no demuestra que haya mantenido un relato durante milenios.",
       salas: ["s09", "s10"], refs: ["reser2021"]
+    },
+    {
+      id: "aldeas-cascadia", eje: "sismos", corto: "Aldeas abandonadas tras el terremoto",
+      titulo: "Terremotos, tsunamis y abandono de aldeas en el norte de Cascadia",
+      taxon: "Pueblos de la costa occidental de la isla de Vancouver y de Washington", lugar: "Columbia Británica (Canadá) y Washington (Estados Unidos)",
+      metodo: "Estratigrafía de concheros, radiocarbono y tradiciones orales",
+      hallazgo: [
+        "Hutchinson y McMillan (1997) reunieron pruebas geológicas de seis grandes terremotos (de magnitud 8 o superior) o grupos de terremotos en el norte de la zona de subducción de Cascadia durante los últimos 3000 años. Las tradiciones orales y el registro arqueológico indicaban que algunas aldeas se habían abandonado tras esos sucesos.",
+        "Analizaron la estratigrafía de los concheros y la actividad fechada por radiocarbono en 30 yacimientos de tres regiones. Los depósitos de tsunami aparecen a menudo dentro de los niveles de ocupación o sellándolos, y los terremotos tienden a preceder a fases de menor ocupación, sobre todo en la región de Nootka Sound."
+      ],
+      importa: "Complementa el caso del terremoto de 1700: aquí no se fecha un relato concreto, sino que la arqueología comprueba si lo que cuentan las tradiciones (aldeas destruidas y abandonadas) tiene huella material. Lo que relatan y lo que se excava apuntan en la misma dirección.",
+      cautela: "La relación entre terremoto y abandono se infiere de la coincidencia temporal de los depósitos y varía mucho según la ubicación de cada aldea, la forma de la costa y la historia del nivel del mar; no en todas las regiones fue igual de clara.",
+      salas: ["s13", "s09"], refs: ["hutchinson1997", "ludwin2005"]
+    },
+    {
+      id: "tseax-1700", eje: "cielo", corto: "El volcán de los nisga'a",
+      titulo: "La erupción del Tseax (hacia 1700) en las historias nisga'a",
+      taxon: "Nisga'a (Columbia Británica, Canadá)", lugar: "Volcán Tseax y valle del río Nass (Columbia Británica, Canadá)",
+      metodo: "Vulcanología de campo, datos petrofísicos e historias orales (adaawak)",
+      hallazgo: [
+        "Le Moigne et al. (2022) reconstruyeron la cronología y la dinámica de la erupción del volcán Tseax, ocurrida hacia 1700. Integraron observaciones de campo, datos petrofísicos y las historias orales y escritas de los nisga'a, los adaawak, que describen la erupción como testigos.",
+        "Las historias corroboran que la erupción fue breve e intensa. La lava recorrió unos 20 km hasta el valle del Nass, desvió el río y cubrió en uno a tres días antiguas aldeas nisga'a; las tradiciones hablan de hasta 2000 muertos, y los autores consideran probable que esa colada fuera la causa."
+      ],
+      importa: "Es un caso de colaboración en el que la tradición oral no se usa para fechar, sino para comprobar la duración y la intensidad de un fenómeno que la geología reconstruye. Muestra cómo un relato puede conservar con precisión el impacto humano de una catástrofe durante unos tres siglos.",
+      cautela: "La cifra de muertos es un máximo transmitido por la tradición y la relación entre la colada y las muertes es una inferencia; la fecha, «hacia 1700», es aproximada y algunas fases de la erupción tienen duraciones muy inciertas.",
+      salas: ["s13"], refs: ["leMoigne2022"]
+    },
+    {
+      id: "triquet-heiltsuk", eje: "arqueologia", corto: "Una costa de agua y hielo",
+      titulo: "Historia oral haíɫzaqv y la ocupación de la isla Triquet",
+      taxon: "Haíɫzaqv (heiltsuk), Columbia Británica, Canadá", lugar: "Isla Triquet, área tribal N̓úláw̓itx̌v, costa central de Columbia Británica",
+      metodo: "Geoarqueología, radiocarbono y historia oral, en colaboración con la Nación Haíɫzaqv",
+      hallazgo: [
+        "Gauvreau et al. (2023), con miembros de la Nación Haíɫzaqv entre los autores, estudiaron el yacimiento EkTb-9, en la isla Triquet. La fecha más antigua, sobre carbón disperso, se sitúa entre unos 14 800 y 13 500 años cal BP y marca aproximadamente la primera ocupación; el lugar se ocupó de forma reiterada desde el inicio del posglaciar hasta hoy.",
+        "Los autores organizan los resultados según las fases temporales de la propia historia haíɫzaqv. Un relato de origen registrado en 1897 describe un mundo de agua y hielo con una estrecha franja de costa, y el nombre de lugar N̓úlú («el mayor») aparece en varias narraciones. Trabajos previos en la zona intermareal (Dyck et al., 2020) y el estudio de los objetos de madera conservados en el yacimiento (Gauvreau, 2025) refuerzan la idea de una continuidad de conocimientos durante cientos de generaciones."
+      ],
+      importa: "El caso muestra una forma distinta de relacionar relato y arqueología: la historia oral no se somete a prueba desde fuera, sino que estructura la propia investigación, hecha junto con la comunidad. El paisaje descrito y la antigüedad del yacimiento resultan coherentes.",
+      cautela: "La coherencia entre el relato de agua y hielo y una ocupación de unos 14 000 años no demuestra que el relato proceda de testigos de entonces. La fecha más antigua procede de carbón disperso y se presenta como aproximada.",
+      salas: ["s11", "s10"], refs: ["gauvreau2023", "dyck2020", "gauvreau2025"]
+    },
+    {
+      id: "erebus-franklin", eje: "arqueologia", corto: "Los botes de Erebus Bay",
+      titulo: "Historia, historia oral inuit y arqueología de la expedición Franklin",
+      taxon: "Inuit de la isla del Rey Guillermo (Nunavut, Canadá)", lugar: "Erebus Bay, isla del Rey Guillermo (Nunavut, Canadá)",
+      metodo: "Contraste entre relatos del siglo XIX, testimonios inuit y excavación",
+      hallazgo: [
+        "La expedición de John Franklin (1845) se perdió en el Ártico canadiense. En 1859 el explorador McClintock describió un «lugar del bote», y en 1861 testimonios inuit hablaron de un segundo lugar con otro bote. Stenton y Park (2017) compararon esos relatos con la arqueología de tres yacimientos de Erebus Bay.",
+        "Concluyen que el yacimiento identificado hasta entonces como el lugar de McClintock (NgLj-1) estaba mal identificado y que el verdadero es otro (NgLj-3). En un tercer yacimiento (NgLj-2) probablemente hubo un bote de la expedición, pero su correspondencia con el segundo lugar descrito por los inuit es dudosa."
+      ],
+      importa: "Es un contrapunto necesario: la historia oral inuit fue clave para localizar los restos de la expedición, pero este estudio muestra que tanto los relatos escritos como los orales deben contrastarse críticamente con la excavación antes de darlos por buenos.",
+      cautela: "Se trata de hechos de hace menos de dos siglos y de relatos recogidos pocos años después; su escala temporal no es comparable con la de las tradiciones del Pleistoceno, aunque sí lo es el problema de método.",
+      salas: ["s13"], refs: ["stenton2017"]
+    },
+    {
+      id: "tsodilo-colinas", eje: "arqueologia", corto: "Las colinas sagradas de Tsodilo",
+      titulo: "Tradiciones orales y arqueología en las colinas de Tsodilo",
+      taxon: "San y otros pueblos del noroeste de Botsuana", lugar: "Colinas de Tsodilo, desierto del Kalahari (Botsuana)",
+      metodo: "Recogida de tradiciones orales y excavación de abrigos rocosos",
+      hallazgo: [
+        "Las colinas de Tsodilo son Patrimonio Mundial desde 2001 por su significado religioso para los pueblos locales y por un registro de ocupación humana de muchos milenios, con miles de pinturas rupestres. Campbell et al. (1994) combinaron las tradiciones orales recogidas en la zona con la excavación de la cueva de Male Hill, y Robbins et al. (1996) excavaron la cercana Rhino Cave.",
+        "La síntesis de Robbins et al. (2023) reúne las secuencias fechadas de varios abrigos de Tsodilo y las relaciona con los cambios climáticos de unos 100 000 años; los objetos más antiguos hallados hasta ahora pertenecen a la Edad de Piedra Media."
+      ],
+      importa: "Tsodilo muestra que el valor de un lugar puede estar a la vez en la memoria viva de sus habitantes y en su registro arqueológico. Es el contexto del debate sobre la «cueva de la pitón», recogido en la ficha siguiente.",
+      cautela: "Las tradiciones recogidas en el siglo XX describen creencias y usos recientes de los abrigos; proyectarlas a ocupaciones de decenas de miles de años exige pruebas independientes. Varios trabajos de esta ficha (Botswana Notes and Records) se han cotejado solo en fuentes secundarias.",
+      salas: ["s10", "s01"], refs: ["campbell1994", "robbins1996", "robbins2023"]
+    },
+    {
+      id: "cueva-piton", eje: "arqueologia", corto: "¿El ritual más antiguo?",
+      titulo: "La «cueva de la pitón» de Tsodilo: un debate abierto",
+      taxon: "Ocupantes de la Edad de Piedra Media; analogía con creencias san actuales", lugar: "Rhino Cave, colinas de Tsodilo (Botsuana)",
+      metodo: "Análisis de la industria lítica, materias primas y dataciones; debate en revistas",
+      hallazgo: [
+        "En 2006 un comunicado de prensa anunció el «ritual más antiguo del mundo»: en Rhino Cave, una roca con cientos de cazoletas talladas, que recordaría una pitón, se habría asociado hace unos 70 000 años a puntas de piedra coloridas que se quemaban o rompían a propósito. Robbins et al. (2007), que habían excavado la cueva, lo rebatieron: las dataciones disponibles no respaldaban esa edad, las cazoletas podían ser de épocas distintas y la interpretación proyectaba creencias san actuales sobre el pasado. Coulson (2007) respondió que los medios habían deformado sus palabras.",
+        "La publicación científica llegó después: Coulson et al. (2011) describieron un fragmento de la pared tallada dentro de los niveles de la Edad de Piedra Media, muchas puntas de materias primas no locales, cuidadosamente talladas, que nunca salieron de la cueva y que se quemaron o rompieron, y concluyeron que la mejor explicación es una conducta ritualizada. Nash et al. (2016) mostraron que parte de esa materia prima (silcreta) se trajo desde hasta 295 km, pasando por alto fuentes más cercanas. El debate siguió con la revisión de piezas de Phillipson (2007) y la réplica de Coulson (2008), la datación de las costras de las cazoletas (Brook et al., 2011), el estudio del desplazamiento de objetos dentro del sedimento en un abrigo vecino (Staurset y Coulson, 2014) y nuevas pruebas de ritual en periodos más recientes (Coulson et al., 2016)."
+      ],
+      importa: "El caso enseña cómo se construye, y se discute, una afirmación extraordinaria sobre los orígenes del ritual. La analogía con las tradiciones orales san es útil para formular hipótesis, pero no basta para fechar ni para interpretar un comportamiento de hace decenas de miles de años.",
+      cautela: "La edad de 70 000 años y la identificación de la pitón no están establecidas; las dataciones de la Edad de Piedra Media en Tsodilo son discutidas y no hay una fecha que vincule directamente las cazoletas con las puntas. El anuncio inicial fue un comunicado de prensa (Research Council of Norway, 2006), no un artículo revisado por pares.",
+      salas: ["s01", "s10", "s13"], refs: ["rcn2006", "robbins2007", "coulson2007", "coulson2011", "phillipson2007", "coulson2008", "brook2011", "staurset2014", "nash2016", "coulson2016"]
     }
   ],
 
@@ -255,7 +334,9 @@ window.SH.oralidad = {
         { t: "Wiessner (2014): conversación junto al fuego", c: 3, e: "Registran y comparan conversaciones diurnas y nocturnas en una sociedad actual." },
         { t: "Nunn (2025): tierras sumergidas de la isla de Man", c: 0, e: "Compara la profundidad de los antiguos puentes de tierra con las curvas de nivel del mar del mar de Irlanda." },
         { t: "Nunn et al. (2019): relatos sobre maares", c: 1, e: "Relacionan los motivos de los relatos con la formación de cráteres volcánicos de explosión." },
-        { t: "Ludwin et al. (2005): el terremoto de Cascadia", c: 4, e: "Contrastan los relatos con el tsunami registrado en Japón el 26 de enero de 1700 y con los anillos de los árboles." }
+        { t: "Ludwin et al. (2005): el terremoto de Cascadia", c: 4, e: "Contrastan los relatos con el tsunami registrado en Japón el 26 de enero de 1700 y con los anillos de los árboles." },
+        { t: "Hutchinson y McMillan (1997): aldeas abandonadas en Cascadia", c: 4, e: "Relacionan depósitos de tsunami fechados con fases de abandono en los concheros." },
+        { t: "Le Moigne et al. (2022): el volcán Tseax", c: 1, e: "La vulcanología reconstruye la erupción y las historias nisga'a corroboran su duración e intensidad." }
       ]
     },
     {
@@ -267,7 +348,9 @@ window.SH.oralidad = {
         { q: "Muchas tradiciones aborígenes se conocen por registros coloniales del siglo XIX. ¿Por qué importa?", o: ["Porque garantizan la exactitud de los relatos.", "Porque los relatos llegan filtrados por intermediarios, traducciones y un contexto de desposesión, lo que obliga a leerlos con cautela.", "No importa: el registro escrito equivale al relato oral."], c: 1, e: "La fuente escrita es otra capa de interpretación entre la tradición y el investigador." },
         { q: "Wiessner (2014) observa que los relatos dominan la conversación nocturna junto al fuego. ¿Qué permite afirmar sobre el Pleistoceno?", o: ["Que los homininos de hace un millón de años contaban historias.", "Ofrece una analogía razonable para pensar el papel del fuego en la vida social, pero no una prueba directa del pasado.", "Que el fuego se controló para contar historias."], c: 1, e: "Es el estudio de una sociedad actual; proyectarlo al pasado requiere otras pruebas." },
         { q: "Reser et al. (2021) comprobaron que una técnica aborigen de memorización basada en lugares mejora el recuerdo. ¿Qué aporta al debate sobre la antigüedad de los relatos?", o: ["Demuestra que los relatos palawa tienen 12 000 años.", "Ofrece un mecanismo plausible de transmisión fiel, pero no data ningún relato.", "Nada, porque se hizo con estudiantes de Medicina."], c: 1, e: "Un experimento actual hace verosímil un mecanismo; la antigüedad de cada relato exige pruebas propias." },
-        { q: "En Simeulue, el recuerdo del tsunami de 1907 ayudó a salvar vidas en 2004 (McAdoo et al., 2006). ¿Qué muestra mejor el caso?", o: ["Que todos los relatos orales son exactos.", "Que una tradición oral puede transmitir una consigna práctica eficaz durante un siglo.", "Que la topografía no influyó en la mortalidad."], c: 1, e: "El caso ilustra la función de la memoria oral; la mortalidad también dependió de otros factores." }
+        { q: "En Simeulue, el recuerdo del tsunami de 1907 ayudó a salvar vidas en 2004 (McAdoo et al., 2006). ¿Qué muestra mejor el caso?", o: ["Que todos los relatos orales son exactos.", "Que una tradición oral puede transmitir una consigna práctica eficaz durante un siglo.", "Que la topografía no influyó en la mortalidad."], c: 1, e: "El caso ilustra la función de la memoria oral; la mortalidad también dependió de otros factores." },
+        { q: "En 2006 se anunció en Rhino Cave (Botsuana) el «ritual más antiguo del mundo», de hace unos 70 000 años. ¿Cuál es la lectura más rigurosa?", o: ["Está demostrado y aceptado por todos los especialistas.", "Es una hipótesis debatida: la edad y la interpretación se discuten, y el anuncio inicial fue un comunicado de prensa.", "Es un fraude sin ningún dato arqueológico."], c: 1, e: "Coulson et al. (2011) publicaron después los datos; Robbins et al. (2007) y otros discuten la edad y la interpretación." },
+        { q: "Stenton y Park (2017) revisaron los «lugares del bote» de la expedición Franklin. ¿Qué enseñan sobre la historia oral?", o: ["Que los testimonios inuit eran siempre erróneos.", "Que los relatos orales y escritos son valiosos, pero deben contrastarse con la excavación.", "Que la arqueología no sirve en el Ártico."], c: 1, e: "Uno de los lugares estaba mal identificado y la correspondencia de otro con el relato inuit es dudosa." }
       ]
     }
   ]
