@@ -6,6 +6,9 @@
  * granger2022, granger2023, frost2022, semaw2005, white2009, woldegabriel2009, lebatard2008, vidal2022 y blumenschine2012 (añadidas el 25-10-2026) se cotejaron con fichas
  * editoriales, institucionales y bibliográficas abiertas, no con Crossref; el DOI de woldegabriel2009 lo confirmó la persona
  * responsable en la página de Science. Conviene confirmarlas todas en Crossref.
+ * herries2020, huguet2025, garciamartinez2026, sumer2025 y martin2024 (añadidas el 31-10-2026, sala 15) y la autoría completa de martin2026
+ * se cotejaron en repositorios institucionales y bibliográficos abiertos (USF, IDEAS/RePEc, SciLifeLab, Tübingen, PaleoCore, WashU), no en Crossref.
+ * herries2020: el número de artículo (eaaw7293) se infiere del DOI. garciamartinez2026: en línea el 30-07-2026, sin volumen asignado.
  */
 window.SH = window.SH || {};
 (() => {
@@ -59,6 +62,7 @@ window.SH.refs = {
   fu2025a: { cita: "Fu, Q. et al. (2025). The proteome of the Late Middle Pleistocene Harbin individual. Science.", doi: "10.1126/science.adu9677" },
   fu2025b: { cita: "Fu, Q. et al. (2025). Denisovan mitochondrial DNA from dental calculus of the >146,000-year-old Harbin cranium. Cell.", doi: "10.1016/j.cell.2025.05.040" },
   fu2026: { cita: "Fu, Q. et al. (2026). Enamel proteins from six Homo erectus specimens across China. Nature, 655, 141-147.", doi: "10.1038/s41586-026-10478-8" },
+  garciamartinez2026: { cita: "García-Martínez, D. et al. (2026). The first human fossil from the Ruidera site (Castilla-La Mancha, Spain): A partial parietal and its implications for Middle Pleistocene hominin variability in Southern Europe. Journal of Human Evolution.", doi: "10.1016/j.jhevol.2026.103866" },
   gandini2025: { cita: "Gandini, F. et al. (2025). Genomic evidence supports the “long chronology” for the peopling of Sahul. Science Advances, 11, eady9493.", doi: "10.1126/sciadv.ady9493" },
   gorenInbar2004: { cita: "Goren-Inbar, N. et al. (2004). Evidence of hominin control of fire at Gesher Benot Ya‘aqov, Israel. Science, 304, 725-727.", doi: "10.1126/science.1095443" },
   granger2022: { cita: "Granger, D. E. et al. (2022). Cosmogenic nuclide dating of Australopithecus at Sterkfontein, South Africa. PNAS, 119(27), e2123516119.", doi: "10.1073/pnas.2123516119" },
@@ -67,10 +71,12 @@ window.SH.refs = {
   haidleSchlaudt2020: { cita: "Haidle, M. N. y Schlaudt, O. (2020). Where does cumulative culture begin? A plea for a sociologically informed perspective. Biological Theory, 15, 161-174.", doi: "10.1007/s13752-020-00351-w" },
   harmand2015: { cita: "Harmand, S. et al. (2015). 3.3-million-year-old stone tools from Lomekwi 3, West Turkana, Kenya. Nature, 521, 310-315.", doi: "10.1038/nature14464" },
   hatala2026: { cita: "Hatala, K. G. et al. (2026). Insights into hominin body size, locomotion, and behavior from Early Pleistocene trackways in northern Kenya. PNAS, 123, e2530996123.", doi: "10.1073/pnas.2530996123" },
+  herries2020: { cita: "Herries, A. I. R. et al. (2020). Contemporaneity of Australopithecus, Paranthropus, and early Homo erectus in South Africa. Science, 368(6486), eaaw7293.", doi: "10.1126/science.aaw7293" },
   hoehl2019: { cita: "Hoehl, S. et al. (2019). ‘Over-imitation’: A review and appraisal of a decade of research. Developmental Review, 51, 90-108.", doi: "10.1016/j.dr.2018.12.002" },
   horner2005: { cita: "Horner, V. y Whiten, A. (2005). Causal knowledge and imitation/emulation switching in chimpanzees (Pan troglodytes) and children (Homo sapiens). Animal Cognition, 8(3), 164-181.", doi: "10.1007/s10071-004-0239-6" },
   hubbe2026: { cita: "Hubbe, M. y Harvati, K. (2026). Evolutionary drivers of encephalization and facial reduction in the genus Homo. Nature Communications, 17, 5625.", doi: "10.1038/s41467-026-74739-w" },
   hublin2017: { cita: "Hublin, J.-J. et al. (2017). New fossils from Jebel Irhoud, Morocco and the pan-African origin of Homo sapiens. Nature, 546, 289-292.", doi: "10.1038/nature22336" },
+  huguet2025: { cita: "Huguet, R. et al. (2025). The earliest human face of Western Europe. Nature, 640(8059), 707-713.", doi: "10.1038/s41586-025-08681-0" },
   hutson2025: { cita: "Hutson, J. M. et al. (2025). Revised age for Schöningen hunting spears indicates intensification of Neanderthal cooperative behavior around 200,000 years ago. Science Advances, 11(19).", doi: "10.1126/sciadv.adv0752" },
   ingicco2018: { cita: "Ingicco, T. et al. (2018). Earliest known hominin activity in the Philippines by 709 thousand years ago. Nature, 557, 233-237.", doi: "10.1038/s41586-018-0072-8" },
   jesmer2018: { cita: "Jesmer, B. R. et al. (2018). Is ungulate migration culturally transmitted? Evidence of social learning from translocated animals. Science, 361, 1023-1025.", doi: "10.1126/science.aat0985" },
@@ -83,8 +89,9 @@ window.SH.refs = {
   luncz2012: { cita: "Luncz, L. V., Mundry, R. y Boesch, C. (2012). Evidence for cultural differences between neighboring chimpanzee communities. Current Biology, 22(10), 922-926.", doi: "10.1016/j.cub.2012.03.031" },
   macchiarelli2020: { cita: "Macchiarelli, R. et al. (2020). Nature and relationships of Sahelanthropus tchadensis. Journal of Human Evolution, 102898.", doi: "10.1016/j.jhevol.2020.102898" },
   marin2026: { cita: "Marin-Monfort, M. D. et al. (2026). New evidence for Early Pleistocene use of fire at Wonderwerk Cave (South Africa). PLOS ONE, 21, e0347480.", doi: "10.1371/journal.pone.0347480" },
+  martin2024: { cita: "Martin, J. M., Leece, A. B., Baker, S. E., Herries, A. I. R. y Strait, D. S. (2024). A lineage perspective on hominin taxonomy and evolution. Evolutionary Anthropology, 33(2), e22018.", doi: "10.1002/evan.22018" },
   martin2025: { cita: "Martin, J. M. et al. (2025). The StW 573 Little Foot fossil should not be attributed to Australopithecus prometheus. American Journal of Biological Anthropology, 188(4), e70177.", doi: "10.1002/ajpa.70177" },
-  martin2026: { cita: "Martin, J. M. et al. (2026). New hominin cranial and mandibular remains from Drimolen Main Quarry, South Africa. Annals of Human Biology, 53, 2725046.", doi: "10.1080/03014460.2026.2725046" },
+  martin2026: { cita: "Martin, J. M., Leece, A. B., Baker, S., Herries, A. I. R. y Strait, D. S. (2026). New hominin cranial and mandibular remains from Drimolen Main Quarry, South Africa. Annals of Human Biology, 53(1), 2725046.", doi: "10.1080/03014460.2026.2725046" },
   martinFrances2026: { cita: "Martín-Francés, L. et al. (2026). Reconstructing dietary preferences in the Middle Pleistocene Sima de los Huesos population: A molar macrowear perspective. Journal of Human Evolution, 211, 103797.", doi: "10.1016/j.jhevol.2025.103797" },
   mateos2025: { cita: "Mateos, A. et al. (2025). Revisiting hominin scavenging through the lens of optimal foraging theory. Journal of Human Evolution, 209, 103762.", doi: "10.1016/j.jhevol.2025.103762" },
   meyer2016: { cita: "Meyer, M. et al. (2016). Nuclear DNA sequences from the Middle Pleistocene Sima de los Huesos hominins. Nature, 531, 504-507.", doi: "10.1038/nature17405" },
@@ -108,6 +115,7 @@ window.SH.refs = {
   smith2018: { cita: "Smith, T. M. et al. (2018). Wintertime stress, nursing, and lead exposure in Neanderthal children. Science Advances, 4(10), eaau9483.", doi: "10.1126/sciadv.aau9483" },
   spassov2026: { cita: "Spassov, N. et al. (2026). An early form of terrestrial hominine bipedalism in the Late Miocene of Bulgaria. Palaeobiodiversity and Palaeoenvironments, 106, 421-453.", doi: "10.1007/s12549-025-00691-0" },
   stout2002: { cita: "Stout, D. (2002). Skill and cognition in stone tool production: An ethnographic case study from Irian Jaya. Current Anthropology, 43(5), 693-722.", doi: "10.1086/342638" },
+  sumer2025: { cita: "Sümer, A. P. et al. (2025). Earliest modern human genomes constrain timing of Neanderthal admixture. Nature, 638(8051), 711-717.", doi: "10.1038/s41586-024-08420-x" },
   verheijen2026: { cita: "Verheijen, I. et al. (2026). Faunal exploitation at the elephant hunting site of Lehringen, Germany, 125,000 years ago. Scientific Reports, 16, 9836.", doi: "10.1038/s41598-026-42538-4" },
   vidal2022: { cita: "Vidal, C. M. et al. (2022). Age of the oldest known Homo sapiens from eastern Africa. Nature, 601(7894), 579-583.", doi: "10.1038/s41586-021-04275-8" },
   villmoare2015: { cita: "Villmoare, B. et al. (2015). Early Homo at 2.8 Ma from Ledi-Geraru, Afar, Ethiopia. Science, 347, 1352-1355.", doi: "10.1126/science.aaa1343" },

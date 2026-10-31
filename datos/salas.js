@@ -1,5 +1,5 @@
 /*
- * SER HUMANOS · las catorce salas
+ * SER HUMANOS · las quince salas
  * Contenido armonizado y actualizado (octubre de 2026). Redacción propia con citas de autor y año;
  * las referencias completas están en datos/referencias.js y se citan por clave en «refs».
  * edad: anclaje en la línea del tiempo (Ma); lado: -1 izquierda, 1 derecha, 0 portada; edad null = laboratorio del presente.
@@ -643,6 +643,63 @@ window.SH.salas = [
       ]
     }
   ]
+},
+/* ------------------------------------------------------------------ 15 */
+{
+  id: "s15", n: 15, objeto: "trenza", edad: 0.4, lado: -1,
+  corto: "¿Cuántas humanidades?",
+  titulo: "¿Cuántas humanidades? Convivir, mezclarse, desaparecer",
+  idea: "Durante casi toda nuestra historia hubo varias formas de ser humano a la vez: convivieron, a veces se mezclaron, y solo una ha llegado hasta hoy.",
+  sintesis: [
+    "La imagen de una fila que avanza del simio al ser humano no resiste el registro fósil. En la cueva de Drimolen (Sudáfrica), en depósitos de hace 2,04-1,95 Ma, aparecen juntos Paranthropus robustus y Homo erectus (Herries et al., 2020). La descripción de 18 restos craneales y mandibulares inéditos del mismo yacimiento asigna 14 a P. robustus, uno a H. erectus, el adulto DNH 127, y tres a homininos sin especie determinada (Martin et al., 2026). En ese paisaje, el linaje que conduciría a nosotros no era el más abundante entre los fósiles.",
+    "Europa muestra la misma diversidad. En la Sima del Elefante (Atapuerca), un fragmento de cara de hace 1,4-1,1 Ma, apodado «Pink», resulta más próximo a Homo erectus que a Homo antecessor, la especie documentada en niveles más recientes de la cercana Gran Dolina. Sus autores lo clasifican provisionalmente como Homo aff. erectus («afín a»), una fórmula que deja abierta la posibilidad de otra especie, y proponen que Europa occidental recibió al menos dos poblaciones distintas en el Pleistoceno inferior (Huguet et al., 2025). Mucho después, hacia 430 000 años, los humanos de la Sima de los Huesos ya pertenecían al linaje neandertal según su ADN nuclear (Meyer et al., 2016), y un parietal de Ruidera (Ciudad Real), de hasta 224 000 años, conserva rasgos arcaicos que sugieren que en la península convivían todavía poblaciones de anatomía inesperada (García-Martínez et al., 2026).",
+    "Convivir no siempre significó mantenerse separados. Los genomas más antiguos de humanos modernos, de Ranis (Alemania) y Zlatý kůň (Chequia), de hace unos 45 000 años, pertenecen a una población pequeña que no dejó descendencia conocida; aun así, su ascendencia neandertal procede del mismo episodio de mezcla que comparten todas las personas no africanas actuales, fechado hace 45 000-49 000 años (Sümer et al., 2025). Una joven de la cueva de Denisova era hija de madre neandertal y padre denisovano (Slon et al., 2018), y nuestro genoma guarda también huellas de linajes que no conocemos por fósiles (Zhang et al., 2026). Los denisovanos, con el cráneo de Harbin y los restos de Bianfu, se presentan en las salas 11 y 13.",
+    "Si hubo varias humanidades, ¿qué nos hace humanos? Ningún rasgo apareció de golpe ni en una sola especie: caminar erguido, tallar piedra, usar el fuego o tener un cerebro grande forman un mosaico repartido en el tiempo y entre linajes. Además, cada especie fósil es una hipótesis que puede agruparse o separarse según el concepto de especie que se use; hay propuestas para leer la taxonomía de los homininos en clave de linajes (Martin et al., 2024). La pregunta deja de ser «¿quién fue el primer humano?» y pasa a ser «¿qué compartimos, y con quién?»."
+  ],
+  conceptos: [
+    { t: "Coexistencia (simpatría)", d: "Presencia de dos o más especies en el mismo lugar y época; no implica por sí sola que se relacionaran." },
+    { t: "Homo aff. (affinis)", d: "«Afín a»: atribución provisional que reconoce parecido con una especie sin asignar el fósil a ella." },
+    { t: "Homo sp.", d: "Fósil del género Homo cuya especie no se determina, por ejemplo por ser un fragmento." },
+    { t: "Episodio de mezcla", d: "Momento de intercambio genético entre poblaciones; se fecha por la longitud de los fragmentos heredados." },
+    { t: "Mosaico evolutivo", d: "Los rasgos cambian a ritmos distintos y no aparecen juntos en un único antepasado." },
+    { t: "Linaje", d: "Secuencia de poblaciones unidas por descendencia a lo largo del tiempo." }
+  ],
+  pensar: "Un cartel de aula muestra la «marcha del progreso»: cinco figuras en fila, del simio al ser humano actual. Con lo visto en esta sala, ¿qué tres cambios haría en el cartel y qué ganaría y perdería el alumnado con cada uno?",
+  debates: [
+    "Pink es un único fragmento facial y su atribución (Homo aff. erectus) es provisional.",
+    "El parietal de Ruidera es un fragmento y se clasifica solo como Homo sp.; sus autores desaconsejan conclusiones amplias.",
+    "La proporción de especies entre los fósiles de Drimolen puede reflejar la conservación y el muestreo, no necesariamente la abundancia real de cada especie.",
+    "Cuántas especies de homininos deben reconocerse depende del concepto de especie empleado y sigue discutiéndose."
+  ],
+  refs: ["herries2020", "martin2026", "huguet2025", "meyer2016", "garciamartinez2026", "sumer2025", "slon2018", "zhang2026", "martin2024"],
+  retos: [
+    {
+      tipo: "clasificar", titulo: "¿Qué muestra cada hallazgo?",
+      consigna: "Prediga antes de leer la síntesis: ¿qué tipo de prueba aporta cada hallazgo sobre la existencia de varias humanidades?",
+      categorias: ["Coexistencia en el mismo lugar y época", "Mezcla genética", "Población distinta sin especie asignada", "Sucesión, no coexistencia"],
+      items: [
+        { t: "Paranthropus robustus y Homo erectus en los mismos depósitos de Drimolen, de 2,04-1,95 Ma.", c: 0, e: "Mismo yacimiento y misma horquilla temporal (Herries et al., 2020; Martin et al., 2026)." },
+        { t: "Una joven de Denisova, hija de madre neandertal y padre denisovano.", c: 1, e: "Primera generación de una mezcla (Slon et al., 2018)." },
+        { t: "La ascendencia neandertal de los individuos de Ranis procede del episodio que comparten todos los no africanos actuales.", c: 1, e: "Mezcla fechada hace 45 000-49 000 años (Sümer et al., 2025)." },
+        { t: "Pink, clasificado como Homo aff. erectus.", c: 2, e: "Atribución provisional: parecido con H. erectus sin asignarlo a esa especie (Huguet et al., 2025)." },
+        { t: "El parietal RVH-1 de Ruidera, clasificado como Homo sp.", c: 2, e: "Un fragmento con rasgos arcaicos, sin especie determinada (García-Martínez et al., 2026)." },
+        { t: "Pink (1,4-1,1 Ma) en la Sima del Elefante y Homo antecessor en niveles más recientes de la Gran Dolina.", c: 3, e: "Dos poblaciones distintas en la misma sierra, pero en momentos diferentes: es sucesión, no convivencia." }
+      ]
+    },
+    { tipo: "numerico", titulo: "Contar fósiles en Drimolen",
+      consigna: "De los 18 restos descritos por Martin et al. (2026), 15 se asignan a especie: 14 a Paranthropus robustus y 1 a Homo erectus. ¿Qué porcentaje de los asignados corresponde a P. robustus? Redondee al entero.",
+      respuesta: 93, tolerancia: 0.02, unidad: "%",
+      pista: "Todavía no. Divida los 14 restos de P. robustus entre los 15 asignados a especie, no entre los 18.",
+      explicacion: "14 / 15 ≈ 0,93, es decir, un 93 %. La cifra describe la muestra fósil, no necesariamente cuántos individuos de cada especie vivían allí: la conservación y la excavación también influyen." },
+    {
+      tipo: "test", titulo: "Leer con cautela",
+      preguntas: [
+        { q: "¿Qué significa clasificar Pink como Homo aff. erectus?", o: ["Que es con seguridad un Homo erectus", "Que se parece a Homo erectus, pero se deja abierta la posibilidad de otra especie", "Que es un híbrido de Homo erectus y Homo antecessor"], c: 1, e: "«Affinis» indica afinidad, no identidad (Huguet et al., 2025)." },
+        { q: "Según Sümer et al. (2025), la ascendencia neandertal de las personas no africanas actuales…", o: ["Procede de muchos episodios independientes en cada región", "Procede en lo esencial de un episodio de mezcla común, hace 45 000-49 000 años", "Solo la conservan las poblaciones europeas"], c: 1, e: "Los genomas de Ranis y Zlatý kůň comparten ese episodio con todos los no africanos actuales." },
+        { q: "¿Qué permite afirmar el hallazgo de Drimolen?", o: ["Que Homo erectus y Paranthropus robustus competían por los mismos alimentos", "Que ambas especies están presentes en los mismos depósitos de hace unos 2 Ma", "Que Paranthropus robustus es antepasado de Homo erectus"], c: 1, e: "La coexistencia en un paisaje es un dato; la competencia o el contacto entre especies son hipótesis que requieren otras pruebas." }
+      ]
+    }
+  ]
 }
 ];
 
@@ -661,5 +718,6 @@ window.SH.examen = [
   { q: "Con 1 km por generación de 20 años, 10 000 km se recorren en…", o: ["20 000 años", "200 000 años", "2 millones de años"], c: 1, e: "Sala 11." },
   { q: "¿Qué hicieron las hembras que emigraron al grupo sur de Taï?", o: ["Mantuvieron su costumbre", "Adoptaron la costumbre local de los martillos de piedra", "Dejaron de cascar nueces"], c: 1, e: "Conformismo (sala 12)." },
   { q: "¿Qué método permite identificar especie y sexo cuando el ADN no se conserva?", o: ["La estratigrafía", "La paleoproteómica", "La datación radiométrica"], c: 1, e: "Las proteínas antiguas duran más que el ADN (sala 13)." },
-  { q: "Si un fósil está bajo una ceniza fechada en 233 000 ± 22 000 años, el fósil…", o: ["Tiene exactamente 233 000 años", "Tiene al menos unos 211 000 años y puede ser más antiguo", "Es más reciente que la ceniza"], c: 1, e: "Edad mínima, como en Omo I (sala 14)." }
+  { q: "Si un fósil está bajo una ceniza fechada en 233 000 ± 22 000 años, el fósil…", o: ["Tiene exactamente 233 000 años", "Tiene al menos unos 211 000 años y puede ser más antiguo", "Es más reciente que la ceniza"], c: 1, e: "Edad mínima, como en Omo I (sala 14)." },
+  { q: "Pink, de la Sima del Elefante, se clasifica como Homo aff. erectus. ¿Qué indica esa fórmula?", o: ["Que es con seguridad un Homo erectus", "Afinidad con Homo erectus, dejando abierta otra especie", "Que es antepasado directo de Homo antecessor"], c: 1, e: "Atribución provisional (sala 15)." }
 ];
