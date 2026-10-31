@@ -316,6 +316,35 @@ function estratos() {
   return g;
 }
 
+function trenza() {
+  // Linajes trenzados (sala 15): varias ramas que nacen, se separan, se cruzan (mezcla) y se extinguen;
+  // solo una llega a la parte superior. Esquema, no árbol filogenético concreto.
+  const g = new THREE.Group();
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.24, 0.04, 32), mat("#5b4636", { roughness: 0.9 }));
+  base.position.y = -0.3; g.add(base);
+  const V = (x, y, z) => new THREE.Vector3(x, y, z);
+  const ramas = [
+    { c: "#7c6a2e", p: [V(0, -0.28, 0), V(-0.05, -0.15, 0.02), V(-0.13, -0.02, 0), V(-0.15, 0.06, -0.02)], fin: true },   // se extingue
+    { c: "#b8651e", p: [V(0, -0.28, 0), V(0.04, -0.12, -0.02), V(0.1, 0.02, 0.03), V(0.12, 0.14, 0.02)], fin: true },    // se extingue
+    { c: "#3f7a58", p: [V(-0.06, -0.12, 0.02), V(-0.03, 0.02, 0.06), V(0.04, 0.12, 0.04), V(0.06, 0.2, 0)], fin: true },  // se extingue
+    { c: "#2c5e8a", p: [V(0, -0.28, 0), V(0.0, -0.08, -0.04), V(-0.02, 0.1, -0.02), V(0.0, 0.3, 0)], fin: false }     // llega hasta hoy
+  ];
+  for (const r of ramas) {
+    const curva = new THREE.CatmullRomCurve3(r.p);
+    const tubo = new THREE.Mesh(new THREE.TubeGeometry(curva, 40, r.fin ? 0.013 : 0.018, 8, false), mat(r.c, { roughness: 0.45 }));
+    g.add(tubo);
+    const extremo = new THREE.Mesh(new THREE.SphereGeometry(r.fin ? 0.02 : 0.03, 14, 10), mat(r.fin ? "#8a7a66" : r.c, { roughness: 0.4 }));
+    extremo.position.copy(r.p[r.p.length - 1]); g.add(extremo);
+  }
+  // Puentes de mezcla entre ramas contemporáneas
+  const puente = mat("#e9dfcc", { roughness: 0.6 });
+  for (const [a, b] of [[V(-0.03, 0.03, 0.05), V(-0.015, 0.06, -0.02)], [V(0.05, 0.14, 0.035), V(-0.012, 0.16, -0.015)]]) {
+    const curva = new THREE.QuadraticBezierCurve3(a, a.clone().add(b).multiplyScalar(0.5).add(V(0, 0.03, 0)), b);
+    g.add(new THREE.Mesh(new THREE.TubeGeometry(curva, 12, 0.006, 6, false), puente));
+  }
+  return g;
+}
+
 export function crearObjeto(tipo, tierra) {
   switch (tipo) {
     case "red": return red();
@@ -332,6 +361,7 @@ export function crearObjeto(tipo, tierra) {
     case "nuez": return nuez();
     case "helice": return helice();
     case "estratos": return estratos();
+    case "trenza": return trenza();
     default: return new THREE.Group();
   }
 }
